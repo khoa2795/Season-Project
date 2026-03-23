@@ -21,7 +21,7 @@ export function Hero() {
   const plugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: false }));
 
   return (
-    <section className="relative w-full h-[60vh] md:h-[90vh] bg-white border-b border-season-gray overflow-hidden group">
+    <section className="relative w-full h-[60vh] md:h-[95vh] bg-white border-b border-season-gray overflow-hidden group">
       <Carousel
         plugins={[plugin.current]}
         className="w-full h-full"
