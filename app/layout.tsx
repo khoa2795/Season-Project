@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Crimson_Pro } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { Header } from "@/components/sections/Header";
+import { Footer } from "@/components/sections/Footer";
 
 const crimsonPro = Crimson_Pro({
   subsets: ["latin"],
@@ -33,7 +35,9 @@ export default function RootLayout({
           crimsonPro.variable,
         )}
       >
+        <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );

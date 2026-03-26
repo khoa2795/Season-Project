@@ -13,16 +13,29 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  CarouselApi,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 
 export function Hero() {
   const plugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: false }));
+  const [api, setApi] = useState<CarouselApi>();
+
+  const handlePrevious = () => {
+    api?.scrollPrev();
+    api?.plugins().autoplay.reset();
+  };
+
+  const handleNext = () => {
+    api?.scrollNext();
+    api?.plugins().autoplay.reset();
+  };
 
   return (
     <section className="relative w-full h-[60vh] md:h-[95vh] bg-white border-b border-season-gray overflow-hidden group">
       <Carousel
+        setApi={setApi}
         plugins={[plugin.current]}
         className="w-full h-full"
         opts={{
@@ -52,8 +65,14 @@ export function Hero() {
         </CarouselContent>
 
         {/* Navigation Buttons */}
-        <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 md:left-8 bg-transparent border-white/50 text-white hover:bg-white hover:text-black hover:border-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 disabled:opacity-0 h-10 w-10 md:h-12 md:w-12" />
-        <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 md:right-8 bg-transparent border-white/50 text-white hover:bg-white hover:text-black hover:border-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 disabled:opacity-0 h-10 w-10 md:h-12 md:w-12" />
+        <CarouselPrevious
+          onClick={handlePrevious}
+          className="absolute left-4 top-1/2 -translate-y-1/2 md:left-8 bg-transparent border-white/50 text-white hover:bg-white hover:text-black hover:border-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 disabled:opacity-0 h-10 w-10 md:h-12 md:w-12"
+        />
+        <CarouselNext
+          onClick={handleNext}
+          className="absolute right-4 top-1/2 -translate-y-1/2 md:right-8 bg-transparent border-white/50 text-white hover:bg-white hover:text-black hover:border-white transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 disabled:opacity-0 h-10 w-10 md:h-12 md:w-12"
+        />
       </Carousel>
 
       <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center gap-6 md:gap-8 animate-in fade-in zoom-in duration-700 pointer-events-none px-4">
