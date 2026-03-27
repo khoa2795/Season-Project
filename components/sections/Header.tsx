@@ -41,7 +41,7 @@ export function Header() {
         <div className="flex flex-col items-center justify-center flex-1">
           <Link
             href="/"
-            className="text-2xl tracking-mega font-light uppercase font-serif text-black hover:opacity-80 transition-opacity duration-300"
+            className="text-1xl md:text-2xl tracking-mega font-light uppercase font-serif text-black hover:opacity-80 transition-opacity duration-300"
           >
             Season
           </Link>

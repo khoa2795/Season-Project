@@ -5,6 +5,7 @@ import kinhCan from "./kinh-can.jpg";
 import kinhRam from "./kinh-ram.jpg";
 import theSoap from "./the-soap.jpg";
 import theOffice from "./the-office.jpg";
+import aboutUs from "./about_us.jpg";
 
 export {
   heroImage,
@@ -14,4 +15,5 @@ export {
   kinhRam,
   theSoap,
   theOffice,
+  aboutUs,  
 };
