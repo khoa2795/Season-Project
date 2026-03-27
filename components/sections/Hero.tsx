@@ -12,7 +12,7 @@ import {
   CarouselApi,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 
 export function Hero() {
   const plugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: false }));

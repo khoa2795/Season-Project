@@ -1,7 +1,7 @@
 import { Hero } from "@/components/sections/Hero";
 import { CategoryGrid } from "@/components/sections/CategorySection";
-import { Collaboration } from "@/components/sections/Collaboration";
-import { AccessoryFeature } from "@/components/sections/AccessoryFeature";
+// import { Collaboration } from "@/components/sections/Collaboration";
+import { AccessoryFeature } from "@/components/sections/CampaignCollections";
 import { Newsletter } from "@/components/sections/Newsletter";
 
 export default function Home() {
@@ -9,7 +9,6 @@ export default function Home() {
     <main className="min-h-screen bg-white">
       <Hero />
       <CategoryGrid />
-      <Collaboration />
       <AccessoryFeature />
       <Newsletter />
     </main>
