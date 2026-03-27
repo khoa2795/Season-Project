@@ -2,11 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import heroImage from "@/images/landing-page/hero_image.jpg";
-import heroImage2 from "@/images/landing-page/hero_image_2.jpg";
-import heroImage3 from "@/images/landing-page/hero_image_3.jpg";
-
-const heroImages = [heroImage, heroImage2, heroImage3];
+import { heroImage, heroImage2, heroImage3 } from "@/images/landing-page";
 import {
   Carousel,
   CarouselContent,
@@ -31,9 +27,9 @@ export function Hero() {
     api?.scrollNext();
     api?.plugins().autoplay.reset();
   };
-
+  const heroImages = [heroImage, heroImage2, heroImage3];
   return (
-    <section className="relative w-full h-[60vh] md:h-[95vh] bg-white border-b border-season-gray overflow-hidden group">
+    <section className="relative w-full h-[70vh] md:h-[95vh] bg-white border-b border-season-gray overflow-hidden group">
       <Carousel
         setApi={setApi}
         plugins={[plugin.current]}
@@ -55,7 +51,7 @@ export function Hero() {
                   alt={`Season Campaign Visual ${index + 1}`}
                   fill
                   sizes="100vw"
-                  className="object-cover object-top md:object-center select-none"
+                  className="object-cover md:object-center select-none"
                   priority={index === 0}
                 />
                 <div className="absolute inset-0 bg-black/20" />
@@ -75,8 +71,8 @@ export function Hero() {
         />
       </Carousel>
 
-      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center gap-6 md:gap-8 animate-in fade-in zoom-in duration-700 pointer-events-none px-4">
-        <h1 className="text-3xl sm:text-4xl md:text-6xl font-serif text-white uppercase tracking-[0.20em] font-extralight drop-shadow-md">
+      <div className="absolute inset-0 z-10 flex flex-col  items-center justify-end mb-10 md:justify-center text-center gap-6 md:gap-8 animate-in fade-in zoom-in duration-700 pointer-events-none px-4">
+        <h1 className="text-2xl sm:text-4xl md:text-6xl font-serif text-white uppercase tracking-[0.20em] font-extralight drop-shadow-md">
           New Collections
         </h1>
         <Button
