@@ -32,6 +32,38 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Installation on Windows
+
+If you're using Windows, follow these additional steps:
+
+### 1. Install Node.js and npm
+- Download the installer from [Node.js Official Website](https://nodejs.org/)
+- Run the `.msi` installer and follow the setup wizard
+- Ensure "Add to PATH" is checked during installation
+- Verify installation by opening Command Prompt and running:
+```cmd
+node --version
+npm --version
+```
+
+### 2. Clone the repository using Git Bash or Command Prompt
+```cmd
+git clone <repository-url>
+cd ProjectSeason\my-app
+```
+
+### 3. Install dependencies
+```cmd
+npm install
+```
+
+### 4. Run the development server
+```cmd
+npm run dev
+```
+
+Then open [http://localhost:3000](http://localhost:3000) in your browser.
+
 ## Project Structure
 
 - `app/`: Next.js App Router pages and layouts.

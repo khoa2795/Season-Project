@@ -1,0 +1,15 @@
+volumes:
+  mongodb_data:
+
+services:
+  mongodb:
+    image: mongodb/mongodb-community-server:8.0-ubi8
+    container_name: my-app-mongodb
+    ports:
+      - "${MONGO_PORT:-27017}:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      MONGODB_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER:-admin}
+      MONGODB_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-mongodb123!secure}
+      MONGODB_INITDB_DATABASE: ${MONGO_DB:-myapp}
