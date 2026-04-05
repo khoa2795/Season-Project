@@ -14,6 +14,10 @@ const productsPath = path.join(
   __dirname,
   "../../season_data/sunglasses-grouped.json",
 );
+const clearanceSalePath = path.join(
+  __dirname,
+  "../../season_data/clearance-sale.json",
+);
 
 const normalizedCollectionsPath = path.join(
   __dirname,
@@ -28,6 +32,21 @@ const normalizeData = () => {
   // 1. Read files
   const collectionsData = JSON.parse(fs.readFileSync(collectionsPath, "utf-8"));
   const productsData = JSON.parse(fs.readFileSync(productsPath, "utf-8"));
+  const clearanceSaleData = JSON.parse(fs.readFileSync(clearanceSalePath, "utf-8"));
+
+  // Extract base names from clearance sale products (remove colors)
+  const clearanceSaleBaseNames = new Set(
+    clearanceSaleData.product_names.map((name: string) => {
+      const dashIndex = name.indexOf(" - ");
+      return dashIndex !== -1 ? name.substring(0, dashIndex).trim() : name;
+    })
+  );
+
+  // Helper function to generate random sale percent (1-30%)
+  const getRandomSalePercent = () => Math.floor(Math.random() * 30) + 1;
+  
+  // Helper function to generate random stock (1-10)
+  const getRandomStock = () => Math.floor(Math.random() * 10) + 1;
 
   // 2. Generate normalized collections with ObjectIds
   const normalizedCollections = collectionsData.collections.map(
@@ -113,18 +132,29 @@ const normalizeData = () => {
 
     // Group products by base name
     if (!groupedProducts[baseName]) {
+      // Check if this product is in clearance sale
+      const isInClearanceSale = clearanceSaleBaseNames.has(baseName);
+      const salePercent = isInClearanceSale ? getRandomSalePercent() : undefined;
+
       groupedProducts[baseName] = {
         ...product,
         name: baseName,
         slug: baseSlug,
         collectionId: collectionId,
+        saleInfo: {
+          isOnSale: isInClearanceSale,
+          ...(isInClearanceSale && { salePercent: salePercent })
+        },
+        specifications: {
+          gender: 'Unisex'
+        },
         variants: [],
       };
       // Remove fields that shouldn't be at root level or are outdated
       delete groupedProducts[baseName].categoryId;
       delete groupedProducts[baseName].CollectionId;
       delete groupedProducts[baseName].images; // Images should only be in variants
-      delete groupedProducts[baseName].frameType; // Not applicable for sunglasses
+      delete groupedProducts[baseName].sale; // Replace with saleInfo
     }
 
     // Normalize variants - extract and normalize colors from each variant's SKU
@@ -192,6 +222,7 @@ const normalizeData = () => {
           originalPrice: variant.originalPrice || variant.price,
           images: variant.images || [],
           isDefault: index === 0, // First variant is default
+          stock: getRandomStock(), // Random stock 1-10
         });
       });
     } else {
@@ -204,6 +235,7 @@ const normalizeData = () => {
         originalPrice: product.originalPrice || product.price,
         images: product.images || [],
         isDefault: groupedProducts[baseName].variants.length === 0,
+        stock: getRandomStock(), // Random stock 1-10
       });
     }
   });

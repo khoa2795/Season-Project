@@ -30,6 +30,10 @@ const metalFramePath = path.resolve(
   __dirname,
   "../../season_data/frame-material-metal.json",
 );
+const clearanceSalePath = path.resolve(
+  __dirname,
+  "../../season_data/clearance-sale.json",
+);
 
 // Output file path
 const outputPath = path.resolve(
@@ -43,6 +47,7 @@ const normalizeNewData = () => {
 
   // Load collections data
   const collectionsData = JSON.parse(fs.readFileSync(collectionsPath, "utf8"));
+  const clearanceSaleData = JSON.parse(fs.readFileSync(clearanceSalePath, "utf8"));
   
   const groupedProducts: Record<string, any> = {};
 
@@ -50,6 +55,20 @@ const normalizeNewData = () => {
   const mediumSizeData = JSON.parse(fs.readFileSync(mediumSizePath, "utf8"));
   const smallSizeData = JSON.parse(fs.readFileSync(smallSizePath, "utf8"));
   const metalFrameData = JSON.parse(fs.readFileSync(metalFramePath, "utf8"));
+  
+  // Extract base names from clearance sale products (remove colors)
+  const clearanceSaleBaseNames = new Set(
+    clearanceSaleData.product_names.map((name: string) => {
+      const dashIndex = name.indexOf(" - ");
+      return dashIndex !== -1 ? name.substring(0, dashIndex).trim() : name;
+    })
+  );
+
+  // Helper function to generate random sale percent (1-30%)
+  const getRandomSalePercent = () => Math.floor(Math.random() * 30) + 1;
+  
+  // Helper function to generate random stock (1-10)
+  const getRandomStock = () => Math.floor(Math.random() * 10) + 1;
   
   const bigSizeProduct = bigSizeData.product_names;
   const mediumSizeProduct = mediumSizeData.product_names;
@@ -160,29 +179,25 @@ const normalizeNewData = () => {
     let baseSlug = baseName.toLowerCase().replace(/\s+/g, "-");
 
     if (!groupedProducts[baseName]) {
+      // Check if this product is in clearance sale
+      const isInClearanceSale = clearanceSaleBaseNames.has(baseName);
+      const salePercent = isInClearanceSale ? getRandomSalePercent() : undefined;
+
       groupedProducts[baseName] = {
         name: baseName,
         slug: baseSlug,
         collectionId: collectionId,
         brand: product.vendor || "SEESONvn",
-        sale: product.sale === undefined || product.sale === null ? false : product.sale,
+        saleInfo: {
+          isOnSale: isInClearanceSale,
+          ...(isInClearanceSale && { salePercent: salePercent })
+        },
         availability: product.availability || "in_stock",
         type: "Eyeglasses",
-        frameType: frameType,
         description: product.description || "",
         specifications: {
-          material: "",
-          lensMaterial: "",
-          origin: "",
-          gender: "Unisex",
-          size: {
-            dimensions: "",
-            width: 0,
-            angle: 0,
-            bridge: 0,
-            totalWidth: 0,
-            longestDiameter: 0,
-          },
+          frameType: frameType,
+          gender: "Unisex"
         },
         variants: [],
         rating: {
@@ -210,6 +225,7 @@ const normalizeNewData = () => {
       originalPrice: price,
       images: product.images || [],
       isDefault: groupedProducts[baseName].variants.length === 0, // Make first variant default
+      stock: getRandomStock(), // Random stock 1-10
     });
   });
 
