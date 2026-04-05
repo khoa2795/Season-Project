@@ -25,33 +25,42 @@ const seedDatabase = async () => {
     // 1. Read the normalized JSON files
     const collectionsPath = path.join(
       __dirname,
-      "../../season_data/normalized_collections.json",
+      "../../season_data/collections-normalized.json",
     );
-    const productsPath = path.join(
+    const sunglassesPath = path.join(
       __dirname,
-      "../../season_data/normalized_products.json",
+      "../../season_data/sunglasses-normalized.json",
+    );
+    const eyeglassesPath = path.join(
+      __dirname,
+      "../../season_data/eyeglasses-normalized.json",
     );
 
     const collectionsRaw = fs.readFileSync(collectionsPath, "utf-8");
-    const productsRaw = fs.readFileSync(productsPath, "utf-8");
+    const sunglassesRaw = fs.readFileSync(sunglassesPath, "utf-8");
+    const eyeglassesRaw = fs.readFileSync(eyeglassesPath, "utf-8");
 
     const collections = JSON.parse(collectionsRaw);
-    const products = JSON.parse(productsRaw);
+    const sunglasses = JSON.parse(sunglassesRaw);
+    const eyeglasses = JSON.parse(eyeglassesRaw);
+    const products = [...sunglasses, ...eyeglasses];
 
     // 2. Clear entire database (drop all schemas and data)
     if (mongoose.connection.db) {
       await mongoose.connection.db.dropDatabase();
-      console.log("🗑️  Completely dropped the database (all schemas and data cleared)");
+      console.log(
+        "Completely dropped the database (all schemas and data cleared)",
+      );
     } else {
-      console.log("⚠️  Could not drop database: connection.db is undefined");
+      console.log("Could not drop database: connection.db is undefined");
     }
 
     // 3. Insert the normalized data
     await Collection.insertMany(collections);
-    console.log(`🌱 Successfully seeded ${collections.length} collections!`);
+    console.log(`Successfully seeded ${collections.length} collections!`);
 
     await Product.insertMany(products);
-    console.log(`🌱 Successfully seeded ${products.length} products!`);
+    console.log(`Successfully seeded ${products.length} products!`);
 
     process.exit(0);
   } catch (error) {

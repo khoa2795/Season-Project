@@ -20,6 +20,8 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "normalize": "tsx src/scripts/normalizeData.ts",
+    "normalize:sunglasses": "tsx src/scripts/normalizeSunglasses.ts",
+    "normalize:eyeglasses": "tsx src/scripts/normalizeEyeglasses.ts",
     "seed": "tsx src/scripts/seed.ts"
   },
   "keywords": [],

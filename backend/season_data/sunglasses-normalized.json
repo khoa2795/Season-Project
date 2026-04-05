@@ -24,7 +24,7 @@
     "variants": [
       {
         "sku": "the-paper-knife-01-brown",
-        "color": "Brown",
+        "color": "brown",
         "size": "",
         "price": 2500000,
         "originalPrice": 2500000,
@@ -39,7 +39,7 @@
       },
       {
         "sku": "the-paper-knife-01-dark-grey",
-        "color": "Dark Grey",
+        "color": "dark-grey",
         "size": "",
         "price": 2500000,
         "originalPrice": 2500000,
@@ -56,7 +56,7 @@
       },
       {
         "sku": "the-paper-knife-01-black",
-        "color": "Black",
+        "color": "black",
         "size": "",
         "price": 2500000,
         "originalPrice": 2500000,
@@ -77,7 +77,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c70337f"
+    "collectionId": "69d26072602c7bb2c42e30f9"
   },
   {
     "name": "THE RULER 07",
@@ -104,7 +104,7 @@
     "variants": [
       {
         "sku": "the-ruler-07-green",
-        "color": "Green",
+        "color": "green",
         "size": "",
         "price": 2550000,
         "originalPrice": 2550000,
@@ -119,7 +119,7 @@
       },
       {
         "sku": "the-ruler-07-grey",
-        "color": "Grey",
+        "color": "grey",
         "size": "",
         "price": 2550000,
         "originalPrice": 2550000,
@@ -134,7 +134,7 @@
       },
       {
         "sku": "the-ruler-07-beige",
-        "color": "Beige",
+        "color": "beige",
         "size": "",
         "price": 2550000,
         "originalPrice": 2550000,
@@ -153,7 +153,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703380"
+    "collectionId": "69d26072602c7bb2c42e30fa"
   },
   {
     "name": "THE PAPER KNIFE 02",
@@ -180,7 +180,7 @@
     "variants": [
       {
         "sku": "the-paper-knife-02-havana",
-        "color": "Havana",
+        "color": "havana",
         "size": "",
         "price": 2500000,
         "originalPrice": 2500000,
@@ -197,7 +197,7 @@
       },
       {
         "sku": "the-paper-knife-02-black",
-        "color": "Black",
+        "color": "black",
         "size": "",
         "price": 2500000,
         "originalPrice": 2500000,
@@ -214,7 +214,7 @@
       },
       {
         "sku": "the-paper-knife-02-grey",
-        "color": "Grey",
+        "color": "grey",
         "size": "",
         "price": 2500000,
         "originalPrice": 2500000,
@@ -235,7 +235,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c70337f"
+    "collectionId": "69d26072602c7bb2c42e30f9"
   },
   {
     "name": "THE RULER 06",
@@ -262,7 +262,7 @@
     "variants": [
       {
         "sku": "the-ruler-06-brown",
-        "color": "Brown",
+        "color": "brown",
         "size": "",
         "price": 2550000,
         "originalPrice": 2550000,
@@ -277,7 +277,7 @@
       },
       {
         "sku": "the-ruler-06-grey",
-        "color": "Grey",
+        "color": "grey",
         "size": "",
         "price": 2550000,
         "originalPrice": 2550000,
@@ -294,7 +294,7 @@
       },
       {
         "sku": "the-ruler-06-black",
-        "color": "Black",
+        "color": "black",
         "size": "",
         "price": 2550000,
         "originalPrice": 2550000,
@@ -311,7 +311,7 @@
       },
       {
         "sku": "the-ruler-06-dark-grey",
-        "color": "Dark Grey",
+        "color": "dark-grey",
         "size": "",
         "price": 2550000,
         "originalPrice": 2550000,
@@ -330,7 +330,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703380"
+    "collectionId": "69d26072602c7bb2c42e30fa"
   },
   {
     "name": "THE SOAP 11",
@@ -357,7 +357,7 @@
     "variants": [
       {
         "sku": "the-soap-11-light-grey",
-        "color": "Light Grey",
+        "color": "light-grey",
         "size": "",
         "price": 2450000,
         "originalPrice": 2450000,
@@ -372,7 +372,7 @@
       },
       {
         "sku": "the-soap-11-green",
-        "color": "Green",
+        "color": "green",
         "size": "",
         "price": 2450000,
         "originalPrice": 2450000,
@@ -391,7 +391,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703383"
+    "collectionId": "69d26072602c7bb2c42e30fd"
   },
   {
     "name": "THE SET SQUARE 02",
@@ -418,7 +418,7 @@
     "variants": [
       {
         "sku": "the-set-square-02-black",
-        "color": "Black",
+        "color": "black",
         "size": "",
         "price": 2600000,
         "originalPrice": 2600000,
@@ -432,6 +432,23 @@
           "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681592/MyProject/the-set-square-02-black/jquxpnmimojowhjgauzd.jpg"
         ],
         "isDefault": true
+      },
+      {
+        "sku": "the-set-square-02-sunglasses-grey-rhino",
+        "color": "grey-rhino",
+        "size": "",
+        "price": 2600000,
+        "originalPrice": 2600000,
+        "images": [
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681211/MyProject/the-set-square-02-sunglasses-grey-rhino/pab0datpf73yhpietcpt.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681212/MyProject/the-set-square-02-sunglasses-grey-rhino/tjl3tjvxfrnmhmcwhovl.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681213/MyProject/the-set-square-02-sunglasses-grey-rhino/x27afbwrprqrooe5cw0y.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681214/MyProject/the-set-square-02-sunglasses-grey-rhino/gfajit5k89oqbuapcx79.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681215/MyProject/the-set-square-02-sunglasses-grey-rhino/btk8fp0l7cqrorfp0via.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681216/MyProject/the-set-square-02-sunglasses-grey-rhino/f5b1nwlckpozesezyx5c.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681217/MyProject/the-set-square-02-sunglasses-grey-rhino/wefi6pop1lsmf799aqiu.jpg"
+        ],
+        "isDefault": true
       }
     ],
     "rating": {
@@ -439,7 +456,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703381"
+    "collectionId": "69d26072602c7bb2c42e30fb"
   },
   {
     "name": "THE SOAP 10",
@@ -466,7 +483,7 @@
     "variants": [
       {
         "sku": "the-soap-10-dark-grey",
-        "color": "Dark Grey",
+        "color": "dark-grey",
         "size": "",
         "price": 2750000,
         "originalPrice": 2750000,
@@ -481,7 +498,7 @@
       },
       {
         "sku": "the-soap-10-black",
-        "color": "Black",
+        "color": "black",
         "size": "",
         "price": 2750000,
         "originalPrice": 2750000,
@@ -500,7 +517,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703383"
+    "collectionId": "69d26072602c7bb2c42e30fd"
   },
   {
     "name": "THE RULER 03",
@@ -527,7 +544,7 @@
     "variants": [
       {
         "sku": "the-ruler-03-gunmetal",
-        "color": "Gunmetal",
+        "color": "gunmetal",
         "size": "",
         "price": 2750000,
         "originalPrice": 2750000,
@@ -543,7 +560,7 @@
       },
       {
         "sku": "the-ruler-03-silver",
-        "color": "Silver",
+        "color": "silver",
         "size": "",
         "price": 2750000,
         "originalPrice": 2750000,
@@ -564,7 +581,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703380"
+    "collectionId": "69d26072602c7bb2c42e30fa"
   },
   {
     "name": "THE RULER 04",
@@ -591,7 +608,7 @@
     "variants": [
       {
         "sku": "the-ruler-04-silver",
-        "color": "Silver",
+        "color": "silver",
         "size": "",
         "price": 2750000,
         "originalPrice": 2750000,
@@ -608,7 +625,7 @@
       },
       {
         "sku": "the-ruler-04-gunmetal",
-        "color": "Gunmetal",
+        "color": "gunmetal",
         "size": "",
         "price": 2750000,
         "originalPrice": 2750000,
@@ -628,55 +645,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703380"
-  },
-  {
-    "name": "THE SET SQUARE 02 SUNGLASSES - Grey",
-    "slug": "the-set-square-02-sunglasses---grey",
-    "brand": "SEESONvn",
-    "sale": false,
-    "availability": "in_stock",
-    "type": "Sunglasses",
-    "description": "Dáng kính chữ nhật bo tròn với viền gọng được tinh chỉnh vừa vặn, làm nổi bật đường nét kim loại sắc sảo ở càng kính. Chi tiết lấy cảm hứng từ thước eke, cân bằng giữa tinh thần khái niệm và tính ứng dụng trong thiết kế.",
-    "specifications": {
-      "material": "",
-      "lensMaterial": "",
-      "origin": "",
-      "gender": "Unisex",
-      "size": {
-        "dimensions": "",
-        "width": 0,
-        "angle": 0,
-        "bridge": 0,
-        "totalWidth": 0,
-        "longestDiameter": 0
-      }
-    },
-    "variants": [
-      {
-        "sku": "the-set-square-02-sunglasses-grey-rhino",
-        "color": "Rhino",
-        "size": "",
-        "price": 2600000,
-        "originalPrice": 2600000,
-        "images": [
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681211/MyProject/the-set-square-02-sunglasses-grey-rhino/pab0datpf73yhpietcpt.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681212/MyProject/the-set-square-02-sunglasses-grey-rhino/tjl3tjvxfrnmhmcwhovl.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681213/MyProject/the-set-square-02-sunglasses-grey-rhino/x27afbwrprqrooe5cw0y.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681214/MyProject/the-set-square-02-sunglasses-grey-rhino/gfajit5k89oqbuapcx79.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681215/MyProject/the-set-square-02-sunglasses-grey-rhino/btk8fp0l7cqrorfp0via.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681216/MyProject/the-set-square-02-sunglasses-grey-rhino/f5b1nwlckpozesezyx5c.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681217/MyProject/the-set-square-02-sunglasses-grey-rhino/wefi6pop1lsmf799aqiu.jpg"
-        ],
-        "isDefault": true
-      }
-    ],
-    "rating": {
-      "avg": 0,
-      "count": 0
-    },
-    "isActive": true,
-    "collectionId": "69d16583b964434b3c703381"
+    "collectionId": "69d26072602c7bb2c42e30fa"
   },
   {
     "name": "THE RULER 01",
@@ -703,7 +672,7 @@
     "variants": [
       {
         "sku": "the-ruler-01-marble-black",
-        "color": "Marble Black",
+        "color": "marble-black",
         "size": "",
         "price": 2850000,
         "originalPrice": 2850000,
@@ -724,11 +693,11 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703380"
+    "collectionId": "69d26072602c7bb2c42e30fa"
   },
   {
-    "name": "THE SOAP 07 SUNGLASSES - Grey",
-    "slug": "the-soap-07-sunglasses---grey",
+    "name": "THE SOAP 07",
+    "slug": "the-soap-07",
     "brand": "SEESONvn",
     "sale": false,
     "availability": "in_stock",
@@ -751,7 +720,7 @@
     "variants": [
       {
         "sku": "the-soap-07-sunglasses-grey-rhino",
-        "color": "Rhino",
+        "color": "grey-rhino",
         "size": "",
         "price": 2450000,
         "originalPrice": 2450000,
@@ -763,6 +732,21 @@
           "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681448/MyProject/the-soap-07-sunglasses-grey-rhino/extav4yhmbievxudddzj.jpg"
         ],
         "isDefault": true
+      },
+      {
+        "sku": "the-soap-07-grey",
+        "color": "grey",
+        "size": "",
+        "price": 2450000,
+        "originalPrice": 2450000,
+        "images": [
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681327/MyProject/the-soap-07-grey/ucvxlseggsxj00xl25gm.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681328/MyProject/the-soap-07-grey/espwv4yw6gxw5lgwq5hh.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681329/MyProject/the-soap-07-grey/eihufortvyk1ntza6pd7.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681330/MyProject/the-soap-07-grey/vnpffgx7zgchyyhjdnj5.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681331/MyProject/the-soap-07-grey/nk7kbfomuanflrhxvovx.jpg"
+        ],
+        "isDefault": true
       }
     ],
     "rating": {
@@ -770,7 +754,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703383"
+    "collectionId": "69d26072602c7bb2c42e30fd"
   },
   {
     "name": "THE OBSIDIAN 02",
@@ -797,7 +781,7 @@
     "variants": [
       {
         "sku": "the-obsidian-02-black",
-        "color": "Black",
+        "color": "black",
         "size": "",
         "price": 2350000,
         "originalPrice": 2350000,
@@ -814,7 +798,7 @@
       },
       {
         "sku": "the-obsidian-02-matte-black",
-        "color": "Matte Black",
+        "color": "matte-black",
         "size": "",
         "price": 2350000,
         "originalPrice": 2350000,
@@ -834,11 +818,11 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c70337d"
+    "collectionId": "69d26072602c7bb2c42e30f7"
   },
   {
-    "name": "THE SOAP 02 SUNGLASSES - Grey",
-    "slug": "the-soap-02-sunglasses---grey",
+    "name": "THE SOAP 02",
+    "slug": "the-soap-02",
     "brand": "SEESONvn",
     "sale": false,
     "availability": "in_stock",
@@ -861,7 +845,7 @@
     "variants": [
       {
         "sku": "the-soap-02-sunglasses-grey-rhino",
-        "color": "Rhino",
+        "color": "grey-rhino",
         "size": "",
         "price": 2350000,
         "originalPrice": 2350000,
@@ -881,7 +865,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703383"
+    "collectionId": "69d26072602c7bb2c42e30fd"
   },
   {
     "name": "THE SNORKEL 02",
@@ -908,7 +892,7 @@
     "variants": [
       {
         "sku": "the-snorkel-02-matte-black",
-        "color": "Matte Black",
+        "color": "matte-black",
         "size": "",
         "price": 2400000,
         "originalPrice": 2400000,
@@ -925,7 +909,7 @@
       },
       {
         "sku": "the-snorkel-02-black",
-        "color": "Black",
+        "color": "black",
         "size": "",
         "price": 2400000,
         "originalPrice": 2400000,
@@ -942,7 +926,7 @@
       },
       {
         "sku": "the-snorkel-02-crystal",
-        "color": "Crystal",
+        "color": "crystal",
         "size": "",
         "price": 2400000,
         "originalPrice": 2400000,
@@ -963,7 +947,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703382"
+    "collectionId": "69d26072602c7bb2c42e30fc"
   },
   {
     "name": "THE SNORKEL 01",
@@ -990,7 +974,7 @@
     "variants": [
       {
         "sku": "the-snorkel-01-crystal",
-        "color": "Crystal",
+        "color": "crystal",
         "size": "",
         "price": 2400000,
         "originalPrice": 2400000,
@@ -1007,7 +991,7 @@
       },
       {
         "sku": "the-snorkel-01-black",
-        "color": "Black",
+        "color": "black",
         "size": "",
         "price": 2400000,
         "originalPrice": 2400000,
@@ -1027,53 +1011,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703382"
-  },
-  {
-    "name": "THE SOAP 08 SUNGLASSES - Grey",
-    "slug": "the-soap-08-sunglasses---grey",
-    "brand": "SEESONvn",
-    "sale": false,
-    "availability": "in_stock",
-    "type": "Sunglasses",
-    "description": "The Soap 08 sở hữu dáng kính vuông hiện đại, tỉ lệ gọng kính được chế tác nhỏ gọn, duy trì độ dày đồng nhất từ càng kính đến mặt gọng, tạo nên tổng thể cân đối. Chi tiết pin-temple được nghiên cứu cải tiến cấu trúc chân pin độc lập khỏi wire-core, hạn chế hiện tượng ố màu hiệu quả, duy trì độ bền thẩm mỹ và tối ưu hóa sự thoải mái khi sử dụng.",
-    "specifications": {
-      "material": "",
-      "lensMaterial": "",
-      "origin": "",
-      "gender": "Unisex",
-      "size": {
-        "dimensions": "",
-        "width": 0,
-        "angle": 0,
-        "bridge": 0,
-        "totalWidth": 0,
-        "longestDiameter": 0
-      }
-    },
-    "variants": [
-      {
-        "sku": "the-soap-08-sunglasses-grey-rhino",
-        "color": "Rhino",
-        "size": "",
-        "price": 2450000,
-        "originalPrice": 2450000,
-        "images": [
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681267/MyProject/the-soap-08-sunglasses-grey-rhino/bugvxdtgpvxcy3krih5v.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681269/MyProject/the-soap-08-sunglasses-grey-rhino/wmvcl8sdcntt5tupyxbu.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681272/MyProject/the-soap-08-sunglasses-grey-rhino/vr8v0g7xbakspgpx3ssv.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681273/MyProject/the-soap-08-sunglasses-grey-rhino/rbehcjzzd19uto1leusj.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681274/MyProject/the-soap-08-sunglasses-grey-rhino/micr8bziyepwnldvvpsu.jpg"
-        ],
-        "isDefault": true
-      }
-    ],
-    "rating": {
-      "avg": 0,
-      "count": 0
-    },
-    "isActive": true,
-    "collectionId": "69d16583b964434b3c703383"
+    "collectionId": "69d26072602c7bb2c42e30fc"
   },
   {
     "name": "THE SOAP 08",
@@ -1099,8 +1037,23 @@
     },
     "variants": [
       {
+        "sku": "the-soap-08-sunglasses-grey-rhino",
+        "color": "grey-rhino",
+        "size": "",
+        "price": 2450000,
+        "originalPrice": 2450000,
+        "images": [
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681267/MyProject/the-soap-08-sunglasses-grey-rhino/bugvxdtgpvxcy3krih5v.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681269/MyProject/the-soap-08-sunglasses-grey-rhino/wmvcl8sdcntt5tupyxbu.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681272/MyProject/the-soap-08-sunglasses-grey-rhino/vr8v0g7xbakspgpx3ssv.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681273/MyProject/the-soap-08-sunglasses-grey-rhino/rbehcjzzd19uto1leusj.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681274/MyProject/the-soap-08-sunglasses-grey-rhino/micr8bziyepwnldvvpsu.jpg"
+        ],
+        "isDefault": true
+      },
+      {
         "sku": "the-soap-08-green",
-        "color": "Green",
+        "color": "green",
         "size": "",
         "price": 2450000,
         "originalPrice": 2450000,
@@ -1115,7 +1068,7 @@
       },
       {
         "sku": "the-soap-08-grey",
-        "color": "Grey",
+        "color": "grey",
         "size": "",
         "price": 2450000,
         "originalPrice": 2450000,
@@ -1134,7 +1087,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703383"
+    "collectionId": "69d26072602c7bb2c42e30fd"
   },
   {
     "name": "THE SOAP 09",
@@ -1161,7 +1114,7 @@
     "variants": [
       {
         "sku": "the-soap-09-grey",
-        "color": "Grey",
+        "color": "grey",
         "size": "",
         "price": 2750000,
         "originalPrice": 2750000,
@@ -1176,7 +1129,7 @@
       },
       {
         "sku": "the-soap-09-brown",
-        "color": "Brown",
+        "color": "brown",
         "size": "",
         "price": 2750000,
         "originalPrice": 2750000,
@@ -1191,7 +1144,7 @@
       },
       {
         "sku": "the-soap-09-faded-ash",
-        "color": "Faded Ash",
+        "color": "faded-ash",
         "size": "",
         "price": 2750000,
         "originalPrice": 2750000,
@@ -1210,7 +1163,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703383"
+    "collectionId": "69d26072602c7bb2c42e30fd"
   },
   {
     "name": "THE ASSEMBLED 02",
@@ -1237,7 +1190,7 @@
     "variants": [
       {
         "sku": "the-assembled-02-transparent-beige",
-        "color": "Transparent Beige",
+        "color": "transparent-beige",
         "size": "",
         "price": 2100000,
         "originalPrice": 2100000,
@@ -1261,7 +1214,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703376"
+    "collectionId": "69d26072602c7bb2c42e30f0"
   },
   {
     "name": "THE ATHLETES 03",
@@ -1288,7 +1241,7 @@
     "variants": [
       {
         "sku": "the-athletes-03-silver",
-        "color": "Silver",
+        "color": "silver",
         "size": "",
         "price": 2700000,
         "originalPrice": 2700000,
@@ -1308,11 +1261,11 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703377"
+    "collectionId": "69d26072602c7bb2c42e30f1"
   },
   {
-    "name": "THE ATHLETES 02 - Beige",
-    "slug": "the-athletes-02---beige",
+    "name": "THE ATHLETES 02",
+    "slug": "the-athletes-02",
     "brand": "SEESONvn",
     "sale": false,
     "availability": "in_stock",
@@ -1335,7 +1288,7 @@
     "variants": [
       {
         "sku": "the-athletes-02-beige-rhino",
-        "color": "Rhino",
+        "color": "rhino",
         "size": "",
         "price": 2800000,
         "originalPrice": 2800000,
@@ -1347,41 +1300,10 @@
           "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681122/MyProject/the-athletes-02-beige-rhino/os34jzmfgfpx31wdj61y.jpg"
         ],
         "isDefault": true
-      }
-    ],
-    "rating": {
-      "avg": 0,
-      "count": 0
-    },
-    "isActive": true,
-    "collectionId": "69d16583b964434b3c703377"
-  },
-  {
-    "name": "THE ATHLETES 02",
-    "slug": "the-athletes-02",
-    "brand": "SEESONvn",
-    "sale": false,
-    "availability": "in_stock",
-    "type": "Sunglasses",
-    "description": "Thiết kế dáng oval mềm mại với đường viền mảnh liền mạch, gợi vẻ cổ điển tinh giản. Càng kính thẳng lấy cảm hứng thể thao, ôm nhẹ theo đường đầu tạo tổng thể hiện đại và cân đối.",
-    "specifications": {
-      "material": "",
-      "lensMaterial": "",
-      "origin": "",
-      "gender": "Unisex",
-      "size": {
-        "dimensions": "",
-        "width": 0,
-        "angle": 0,
-        "bridge": 0,
-        "totalWidth": 0,
-        "longestDiameter": 0
-      }
-    },
-    "variants": [
+      },
       {
         "sku": "the-athletes-02-milky-grey",
-        "color": "Milky Grey",
+        "color": "milky-grey",
         "size": "",
         "price": 2800000,
         "originalPrice": 2800000,
@@ -1401,57 +1323,11 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703377"
+    "collectionId": "69d26072602c7bb2c42e30f1"
   },
   {
-    "name": "THE SOAP 07",
-    "slug": "the-soap-07",
-    "brand": "SEESONvn",
-    "sale": false,
-    "availability": "in_stock",
-    "type": "Sunglasses",
-    "description": "The Soap 07 nổi bật với thiết kế gọng vuông được bo tròn mềm mại, phù hợp với gương mặt tương đối lớn. Chi tiết pin-temple được nghiên cứu cải tiến với cấu trúc chân pin tách biệt khỏi wire-core, giúp hạn chế hiện tượng ố màu, đồng thời duy trì độ bền thẩm mỹ và tối ưu hóa sự thoải mái khi sử dụng.",
-    "specifications": {
-      "material": "",
-      "lensMaterial": "",
-      "origin": "",
-      "gender": "Unisex",
-      "size": {
-        "dimensions": "",
-        "width": 0,
-        "angle": 0,
-        "bridge": 0,
-        "totalWidth": 0,
-        "longestDiameter": 0
-      }
-    },
-    "variants": [
-      {
-        "sku": "the-soap-07-grey",
-        "color": "Grey",
-        "size": "",
-        "price": 2450000,
-        "originalPrice": 2450000,
-        "images": [
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681327/MyProject/the-soap-07-grey/ucvxlseggsxj00xl25gm.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681328/MyProject/the-soap-07-grey/espwv4yw6gxw5lgwq5hh.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681329/MyProject/the-soap-07-grey/eihufortvyk1ntza6pd7.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681330/MyProject/the-soap-07-grey/vnpffgx7zgchyyhjdnj5.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681331/MyProject/the-soap-07-grey/nk7kbfomuanflrhxvovx.jpg"
-        ],
-        "isDefault": true
-      }
-    ],
-    "rating": {
-      "avg": 0,
-      "count": 0
-    },
-    "isActive": true,
-    "collectionId": "69d16583b964434b3c703383"
-  },
-  {
-    "name": "THE ATHLETES 11 - Dark Grey",
-    "slug": "the-athletes-11---dark-grey",
+    "name": "THE ATHLETES 11",
+    "slug": "the-athletes-11",
     "brand": "SEESONvn",
     "sale": false,
     "availability": "in_stock",
@@ -1474,7 +1350,7 @@
     "variants": [
       {
         "sku": "the-athletes-11-dark-grey-rhino",
-        "color": "Rhino",
+        "color": "rhino",
         "size": "",
         "price": 2800000,
         "originalPrice": 2800000,
@@ -1487,6 +1363,38 @@
           "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681342/MyProject/the-athletes-11-dark-grey-rhino/fmdsf1ymxf4clmgc8icy.jpg"
         ],
         "isDefault": true
+      },
+      {
+        "sku": "the-athletes-11-green-rhino",
+        "color": "rhino",
+        "size": "",
+        "price": 2800000,
+        "originalPrice": 2800000,
+        "images": [
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681302/MyProject/the-athletes-11-green-rhino/gjoskgxl5asac5l3bjbq.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681304/MyProject/the-athletes-11-green-rhino/h7zqtzzzllvubben3g7a.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681306/MyProject/the-athletes-11-green-rhino/n4try2n4bkjz4nuy07ih.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681307/MyProject/the-athletes-11-green-rhino/yoqvqlnvrmn2mfoo6j27.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681307/MyProject/the-athletes-11-green-rhino/t8u4x2x5ok0znkcew4kj.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681308/MyProject/the-athletes-11-green-rhino/piz19byyyhre1dx7vttl.jpg"
+        ],
+        "isDefault": true
+      },
+      {
+        "sku": "the-athletes-11-black-rhino",
+        "color": "rhino",
+        "size": "",
+        "price": 2800000,
+        "originalPrice": 2800000,
+        "images": [
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681200/MyProject/the-athletes-11-black-rhino/hvdm3hd7bp6rjp2woyod.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681202/MyProject/the-athletes-11-black-rhino/eh4gwanxgzwirr0q9ico.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681203/MyProject/the-athletes-11-black-rhino/qici8udituida152xjd2.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681204/MyProject/the-athletes-11-black-rhino/jncazvspgxidsvslg8yi.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681205/MyProject/the-athletes-11-black-rhino/d6beiwtw0ubaqwmkcn8f.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681205/MyProject/the-athletes-11-black-rhino/ddrjj5rvjk5o8yjqzn1b.jpg"
+        ],
+        "isDefault": true
       }
     ],
     "rating": {
@@ -1494,7 +1402,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703377"
+    "collectionId": "69d26072602c7bb2c42e30f1"
   },
   {
     "name": "THE ATHLETES 10",
@@ -1521,7 +1429,7 @@
     "variants": [
       {
         "sku": "the-athletes-10-milky-grey",
-        "color": "Milky Grey",
+        "color": "milky-grey",
         "size": "",
         "price": 2700000,
         "originalPrice": 2700000,
@@ -1534,6 +1442,51 @@
           "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681518/MyProject/the-athletes-10-milky-grey/ewfyixkuoiz3v1wmxycm.jpg"
         ],
         "isDefault": true
+      },
+      {
+        "sku": "the-athletes-10-brown-rhino",
+        "color": "rhino",
+        "size": "",
+        "price": 2700000,
+        "originalPrice": 2700000,
+        "images": [
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681136/MyProject/the-athletes-10-brown-rhino/zyo2d42rbdvxauldiz1b.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681138/MyProject/the-athletes-10-brown-rhino/t7zl1utu0ncricymkqlp.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681139/MyProject/the-athletes-10-brown-rhino/syhjlj09v6pxbhe4mxlt.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681140/MyProject/the-athletes-10-brown-rhino/xy65mx5ozska8xubv8nn.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681140/MyProject/the-athletes-10-brown-rhino/quzeuksjdkyn14d9kast.jpg"
+        ],
+        "isDefault": true
+      },
+      {
+        "sku": "the-athletes-10-blue-rhino",
+        "color": "rhino",
+        "size": "",
+        "price": 2700000,
+        "originalPrice": 2700000,
+        "images": [
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681546/MyProject/the-athletes-10-blue-rhino/cnwm9ckmtd5wysuhq1n2.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681547/MyProject/the-athletes-10-blue-rhino/fb1mdlbkybgluc0jyvlk.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681549/MyProject/the-athletes-10-blue-rhino/ztq8tcbgpzivnbxgoswl.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681550/MyProject/the-athletes-10-blue-rhino/lzmxixqkqvikoehpckk2.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681551/MyProject/the-athletes-10-blue-rhino/aizosb0374jjvhuf6sum.jpg"
+        ],
+        "isDefault": true
+      },
+      {
+        "sku": "the-athletes-10-grey-rhino",
+        "color": "rhino",
+        "size": "",
+        "price": 2700000,
+        "originalPrice": 2700000,
+        "images": [
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681309/MyProject/the-athletes-10-grey-rhino/yjrcudb1b3827lmm4aeb.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681310/MyProject/the-athletes-10-grey-rhino/vdrkj5msyoeybh0wlmjx.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681311/MyProject/the-athletes-10-grey-rhino/icimeb0h92tyrczmm02q.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681312/MyProject/the-athletes-10-grey-rhino/kxpgxziphedu06zgtoqo.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681313/MyProject/the-athletes-10-grey-rhino/t9atvtv96m5tzyn4a8lt.jpg"
+        ],
+        "isDefault": true
       }
     ],
     "rating": {
@@ -1541,7 +1494,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703377"
+    "collectionId": "69d26072602c7bb2c42e30f1"
   },
   {
     "name": "THE ATHLETES 14",
@@ -1568,7 +1521,7 @@
     "variants": [
       {
         "sku": "the-athletes-14-faded-ash",
-        "color": "Faded Ash",
+        "color": "faded-ash",
         "size": "",
         "price": 2700000,
         "originalPrice": 2700000,
@@ -1580,41 +1533,10 @@
           "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681317/MyProject/the-athletes-14-faded-ash/or89akahgfahgib1lxxd.jpg"
         ],
         "isDefault": true
-      }
-    ],
-    "rating": {
-      "avg": 0,
-      "count": 0
-    },
-    "isActive": true,
-    "collectionId": "69d16583b964434b3c703377"
-  },
-  {
-    "name": "THE ATHLETES 14 - Black",
-    "slug": "the-athletes-14---black",
-    "brand": "SEESONvn",
-    "sale": false,
-    "availability": "in_stock",
-    "type": "Sunglasses",
-    "description": "Dáng vuông bo tròn nhẹ với độ cao tròng lớn và tỉ lệ viền dày đồng đều, tạo nên cấu trúc thị giác vững và cân đối.",
-    "specifications": {
-      "material": "",
-      "lensMaterial": "",
-      "origin": "",
-      "gender": "Unisex",
-      "size": {
-        "dimensions": "",
-        "width": 0,
-        "angle": 0,
-        "bridge": 0,
-        "totalWidth": 0,
-        "longestDiameter": 0
-      }
-    },
-    "variants": [
+      },
       {
         "sku": "the-athletes-14-black-rhino",
-        "color": "Rhino",
+        "color": "rhino",
         "size": "",
         "price": 2700000,
         "originalPrice": 2700000,
@@ -1626,97 +1548,19 @@
           "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681336/MyProject/the-athletes-14-black-rhino/twwky9lhfuxivv8tgfix.jpg"
         ],
         "isDefault": true
-      }
-    ],
-    "rating": {
-      "avg": 0,
-      "count": 0
-    },
-    "isActive": true,
-    "collectionId": "69d16583b964434b3c703377"
-  },
-  {
-    "name": "THE ATHLETES 11 - Green",
-    "slug": "the-athletes-11---green",
-    "brand": "SEESONvn",
-    "sale": false,
-    "availability": "in_stock",
-    "type": "Sunglasses",
-    "description": "Mặt gọng cellulose acetate kết hợp cùng càng kính kim loại, định hình phom chữ nhật gọn gàng và cân đốidễ ứng dụng trong nhiều bối cảnh sử dụng.",
-    "specifications": {
-      "material": "",
-      "lensMaterial": "",
-      "origin": "",
-      "gender": "Unisex",
-      "size": {
-        "dimensions": "",
-        "width": 0,
-        "angle": 0,
-        "bridge": 0,
-        "totalWidth": 0,
-        "longestDiameter": 0
-      }
-    },
-    "variants": [
+      },
       {
-        "sku": "the-athletes-11-green-rhino",
-        "color": "Rhino",
-        "size": "",
-        "price": 2800000,
-        "originalPrice": 2800000,
-        "images": [
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681302/MyProject/the-athletes-11-green-rhino/gjoskgxl5asac5l3bjbq.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681304/MyProject/the-athletes-11-green-rhino/h7zqtzzzllvubben3g7a.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681306/MyProject/the-athletes-11-green-rhino/n4try2n4bkjz4nuy07ih.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681307/MyProject/the-athletes-11-green-rhino/yoqvqlnvrmn2mfoo6j27.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681307/MyProject/the-athletes-11-green-rhino/t8u4x2x5ok0znkcew4kj.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681308/MyProject/the-athletes-11-green-rhino/piz19byyyhre1dx7vttl.jpg"
-        ],
-        "isDefault": true
-      }
-    ],
-    "rating": {
-      "avg": 0,
-      "count": 0
-    },
-    "isActive": true,
-    "collectionId": "69d16583b964434b3c703377"
-  },
-  {
-    "name": "THE ATHLETES 10 - Brown",
-    "slug": "the-athletes-10---brown",
-    "brand": "SEESONvn",
-    "sale": false,
-    "availability": "in_stock",
-    "type": "Sunglasses",
-    "description": "Dáng vuông bản lớn với đường bo mềm, kết hợp càng kính đáp tầng đặc trưng của SEESON, mang lại vẻ hiện đại và nâng cấp trải nghiệm đeo.",
-    "specifications": {
-      "material": "",
-      "lensMaterial": "",
-      "origin": "",
-      "gender": "Unisex",
-      "size": {
-        "dimensions": "",
-        "width": 0,
-        "angle": 0,
-        "bridge": 0,
-        "totalWidth": 0,
-        "longestDiameter": 0
-      }
-    },
-    "variants": [
-      {
-        "sku": "the-athletes-10-brown-rhino",
-        "color": "Rhino",
+        "sku": "the-athletes-14-grey-rhino",
+        "color": "rhino",
         "size": "",
         "price": 2700000,
         "originalPrice": 2700000,
         "images": [
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681136/MyProject/the-athletes-10-brown-rhino/zyo2d42rbdvxauldiz1b.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681138/MyProject/the-athletes-10-brown-rhino/t7zl1utu0ncricymkqlp.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681139/MyProject/the-athletes-10-brown-rhino/syhjlj09v6pxbhe4mxlt.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681140/MyProject/the-athletes-10-brown-rhino/xy65mx5ozska8xubv8nn.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681140/MyProject/the-athletes-10-brown-rhino/quzeuksjdkyn14d9kast.jpg"
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681610/MyProject/the-athletes-14-grey-rhino/npjkb9gllqzqwmdnwngt.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681610/MyProject/the-athletes-14-grey-rhino/h35r1wsyrz7nvniku30y.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681611/MyProject/the-athletes-14-grey-rhino/smoqqnprcbnxlw6ithnl.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681612/MyProject/the-athletes-14-grey-rhino/m1ocespaciottkmcnjyp.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681613/MyProject/the-athletes-14-grey-rhino/jd2gwafeflneeu9gi4yp.jpg"
         ],
         "isDefault": true
       }
@@ -1726,57 +1570,11 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703377"
+    "collectionId": "69d26072602c7bb2c42e30f1"
   },
   {
-    "name": "THE ATHLETES 10 - Blue",
-    "slug": "the-athletes-10---blue",
-    "brand": "SEESONvn",
-    "sale": false,
-    "availability": "in_stock",
-    "type": "Sunglasses",
-    "description": "Dáng vuông bản lớn với đường bo mềm, kết hợp càng kính đáp tầng đặc trưng của SEESON, mang lại vẻ hiện đại và nâng cấp trải nghiệm đeo.",
-    "specifications": {
-      "material": "",
-      "lensMaterial": "",
-      "origin": "",
-      "gender": "Unisex",
-      "size": {
-        "dimensions": "",
-        "width": 0,
-        "angle": 0,
-        "bridge": 0,
-        "totalWidth": 0,
-        "longestDiameter": 0
-      }
-    },
-    "variants": [
-      {
-        "sku": "the-athletes-10-blue-rhino",
-        "color": "Rhino",
-        "size": "",
-        "price": 2700000,
-        "originalPrice": 2700000,
-        "images": [
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681546/MyProject/the-athletes-10-blue-rhino/cnwm9ckmtd5wysuhq1n2.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681547/MyProject/the-athletes-10-blue-rhino/fb1mdlbkybgluc0jyvlk.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681549/MyProject/the-athletes-10-blue-rhino/ztq8tcbgpzivnbxgoswl.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681550/MyProject/the-athletes-10-blue-rhino/lzmxixqkqvikoehpckk2.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681551/MyProject/the-athletes-10-blue-rhino/aizosb0374jjvhuf6sum.jpg"
-        ],
-        "isDefault": true
-      }
-    ],
-    "rating": {
-      "avg": 0,
-      "count": 0
-    },
-    "isActive": true,
-    "collectionId": "69d16583b964434b3c703377"
-  },
-  {
-    "name": "THE ATHLETES 13 - Olive",
-    "slug": "the-athletes-13---olive",
+    "name": "THE ATHLETES 13",
+    "slug": "the-athletes-13",
     "brand": "SEESONvn",
     "sale": false,
     "availability": "in_stock",
@@ -1799,7 +1597,7 @@
     "variants": [
       {
         "sku": "the-athletes-13-olive-rhino",
-        "color": "Rhino",
+        "color": "rhino",
         "size": "",
         "price": 2800000,
         "originalPrice": 2800000,
@@ -1811,6 +1609,52 @@
           "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681494/MyProject/the-athletes-13-olive-rhino/evwxbrz7hhuoym8mogkj.jpg"
         ],
         "isDefault": true
+      },
+      {
+        "sku": "the-athletes-13-black",
+        "color": "black",
+        "size": "",
+        "price": 2800000,
+        "originalPrice": 2800000,
+        "images": [
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681132/MyProject/the-athletes-13-black/rog50ed9xuxmnduzmiiy.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681133/MyProject/the-athletes-13-black/p18jlf3bed6myxxjfekw.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681134/MyProject/the-athletes-13-black/v7pu3qkghysept9nkefy.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681135/MyProject/the-athletes-13-black/aizwql9ii0jjos3hqpwv.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681136/MyProject/the-athletes-13-black/aozr4vbk7xcaerbv3qxd.jpg"
+        ],
+        "isDefault": true
+      },
+      {
+        "sku": "the-athletes-13-brown",
+        "color": "brown",
+        "size": "",
+        "price": 2800000,
+        "originalPrice": 2800000,
+        "images": [
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681531/MyProject/the-athletes-13-brown/adwevwk6mtzs2outcqii.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681532/MyProject/the-athletes-13-brown/d6enonxhpkcuet5kzgss.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681533/MyProject/the-athletes-13-brown/hnptycotqso5fo6okcks.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681533/MyProject/the-athletes-13-brown/fptd4gi6jczdnbxp8asu.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681534/MyProject/the-athletes-13-brown/bbtijp63qha9gedkswhs.jpg"
+        ],
+        "isDefault": false
+      },
+      {
+        "sku": "the-athletes-13-grey-rhino",
+        "color": "rhino",
+        "size": "",
+        "price": 2800000,
+        "originalPrice": 2800000,
+        "images": [
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681386/MyProject/the-athletes-13-grey-rhino/csla5pgx7mf7aqr3cb6f.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681387/MyProject/the-athletes-13-grey-rhino/blth3wy1lv8nh7zs9k17.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681388/MyProject/the-athletes-13-grey-rhino/aohtoreskptvcmxlssgn.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681389/MyProject/the-athletes-13-grey-rhino/ruw1supzbbuxonbnkc9o.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681390/MyProject/the-athletes-13-grey-rhino/byryhx2fql9lqwebs0vj.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681391/MyProject/the-athletes-13-grey-rhino/plsnlrbiqrtqjuozjnmn.jpg"
+        ],
+        "isDefault": true
       }
     ],
     "rating": {
@@ -1818,7 +1662,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703377"
+    "collectionId": "69d26072602c7bb2c42e30f1"
   },
   {
     "name": "THE ATHLETES 05",
@@ -1845,7 +1689,7 @@
     "variants": [
       {
         "sku": "the-athletes-05-silver",
-        "color": "Silver",
+        "color": "silver",
         "size": "",
         "price": 2800000,
         "originalPrice": 2800000,
@@ -1864,118 +1708,11 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703377"
+    "collectionId": "69d26072602c7bb2c42e30f1"
   },
   {
-    "name": "THE ATHLETES 14 - Grey",
-    "slug": "the-athletes-14---grey",
-    "brand": "SEESONvn",
-    "sale": false,
-    "availability": "in_stock",
-    "type": "Sunglasses",
-    "description": "Dáng vuông bo tròn nhẹ với độ cao tròng lớn và tỉ lệ viền dày đồng đều, tạo nên cấu trúc thị giác vững và cân đối.",
-    "specifications": {
-      "material": "",
-      "lensMaterial": "",
-      "origin": "",
-      "gender": "Unisex",
-      "size": {
-        "dimensions": "",
-        "width": 0,
-        "angle": 0,
-        "bridge": 0,
-        "totalWidth": 0,
-        "longestDiameter": 0
-      }
-    },
-    "variants": [
-      {
-        "sku": "the-athletes-14-grey-rhino",
-        "color": "Rhino",
-        "size": "",
-        "price": 2700000,
-        "originalPrice": 2700000,
-        "images": [
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681610/MyProject/the-athletes-14-grey-rhino/npjkb9gllqzqwmdnwngt.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681610/MyProject/the-athletes-14-grey-rhino/h35r1wsyrz7nvniku30y.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681611/MyProject/the-athletes-14-grey-rhino/smoqqnprcbnxlw6ithnl.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681612/MyProject/the-athletes-14-grey-rhino/m1ocespaciottkmcnjyp.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681613/MyProject/the-athletes-14-grey-rhino/jd2gwafeflneeu9gi4yp.jpg"
-        ],
-        "isDefault": true
-      }
-    ],
-    "rating": {
-      "avg": 0,
-      "count": 0
-    },
-    "isActive": true,
-    "collectionId": "69d16583b964434b3c703377"
-  },
-  {
-    "name": "THE ATHLETES 13",
-    "slug": "the-athletes-13",
-    "brand": "SEESONvn",
-    "sale": false,
-    "availability": "in_stock",
-    "type": "Sunglasses",
-    "description": "Dáng vuông với đường viền cong nhẹ, cấu trúc cân đối và đương đại, kết hợp càng kính thoải ôm sát đầu tạo nên silhouette thể thao tinh gọn.",
-    "specifications": {
-      "material": "",
-      "lensMaterial": "",
-      "origin": "",
-      "gender": "Unisex",
-      "size": {
-        "dimensions": "",
-        "width": 0,
-        "angle": 0,
-        "bridge": 0,
-        "totalWidth": 0,
-        "longestDiameter": 0
-      }
-    },
-    "variants": [
-      {
-        "sku": "the-athletes-13-black",
-        "color": "Black",
-        "size": "",
-        "price": 2800000,
-        "originalPrice": 2800000,
-        "images": [
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681132/MyProject/the-athletes-13-black/rog50ed9xuxmnduzmiiy.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681133/MyProject/the-athletes-13-black/p18jlf3bed6myxxjfekw.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681134/MyProject/the-athletes-13-black/v7pu3qkghysept9nkefy.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681135/MyProject/the-athletes-13-black/aizwql9ii0jjos3hqpwv.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681136/MyProject/the-athletes-13-black/aozr4vbk7xcaerbv3qxd.jpg"
-        ],
-        "isDefault": true
-      },
-      {
-        "sku": "the-athletes-13-brown",
-        "color": "Brown",
-        "size": "",
-        "price": 2800000,
-        "originalPrice": 2800000,
-        "images": [
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681531/MyProject/the-athletes-13-brown/adwevwk6mtzs2outcqii.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681532/MyProject/the-athletes-13-brown/d6enonxhpkcuet5kzgss.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681533/MyProject/the-athletes-13-brown/hnptycotqso5fo6okcks.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681533/MyProject/the-athletes-13-brown/fptd4gi6jczdnbxp8asu.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681534/MyProject/the-athletes-13-brown/bbtijp63qha9gedkswhs.jpg"
-        ],
-        "isDefault": false
-      }
-    ],
-    "rating": {
-      "avg": 0,
-      "count": 0
-    },
-    "isActive": true,
-    "collectionId": "69d16583b964434b3c703377"
-  },
-  {
-    "name": "THE ATHLETES 12 - Green",
-    "slug": "the-athletes-12---green",
+    "name": "THE ATHLETES 12",
+    "slug": "the-athletes-12",
     "brand": "SEESONvn",
     "sale": false,
     "availability": "in_stock",
@@ -1998,7 +1735,7 @@
     "variants": [
       {
         "sku": "the-athletes-12-green-rhino",
-        "color": "Rhino",
+        "color": "rhino",
         "size": "",
         "price": 2700000,
         "originalPrice": 2700000,
@@ -2010,6 +1747,51 @@
           "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681111/MyProject/the-athletes-12-green-rhino/yew8vpiwjig4mevo8rpl.jpg"
         ],
         "isDefault": true
+      },
+      {
+        "sku": "the-athletes-12-faded-ash",
+        "color": "faded-ash",
+        "size": "",
+        "price": 2700000,
+        "originalPrice": 2700000,
+        "images": [
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681196/MyProject/the-athletes-12-faded-ash/tindudqzegsvkqrsxnnz.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681197/MyProject/the-athletes-12-faded-ash/v7ejhdcic71kz6kzrwsk.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681198/MyProject/the-athletes-12-faded-ash/uwnalpqfwffq1fgqy8gn.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681199/MyProject/the-athletes-12-faded-ash/hxpepdcszjvnao7iwudv.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681199/MyProject/the-athletes-12-faded-ash/at0ylnykitwitkmcabun.jpg"
+        ],
+        "isDefault": true
+      },
+      {
+        "sku": "the-athletes-12-brown",
+        "color": "brown",
+        "size": "",
+        "price": 2700000,
+        "originalPrice": 2700000,
+        "images": [
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681434/MyProject/the-athletes-12-brown/w3jubtd5imjntfi75zpl.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681435/MyProject/the-athletes-12-brown/ojfyqqfformluclbtjrn.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681436/MyProject/the-athletes-12-brown/izp8644dixb5ufhebdi7.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681437/MyProject/the-athletes-12-brown/jp3oy7ypim0enxg9cval.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681438/MyProject/the-athletes-12-brown/hpzbj4mjllksphf8moir.jpg"
+        ],
+        "isDefault": false
+      },
+      {
+        "sku": "the-athletes-12-grey-rhino",
+        "color": "rhino",
+        "size": "",
+        "price": 2700000,
+        "originalPrice": 2700000,
+        "images": [
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681153/MyProject/the-athletes-12-grey-rhino/ireaanc07zvy1npxwu8h.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681154/MyProject/the-athletes-12-grey-rhino/qxwlkjetnzwjgnat9z2r.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681155/MyProject/the-athletes-12-grey-rhino/okndsowwxcdfv2xjep7s.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681156/MyProject/the-athletes-12-grey-rhino/rsvuofa1sfj1ncc9f2k2.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681156/MyProject/the-athletes-12-grey-rhino/frtbvedqjcrgo0a5lmkp.jpg"
+        ],
+        "isDefault": true
       }
     ],
     "rating": {
@@ -2017,7 +1799,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703377"
+    "collectionId": "69d26072602c7bb2c42e30f1"
   },
   {
     "name": "THE ATHLETES 08",
@@ -2044,7 +1826,7 @@
     "variants": [
       {
         "sku": "the-athletes-08-black",
-        "color": "Black",
+        "color": "black",
         "size": "",
         "price": 2700000,
         "originalPrice": 2700000,
@@ -2060,7 +1842,7 @@
       },
       {
         "sku": "the-athletes-08-milky-grey",
-        "color": "Milky Grey",
+        "color": "milky-grey",
         "size": "",
         "price": 2700000,
         "originalPrice": 2700000,
@@ -2076,7 +1858,7 @@
       },
       {
         "sku": "the-athletes-08-dark-grey",
-        "color": "Dark Grey",
+        "color": "dark-grey",
         "size": "",
         "price": 2700000,
         "originalPrice": 2700000,
@@ -2096,68 +1878,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703377"
-  },
-  {
-    "name": "THE ATHLETES 12",
-    "slug": "the-athletes-12",
-    "brand": "SEESONvn",
-    "sale": false,
-    "availability": "in_stock",
-    "type": "Sunglasses",
-    "description": "The Athletes 12 được phát triển theo form vuông hiện đại, duy trì độ dày cân đối giữa càng kính và mặt gọng, tạo nên tổng thể sắc nét và hiện đại.",
-    "specifications": {
-      "material": "",
-      "lensMaterial": "",
-      "origin": "",
-      "gender": "Unisex",
-      "size": {
-        "dimensions": "",
-        "width": 0,
-        "angle": 0,
-        "bridge": 0,
-        "totalWidth": 0,
-        "longestDiameter": 0
-      }
-    },
-    "variants": [
-      {
-        "sku": "the-athletes-12-faded-ash",
-        "color": "Faded Ash",
-        "size": "",
-        "price": 2700000,
-        "originalPrice": 2700000,
-        "images": [
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681196/MyProject/the-athletes-12-faded-ash/tindudqzegsvkqrsxnnz.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681197/MyProject/the-athletes-12-faded-ash/v7ejhdcic71kz6kzrwsk.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681198/MyProject/the-athletes-12-faded-ash/uwnalpqfwffq1fgqy8gn.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681199/MyProject/the-athletes-12-faded-ash/hxpepdcszjvnao7iwudv.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681199/MyProject/the-athletes-12-faded-ash/at0ylnykitwitkmcabun.jpg"
-        ],
-        "isDefault": true
-      },
-      {
-        "sku": "the-athletes-12-brown",
-        "color": "Brown",
-        "size": "",
-        "price": 2700000,
-        "originalPrice": 2700000,
-        "images": [
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681434/MyProject/the-athletes-12-brown/w3jubtd5imjntfi75zpl.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681435/MyProject/the-athletes-12-brown/ojfyqqfformluclbtjrn.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681436/MyProject/the-athletes-12-brown/izp8644dixb5ufhebdi7.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681437/MyProject/the-athletes-12-brown/jp3oy7ypim0enxg9cval.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681438/MyProject/the-athletes-12-brown/hpzbj4mjllksphf8moir.jpg"
-        ],
-        "isDefault": false
-      }
-    ],
-    "rating": {
-      "avg": 0,
-      "count": 0
-    },
-    "isActive": true,
-    "collectionId": "69d16583b964434b3c703377"
+    "collectionId": "69d26072602c7bb2c42e30f1"
   },
   {
     "name": "THE ATHLETES 06",
@@ -2184,7 +1905,7 @@
     "variants": [
       {
         "sku": "the-athletes-06-silver",
-        "color": "Silver",
+        "color": "silver",
         "size": "",
         "price": 2800000,
         "originalPrice": 2800000,
@@ -2204,7 +1925,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703377"
+    "collectionId": "69d26072602c7bb2c42e30f1"
   },
   {
     "name": "THE ATHLETES 07",
@@ -2231,7 +1952,7 @@
     "variants": [
       {
         "sku": "the-athletes-07-silver",
-        "color": "Silver",
+        "color": "silver",
         "size": "",
         "price": 2800000,
         "originalPrice": 2800000,
@@ -2250,285 +1971,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703377"
-  },
-  {
-    "name": "THE ATHLETES 11 - Black",
-    "slug": "the-athletes-11---black",
-    "brand": "SEESONvn",
-    "sale": false,
-    "availability": "in_stock",
-    "type": "Sunglasses",
-    "description": "Mặt gọng cellulose acetate kết hợp cùng càng kính kim loại, định hình phom chữ nhật gọn gàng và cân đốidễ ứng dụng trong nhiều bối cảnh sử dụng.",
-    "specifications": {
-      "material": "",
-      "lensMaterial": "",
-      "origin": "",
-      "gender": "Unisex",
-      "size": {
-        "dimensions": "",
-        "width": 0,
-        "angle": 0,
-        "bridge": 0,
-        "totalWidth": 0,
-        "longestDiameter": 0
-      }
-    },
-    "variants": [
-      {
-        "sku": "the-athletes-11-black-rhino",
-        "color": "Rhino",
-        "size": "",
-        "price": 2800000,
-        "originalPrice": 2800000,
-        "images": [
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681200/MyProject/the-athletes-11-black-rhino/hvdm3hd7bp6rjp2woyod.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681202/MyProject/the-athletes-11-black-rhino/eh4gwanxgzwirr0q9ico.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681203/MyProject/the-athletes-11-black-rhino/qici8udituida152xjd2.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681204/MyProject/the-athletes-11-black-rhino/jncazvspgxidsvslg8yi.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681205/MyProject/the-athletes-11-black-rhino/d6beiwtw0ubaqwmkcn8f.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681205/MyProject/the-athletes-11-black-rhino/ddrjj5rvjk5o8yjqzn1b.jpg"
-        ],
-        "isDefault": true
-      }
-    ],
-    "rating": {
-      "avg": 0,
-      "count": 0
-    },
-    "isActive": true,
-    "collectionId": "69d16583b964434b3c703377"
-  },
-  {
-    "name": "THE ATHLETES 10 - Grey",
-    "slug": "the-athletes-10---grey",
-    "brand": "SEESONvn",
-    "sale": false,
-    "availability": "in_stock",
-    "type": "Sunglasses",
-    "description": "Dáng vuông bản lớn với đường bo mềm, kết hợp càng kính đáp tầng đặc trưng của SEESON, mang lại vẻ hiện đại và nâng cấp trải nghiệm đeo.",
-    "specifications": {
-      "material": "",
-      "lensMaterial": "",
-      "origin": "",
-      "gender": "Unisex",
-      "size": {
-        "dimensions": "",
-        "width": 0,
-        "angle": 0,
-        "bridge": 0,
-        "totalWidth": 0,
-        "longestDiameter": 0
-      }
-    },
-    "variants": [
-      {
-        "sku": "the-athletes-10-grey-rhino",
-        "color": "Rhino",
-        "size": "",
-        "price": 2700000,
-        "originalPrice": 2700000,
-        "images": [
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681309/MyProject/the-athletes-10-grey-rhino/yjrcudb1b3827lmm4aeb.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681310/MyProject/the-athletes-10-grey-rhino/vdrkj5msyoeybh0wlmjx.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681311/MyProject/the-athletes-10-grey-rhino/icimeb0h92tyrczmm02q.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681312/MyProject/the-athletes-10-grey-rhino/kxpgxziphedu06zgtoqo.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681313/MyProject/the-athletes-10-grey-rhino/t9atvtv96m5tzyn4a8lt.jpg"
-        ],
-        "isDefault": true
-      }
-    ],
-    "rating": {
-      "avg": 0,
-      "count": 0
-    },
-    "isActive": true,
-    "collectionId": "69d16583b964434b3c703377"
-  },
-  {
-    "name": "THE ATHLETES 12 - Grey",
-    "slug": "the-athletes-12---grey",
-    "brand": "SEESONvn",
-    "sale": false,
-    "availability": "in_stock",
-    "type": "Sunglasses",
-    "description": "The Athletes 12 được phát triển theo form vuông hiện đại, duy trì độ dày cân đối giữa càng kính và mặt gọng, tạo nên tổng thể sắc nét và hiện đại.",
-    "specifications": {
-      "material": "",
-      "lensMaterial": "",
-      "origin": "",
-      "gender": "Unisex",
-      "size": {
-        "dimensions": "",
-        "width": 0,
-        "angle": 0,
-        "bridge": 0,
-        "totalWidth": 0,
-        "longestDiameter": 0
-      }
-    },
-    "variants": [
-      {
-        "sku": "the-athletes-12-grey-rhino",
-        "color": "Rhino",
-        "size": "",
-        "price": 2700000,
-        "originalPrice": 2700000,
-        "images": [
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681153/MyProject/the-athletes-12-grey-rhino/ireaanc07zvy1npxwu8h.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681154/MyProject/the-athletes-12-grey-rhino/qxwlkjetnzwjgnat9z2r.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681155/MyProject/the-athletes-12-grey-rhino/okndsowwxcdfv2xjep7s.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681156/MyProject/the-athletes-12-grey-rhino/rsvuofa1sfj1ncc9f2k2.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681156/MyProject/the-athletes-12-grey-rhino/frtbvedqjcrgo0a5lmkp.jpg"
-        ],
-        "isDefault": true
-      }
-    ],
-    "rating": {
-      "avg": 0,
-      "count": 0
-    },
-    "isActive": true,
-    "collectionId": "69d16583b964434b3c703377"
-  },
-  {
-    "name": "THE ATHLETES 13 - Grey",
-    "slug": "the-athletes-13---grey",
-    "brand": "SEESONvn",
-    "sale": false,
-    "availability": "in_stock",
-    "type": "Sunglasses",
-    "description": "Dáng vuông với đường viền cong nhẹ, cấu trúc cân đối và đương đại, kết hợp càng kính thoải ôm sát đầu tạo nên silhouette thể thao tinh gọn.",
-    "specifications": {
-      "material": "",
-      "lensMaterial": "",
-      "origin": "",
-      "gender": "Unisex",
-      "size": {
-        "dimensions": "",
-        "width": 0,
-        "angle": 0,
-        "bridge": 0,
-        "totalWidth": 0,
-        "longestDiameter": 0
-      }
-    },
-    "variants": [
-      {
-        "sku": "the-athletes-13-grey-rhino",
-        "color": "Rhino",
-        "size": "",
-        "price": 2800000,
-        "originalPrice": 2800000,
-        "images": [
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681386/MyProject/the-athletes-13-grey-rhino/csla5pgx7mf7aqr3cb6f.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681387/MyProject/the-athletes-13-grey-rhino/blth3wy1lv8nh7zs9k17.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681388/MyProject/the-athletes-13-grey-rhino/aohtoreskptvcmxlssgn.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681389/MyProject/the-athletes-13-grey-rhino/ruw1supzbbuxonbnkc9o.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681390/MyProject/the-athletes-13-grey-rhino/byryhx2fql9lqwebs0vj.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681391/MyProject/the-athletes-13-grey-rhino/plsnlrbiqrtqjuozjnmn.jpg"
-        ],
-        "isDefault": true
-      }
-    ],
-    "rating": {
-      "avg": 0,
-      "count": 0
-    },
-    "isActive": true,
-    "collectionId": "69d16583b964434b3c703377"
-  },
-  {
-    "name": "THE ATHLETES 15 - Black",
-    "slug": "the-athletes-15---black",
-    "brand": "SEESONvn",
-    "sale": false,
-    "availability": "in_stock",
-    "type": "Sunglasses",
-    "description": "Dáng kính high-square với tỷ lệ tròng cao và khối gọng dày, mang diện mạo edgy và sắc nét. Chất liệu acetate được xử lý tinh gọn, tạo nên cấu trúc vững và hiện đại, cân bằng giữa kỹ thuật và thẩm mỹ.",
-    "specifications": {
-      "material": "",
-      "lensMaterial": "",
-      "origin": "",
-      "gender": "Unisex",
-      "size": {
-        "dimensions": "",
-        "width": 0,
-        "angle": 0,
-        "bridge": 0,
-        "totalWidth": 0,
-        "longestDiameter": 0
-      }
-    },
-    "variants": [
-      {
-        "sku": "the-athletes-15-black-rhino",
-        "color": "Rhino",
-        "size": "",
-        "price": 2700000,
-        "originalPrice": 2700000,
-        "images": [
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681518/MyProject/the-athletes-15-black-rhino/au9yattc1o5c4hlhufmv.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681520/MyProject/the-athletes-15-black-rhino/aa4r6u8kdl4ubighesjv.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681521/MyProject/the-athletes-15-black-rhino/pefytj1waesua44kob2v.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681522/MyProject/the-athletes-15-black-rhino/f4t5clwqyvlqainxcphs.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681523/MyProject/the-athletes-15-black-rhino/encviehtdhjfezc7qal4.jpg"
-        ],
-        "isDefault": true
-      }
-    ],
-    "rating": {
-      "avg": 0,
-      "count": 0
-    },
-    "isActive": true,
-    "collectionId": "69d16583b964434b3c703377"
-  },
-  {
-    "name": "THE ATHLETES 15 - Brown",
-    "slug": "the-athletes-15---brown",
-    "brand": "SEESONvn",
-    "sale": false,
-    "availability": "in_stock",
-    "type": "Sunglasses",
-    "description": "Dáng kính high-square với tỷ lệ tròng cao và khối gọng dày, mang diện mạo edgy và sắc nét. Chất liệu acetate được xử lý tinh gọn, tạo nên cấu trúc vững và hiện đại, cân bằng giữa kỹ thuật và thẩm mỹ.",
-    "specifications": {
-      "material": "",
-      "lensMaterial": "",
-      "origin": "",
-      "gender": "Unisex",
-      "size": {
-        "dimensions": "",
-        "width": 0,
-        "angle": 0,
-        "bridge": 0,
-        "totalWidth": 0,
-        "longestDiameter": 0
-      }
-    },
-    "variants": [
-      {
-        "sku": "the-athletes-15-brown-rhino",
-        "color": "Rhino",
-        "size": "",
-        "price": 2700000,
-        "originalPrice": 2700000,
-        "images": [
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681123/MyProject/the-athletes-15-brown-rhino/vxt7dzzdpyb6eywzh7ky.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681125/MyProject/the-athletes-15-brown-rhino/ljaiwiiu15zkkmuetdpp.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681126/MyProject/the-athletes-15-brown-rhino/cvlmgsbvrlbv111uhb8q.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681126/MyProject/the-athletes-15-brown-rhino/svdwqr8idjvwiemhm5cd.png",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681127/MyProject/the-athletes-15-brown-rhino/f61juajp3xga7fppd3rv.jpg"
-        ],
-        "isDefault": true
-      }
-    ],
-    "rating": {
-      "avg": 0,
-      "count": 0
-    },
-    "isActive": true,
-    "collectionId": "69d16583b964434b3c703377"
+    "collectionId": "69d26072602c7bb2c42e30f1"
   },
   {
     "name": "THE ATHLETES 15",
@@ -2554,8 +1997,38 @@
     },
     "variants": [
       {
+        "sku": "the-athletes-15-black-rhino",
+        "color": "rhino",
+        "size": "",
+        "price": 2700000,
+        "originalPrice": 2700000,
+        "images": [
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681518/MyProject/the-athletes-15-black-rhino/au9yattc1o5c4hlhufmv.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681520/MyProject/the-athletes-15-black-rhino/aa4r6u8kdl4ubighesjv.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681521/MyProject/the-athletes-15-black-rhino/pefytj1waesua44kob2v.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681522/MyProject/the-athletes-15-black-rhino/f4t5clwqyvlqainxcphs.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681523/MyProject/the-athletes-15-black-rhino/encviehtdhjfezc7qal4.jpg"
+        ],
+        "isDefault": true
+      },
+      {
+        "sku": "the-athletes-15-brown-rhino",
+        "color": "rhino",
+        "size": "",
+        "price": 2700000,
+        "originalPrice": 2700000,
+        "images": [
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681123/MyProject/the-athletes-15-brown-rhino/vxt7dzzdpyb6eywzh7ky.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681125/MyProject/the-athletes-15-brown-rhino/ljaiwiiu15zkkmuetdpp.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681126/MyProject/the-athletes-15-brown-rhino/cvlmgsbvrlbv111uhb8q.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681126/MyProject/the-athletes-15-brown-rhino/svdwqr8idjvwiemhm5cd.png",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681127/MyProject/the-athletes-15-brown-rhino/f61juajp3xga7fppd3rv.jpg"
+        ],
+        "isDefault": true
+      },
+      {
         "sku": "the-athletes-15-grey",
-        "color": "Grey",
+        "color": "grey",
         "size": "",
         "price": 2700000,
         "originalPrice": 2700000,
@@ -2567,41 +2040,10 @@
           "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681367/MyProject/the-athletes-15-grey/erjwz65zeigxz9megr1f.jpg"
         ],
         "isDefault": true
-      }
-    ],
-    "rating": {
-      "avg": 0,
-      "count": 0
-    },
-    "isActive": true,
-    "collectionId": "69d16583b964434b3c703377"
-  },
-  {
-    "name": "THE ATHLETES 15 - Grey",
-    "slug": "the-athletes-15---grey",
-    "brand": "SEESONvn",
-    "sale": false,
-    "availability": "in_stock",
-    "type": "Sunglasses",
-    "description": "Dáng kính high-square với tỷ lệ tròng cao và khối gọng dày, mang diện mạo edgy và sắc nét. Chất liệu acetate được xử lý tinh gọn, tạo nên cấu trúc vững và hiện đại, cân bằng giữa kỹ thuật và thẩm mỹ.",
-    "specifications": {
-      "material": "",
-      "lensMaterial": "",
-      "origin": "",
-      "gender": "Unisex",
-      "size": {
-        "dimensions": "",
-        "width": 0,
-        "angle": 0,
-        "bridge": 0,
-        "totalWidth": 0,
-        "longestDiameter": 0
-      }
-    },
-    "variants": [
+      },
       {
         "sku": "the-athletes-15-grey-rhino",
-        "color": "Rhino",
+        "color": "rhino",
         "size": "",
         "price": 2700000,
         "originalPrice": 2700000,
@@ -2620,7 +2062,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703377"
+    "collectionId": "69d26072602c7bb2c42e30f1"
   },
   {
     "name": "THE LAYERED 09",
@@ -2647,7 +2089,7 @@
     "variants": [
       {
         "sku": "the-layered-09-layered-grey",
-        "color": "Layered Grey",
+        "color": "layered-grey",
         "size": "",
         "price": 2240000,
         "originalPrice": 2240000,
@@ -2665,7 +2107,7 @@
       },
       {
         "sku": "the-layered-09-crystal-green",
-        "color": "Crystal Green",
+        "color": "crystal-green",
         "size": "",
         "price": 2240000,
         "originalPrice": 2240000,
@@ -2683,7 +2125,7 @@
       },
       {
         "sku": "the-layered-09-denim",
-        "color": "Denim",
+        "color": "denim",
         "size": "",
         "price": 2240000,
         "originalPrice": 2240000,
@@ -2705,7 +2147,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c70337c"
+    "collectionId": "69d26072602c7bb2c42e30f6"
   },
   {
     "name": "THE EDGE 04",
@@ -2732,7 +2174,7 @@
     "variants": [
       {
         "sku": "the-edge-04-black",
-        "color": "Black",
+        "color": "black",
         "size": "",
         "price": 1920000,
         "originalPrice": 1920000,
@@ -2748,7 +2190,7 @@
       },
       {
         "sku": "the-edge-04-beige",
-        "color": "Beige",
+        "color": "beige",
         "size": "",
         "price": 2400000,
         "originalPrice": 2400000,
@@ -2764,7 +2206,7 @@
       },
       {
         "sku": "the-edge-04-purple",
-        "color": "Purple",
+        "color": "purple",
         "size": "",
         "price": 1920000,
         "originalPrice": 1920000,
@@ -2784,7 +2226,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c70337a"
+    "collectionId": "69d26072602c7bb2c42e30f4"
   },
   {
     "name": "THE EDGE 01",
@@ -2811,7 +2253,7 @@
     "variants": [
       {
         "sku": "the-edge-01-purple",
-        "color": "Purple",
+        "color": "purple",
         "size": "",
         "price": 2400000,
         "originalPrice": 2400000,
@@ -2831,7 +2273,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c70337a"
+    "collectionId": "69d26072602c7bb2c42e30f4"
   },
   {
     "name": "THE FLOW 02",
@@ -2858,7 +2300,7 @@
     "variants": [
       {
         "sku": "the-flow-02-matte-gunmetal",
-        "color": "Matte Gunmetal",
+        "color": "matte-gunmetal",
         "size": "",
         "price": 2640000,
         "originalPrice": 2640000,
@@ -2875,7 +2317,7 @@
       },
       {
         "sku": "the-flow-02-matte-silver",
-        "color": "Matte Silver",
+        "color": "matte-silver",
         "size": "",
         "price": 2640000,
         "originalPrice": 2640000,
@@ -2891,7 +2333,7 @@
       },
       {
         "sku": "the-flow-02-matte-black",
-        "color": "Matte Black",
+        "color": "matte-black",
         "size": "",
         "price": 2640000,
         "originalPrice": 2640000,
@@ -2911,7 +2353,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c70337b"
+    "collectionId": "69d26072602c7bb2c42e30f5"
   },
   {
     "name": "THE EDGE 05",
@@ -2938,7 +2380,7 @@
     "variants": [
       {
         "sku": "the-edge-05-transparent-green",
-        "color": "Transparent Green",
+        "color": "transparent-green",
         "size": "",
         "price": 1920000,
         "originalPrice": 1920000,
@@ -2958,145 +2400,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c70337a"
-  },
-  {
-    "name": "THE CUT 15 - Black",
-    "slug": "the-cut-15---black",
-    "brand": "SEESONvn",
-    "sale": false,
-    "availability": "in_stock",
-    "type": "Sunglasses",
-    "description": "Shape kính chữ nhật hẹp đặc trưng trong design của SEESON quay trở lại với phần front-end được thiết kế bo góc mềm mại, bớt sắc cạnh. Sự kết hợp màu sắc mới của lõi kim loại và acetate cũng góp phần giữ lại tinh thần edgy-look của The Cut 15.",
-    "specifications": {
-      "material": "",
-      "lensMaterial": "",
-      "origin": "",
-      "gender": "Unisex",
-      "size": {
-        "dimensions": "",
-        "width": 0,
-        "angle": 0,
-        "bridge": 0,
-        "totalWidth": 0,
-        "longestDiameter": 0
-      }
-    },
-    "variants": [
-      {
-        "sku": "the-cut-15-black-black",
-        "color": "Black",
-        "size": "",
-        "price": 2360000,
-        "originalPrice": 2360000,
-        "images": [
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681343/MyProject/the-cut-15-black-black/qmhkcgkno02dvs3vedsp.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681344/MyProject/the-cut-15-black-black/bgqgrpuslcukwaxzhpxg.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681344/MyProject/the-cut-15-black-black/jjvm1ujlc3ztkfpys3ix.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681345/MyProject/the-cut-15-black-black/xpg3p57tli83drpmpwho.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681346/MyProject/the-cut-15-black-black/k1ntcdzv0yor8wvgpphm.jpg"
-        ],
-        "isDefault": true
-      }
-    ],
-    "rating": {
-      "avg": 0,
-      "count": 0
-    },
-    "isActive": true,
-    "collectionId": "69d16583b964434b3c703378"
-  },
-  {
-    "name": "THE CUT 16 - Black",
-    "slug": "the-cut-16---black",
-    "brand": "SEESONvn",
-    "sale": false,
-    "availability": "in_stock",
-    "type": "Sunglasses",
-    "description": "The Cut 16 với dáng kính chữ nhật flat top với phần cầu mũi được thiết kế thoải mái cùng các đường viền mỏng giúp trải đều trọng lượng.",
-    "specifications": {
-      "material": "",
-      "lensMaterial": "",
-      "origin": "",
-      "gender": "Unisex",
-      "size": {
-        "dimensions": "",
-        "width": 0,
-        "angle": 0,
-        "bridge": 0,
-        "totalWidth": 0,
-        "longestDiameter": 0
-      }
-    },
-    "variants": [
-      {
-        "sku": "the-cut-16-black-black",
-        "color": "Black",
-        "size": "",
-        "price": 2360000,
-        "originalPrice": 2360000,
-        "images": [
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681092/MyProject/the-cut-16-black-black/z1swzwts30bbkerho7pt.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681093/MyProject/the-cut-16-black-black/apmzaxi2eymht6sdr4uv.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681094/MyProject/the-cut-16-black-black/nuzk7yqrtsvwdnrhc8g0.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681095/MyProject/the-cut-16-black-black/l3kd6ub99svp6xlmaest.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681096/MyProject/the-cut-16-black-black/hvg20dq4fb7d8qsgl5cc.jpg"
-        ],
-        "isDefault": true
-      }
-    ],
-    "rating": {
-      "avg": 0,
-      "count": 0
-    },
-    "isActive": true,
-    "collectionId": "69d16583b964434b3c703378"
-  },
-  {
-    "name": "THE CUT 16 - Denim",
-    "slug": "the-cut-16---denim",
-    "brand": "SEESONvn",
-    "sale": false,
-    "availability": "in_stock",
-    "type": "Sunglasses",
-    "description": "The Cut 16 với dáng kính chữ nhật flat top với phần cầu mũi được thiết kế thoải mái cùng các đường viền mỏng giúp trải đều trọng lượng.",
-    "specifications": {
-      "material": "",
-      "lensMaterial": "",
-      "origin": "",
-      "gender": "Unisex",
-      "size": {
-        "dimensions": "",
-        "width": 0,
-        "angle": 0,
-        "bridge": 0,
-        "totalWidth": 0,
-        "longestDiameter": 0
-      }
-    },
-    "variants": [
-      {
-        "sku": "the-cut-16-denim-black",
-        "color": "Black",
-        "size": "",
-        "price": 2360000,
-        "originalPrice": 2360000,
-        "images": [
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681192/MyProject/the-cut-16-denim-black/ah2qelqwqc2fvnljyalv.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681193/MyProject/the-cut-16-denim-black/qlbfarqdipf39tzwzr7q.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681194/MyProject/the-cut-16-denim-black/iwby4wdbr97b2psom0qg.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681195/MyProject/the-cut-16-denim-black/j7ur9ios1lxllwajuv55.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681195/MyProject/the-cut-16-denim-black/eigdq9inmnq8xhiltqcs.jpg"
-        ],
-        "isDefault": true
-      }
-    ],
-    "rating": {
-      "avg": 0,
-      "count": 0
-    },
-    "isActive": true,
-    "collectionId": "69d16583b964434b3c703378"
+    "collectionId": "69d26072602c7bb2c42e30f4"
   },
   {
     "name": "THE CUT 15",
@@ -3122,8 +2426,23 @@
     },
     "variants": [
       {
+        "sku": "the-cut-15-black-black",
+        "color": "black",
+        "size": "",
+        "price": 2360000,
+        "originalPrice": 2360000,
+        "images": [
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681343/MyProject/the-cut-15-black-black/qmhkcgkno02dvs3vedsp.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681344/MyProject/the-cut-15-black-black/bgqgrpuslcukwaxzhpxg.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681344/MyProject/the-cut-15-black-black/jjvm1ujlc3ztkfpys3ix.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681345/MyProject/the-cut-15-black-black/xpg3p57tli83drpmpwho.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681346/MyProject/the-cut-15-black-black/k1ntcdzv0yor8wvgpphm.jpg"
+        ],
+        "isDefault": true
+      },
+      {
         "sku": "the-cut-15-green",
-        "color": "Green",
+        "color": "green",
         "size": "",
         "price": 2200000,
         "originalPrice": 2200000,
@@ -3135,6 +2454,37 @@
           "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681100/MyProject/the-cut-15-green/kdfatfhwuvtaxmqh9l58.jpg"
         ],
         "isDefault": true
+      },
+      {
+        "sku": "the-cut-15-matte-black-black",
+        "color": "black",
+        "size": "",
+        "price": 2360000,
+        "originalPrice": 2360000,
+        "images": [
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681061/MyProject/the-cut-15-matte-black-black/qxutxnsrscbyueo7ou4x.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681061/MyProject/the-cut-15-matte-black-black/n1rygcer8xgkmr9wx7s4.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681063/MyProject/the-cut-15-matte-black-black/i3shi49xdwqx7kszno7p.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681064/MyProject/the-cut-15-matte-black-black/rvewua3q3uig6hstdhk6.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681065/MyProject/the-cut-15-matte-black-black/gkf8plqamadolrejd5yw.jpg"
+        ],
+        "isDefault": true
+      },
+      {
+        "sku": "the-cut-15-faded-ash-black",
+        "color": "black",
+        "size": "",
+        "price": 2360000,
+        "originalPrice": 2360000,
+        "images": [
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681581/MyProject/the-cut-15-faded-ash-black/h1f5yprr0drpkawsdqud.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681582/MyProject/the-cut-15-faded-ash-black/lleexkrjr2noz8qjgx96.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681582/MyProject/the-cut-15-faded-ash-black/szh8wlrcdyvg5rn7v5vf.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681583/MyProject/the-cut-15-faded-ash-black/yfwcmlf0oqlbvbkm6rw3.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681584/MyProject/the-cut-15-faded-ash-black/zjowurgdqoveek5jeinu.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681585/MyProject/the-cut-15-faded-ash-black/ryetyjlhxkb2ynhtcjey.jpg"
+        ],
+        "isDefault": true
       }
     ],
     "rating": {
@@ -3142,7 +2492,83 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703378"
+    "collectionId": "69d26072602c7bb2c42e30f2"
+  },
+  {
+    "name": "THE CUT 16",
+    "slug": "the-cut-16",
+    "brand": "SEESONvn",
+    "sale": false,
+    "availability": "in_stock",
+    "type": "Sunglasses",
+    "description": "The Cut 16 với dáng kính chữ nhật flat top với phần cầu mũi được thiết kế thoải mái cùng các đường viền mỏng giúp trải đều trọng lượng.",
+    "specifications": {
+      "material": "",
+      "lensMaterial": "",
+      "origin": "",
+      "gender": "Unisex",
+      "size": {
+        "dimensions": "",
+        "width": 0,
+        "angle": 0,
+        "bridge": 0,
+        "totalWidth": 0,
+        "longestDiameter": 0
+      }
+    },
+    "variants": [
+      {
+        "sku": "the-cut-16-black-black",
+        "color": "black",
+        "size": "",
+        "price": 2360000,
+        "originalPrice": 2360000,
+        "images": [
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681092/MyProject/the-cut-16-black-black/z1swzwts30bbkerho7pt.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681093/MyProject/the-cut-16-black-black/apmzaxi2eymht6sdr4uv.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681094/MyProject/the-cut-16-black-black/nuzk7yqrtsvwdnrhc8g0.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681095/MyProject/the-cut-16-black-black/l3kd6ub99svp6xlmaest.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681096/MyProject/the-cut-16-black-black/hvg20dq4fb7d8qsgl5cc.jpg"
+        ],
+        "isDefault": true
+      },
+      {
+        "sku": "the-cut-16-denim-black",
+        "color": "black",
+        "size": "",
+        "price": 2360000,
+        "originalPrice": 2360000,
+        "images": [
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681192/MyProject/the-cut-16-denim-black/ah2qelqwqc2fvnljyalv.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681193/MyProject/the-cut-16-denim-black/qlbfarqdipf39tzwzr7q.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681194/MyProject/the-cut-16-denim-black/iwby4wdbr97b2psom0qg.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681195/MyProject/the-cut-16-denim-black/j7ur9ios1lxllwajuv55.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681195/MyProject/the-cut-16-denim-black/eigdq9inmnq8xhiltqcs.jpg"
+        ],
+        "isDefault": true
+      },
+      {
+        "sku": "the-cut-16-matte-black-black",
+        "color": "black",
+        "size": "",
+        "price": 2360000,
+        "originalPrice": 2360000,
+        "images": [
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681289/MyProject/the-cut-16-matte-black-black/tvvhiublyftqqlxsckle.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681290/MyProject/the-cut-16-matte-black-black/kblqnvsheeywuahycdpz.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681291/MyProject/the-cut-16-matte-black-black/quq2qe3nq5ydfnu3p0j8.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681292/MyProject/the-cut-16-matte-black-black/bsm88jvlxwzevefqtcx2.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681293/MyProject/the-cut-16-matte-black-black/qeyitturx7qvpyyy7efa.jpg"
+        ],
+        "isDefault": true
+      }
+    ],
+    "rating": {
+      "avg": 0,
+      "count": 0
+    },
+    "isActive": true,
+    "collectionId": "69d26072602c7bb2c42e30f2"
   },
   {
     "name": "THE CUT 09",
@@ -3169,7 +2595,7 @@
     "variants": [
       {
         "sku": "the-cut-09-crystal-beige",
-        "color": "Crystal Beige",
+        "color": "crystal-beige",
         "size": "",
         "price": 2160000,
         "originalPrice": 2160000,
@@ -3190,104 +2616,11 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703378"
+    "collectionId": "69d26072602c7bb2c42e30f2"
   },
   {
-    "name": "THE CUT 15 - Matte Black",
-    "slug": "the-cut-15---matte-black",
-    "brand": "SEESONvn",
-    "sale": false,
-    "availability": "in_stock",
-    "type": "Sunglasses",
-    "description": "Shape kính chữ nhật hẹp đặc trưng trong design của SEESON quay trở lại với phần front-end được thiết kế bo góc mềm mại, bớt sắc cạnh. Sự kết hợp màu sắc mới của lõi kim loại và acetate cũng góp phần giữ lại tinh thần edgy-look của The Cut 15.",
-    "specifications": {
-      "material": "",
-      "lensMaterial": "",
-      "origin": "",
-      "gender": "Unisex",
-      "size": {
-        "dimensions": "",
-        "width": 0,
-        "angle": 0,
-        "bridge": 0,
-        "totalWidth": 0,
-        "longestDiameter": 0
-      }
-    },
-    "variants": [
-      {
-        "sku": "the-cut-15-matte-black-black",
-        "color": "Black",
-        "size": "",
-        "price": 2360000,
-        "originalPrice": 2360000,
-        "images": [
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681061/MyProject/the-cut-15-matte-black-black/qxutxnsrscbyueo7ou4x.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681061/MyProject/the-cut-15-matte-black-black/n1rygcer8xgkmr9wx7s4.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681063/MyProject/the-cut-15-matte-black-black/i3shi49xdwqx7kszno7p.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681064/MyProject/the-cut-15-matte-black-black/rvewua3q3uig6hstdhk6.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681065/MyProject/the-cut-15-matte-black-black/gkf8plqamadolrejd5yw.jpg"
-        ],
-        "isDefault": true
-      }
-    ],
-    "rating": {
-      "avg": 0,
-      "count": 0
-    },
-    "isActive": true,
-    "collectionId": "69d16583b964434b3c703378"
-  },
-  {
-    "name": "THE CUT 15 - Faded Ash",
-    "slug": "the-cut-15---faded-ash",
-    "brand": "SEESONvn",
-    "sale": false,
-    "availability": "in_stock",
-    "type": "Sunglasses",
-    "description": "Shape kính chữ nhật hẹp đặc trưng trong design của SEESON quay trở lại với phần front-end được thiết kế bo góc mềm mại, bớt sắc cạnh. Sự kết hợp màu sắc mới của lõi kim loại và acetate cũng góp phần giữ lại tinh thần edgy-look của The Cut 15.",
-    "specifications": {
-      "material": "",
-      "lensMaterial": "",
-      "origin": "",
-      "gender": "Unisex",
-      "size": {
-        "dimensions": "",
-        "width": 0,
-        "angle": 0,
-        "bridge": 0,
-        "totalWidth": 0,
-        "longestDiameter": 0
-      }
-    },
-    "variants": [
-      {
-        "sku": "the-cut-15-faded-ash-black",
-        "color": "Black",
-        "size": "",
-        "price": 2360000,
-        "originalPrice": 2360000,
-        "images": [
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681581/MyProject/the-cut-15-faded-ash-black/h1f5yprr0drpkawsdqud.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681582/MyProject/the-cut-15-faded-ash-black/lleexkrjr2noz8qjgx96.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681582/MyProject/the-cut-15-faded-ash-black/szh8wlrcdyvg5rn7v5vf.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681583/MyProject/the-cut-15-faded-ash-black/yfwcmlf0oqlbvbkm6rw3.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681584/MyProject/the-cut-15-faded-ash-black/zjowurgdqoveek5jeinu.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681585/MyProject/the-cut-15-faded-ash-black/ryetyjlhxkb2ynhtcjey.jpg"
-        ],
-        "isDefault": true
-      }
-    ],
-    "rating": {
-      "avg": 0,
-      "count": 0
-    },
-    "isActive": true,
-    "collectionId": "69d16583b964434b3c703378"
-  },
-  {
-    "name": "THE CUT 18 - Black",
-    "slug": "the-cut-18---black",
+    "name": "THE CUT 18",
+    "slug": "the-cut-18",
     "brand": "SEESONvn",
     "sale": false,
     "availability": "in_stock",
@@ -3310,7 +2643,7 @@
     "variants": [
       {
         "sku": "the-cut-18-black-black",
-        "color": "Black",
+        "color": "black",
         "size": "",
         "price": 2360000,
         "originalPrice": 2360000,
@@ -3322,6 +2655,21 @@
           "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681595/MyProject/the-cut-18-black-black/x9v85kysfbyf7zg7wx24.jpg"
         ],
         "isDefault": true
+      },
+      {
+        "sku": "the-cut-18-matte-black-black",
+        "color": "black",
+        "size": "",
+        "price": 2360000,
+        "originalPrice": 2360000,
+        "images": [
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681501/MyProject/the-cut-18-matte-black-black/rrhdttdbli6mld30cq6a.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681502/MyProject/the-cut-18-matte-black-black/wiurn5suoj7boujgqqz8.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681502/MyProject/the-cut-18-matte-black-black/zh2bswyzzsbaxgdr6ijn.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681503/MyProject/the-cut-18-matte-black-black/dfawwbtzw8wdzv0cfd8n.jpg",
+          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681504/MyProject/the-cut-18-matte-black-black/t21vyndiwtkyp8onhkxf.jpg"
+        ],
+        "isDefault": true
       }
     ],
     "rating": {
@@ -3329,7 +2677,7 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c703378"
+    "collectionId": "69d26072602c7bb2c42e30f2"
   },
   {
     "name": "THE FLOW 01",
@@ -3356,7 +2704,7 @@
     "variants": [
       {
         "sku": "the-flow-01-matte-silver",
-        "color": "Matte Silver",
+        "color": "matte-silver",
         "size": "",
         "price": 2640000,
         "originalPrice": 2640000,
@@ -3377,98 +2725,6 @@
       "count": 0
     },
     "isActive": true,
-    "collectionId": "69d16583b964434b3c70337b"
-  },
-  {
-    "name": "THE CUT 16 - Matte Black",
-    "slug": "the-cut-16---matte-black",
-    "brand": "SEESONvn",
-    "sale": false,
-    "availability": "in_stock",
-    "type": "Sunglasses",
-    "description": "The Cut 16 với dáng kính chữ nhật flat top với phần cầu mũi được thiết kế thoải mái cùng các đường viền mỏng giúp trải đều trọng lượng.",
-    "specifications": {
-      "material": "",
-      "lensMaterial": "",
-      "origin": "",
-      "gender": "Unisex",
-      "size": {
-        "dimensions": "",
-        "width": 0,
-        "angle": 0,
-        "bridge": 0,
-        "totalWidth": 0,
-        "longestDiameter": 0
-      }
-    },
-    "variants": [
-      {
-        "sku": "the-cut-16-matte-black-black",
-        "color": "Black",
-        "size": "",
-        "price": 2360000,
-        "originalPrice": 2360000,
-        "images": [
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681289/MyProject/the-cut-16-matte-black-black/tvvhiublyftqqlxsckle.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681290/MyProject/the-cut-16-matte-black-black/kblqnvsheeywuahycdpz.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681291/MyProject/the-cut-16-matte-black-black/quq2qe3nq5ydfnu3p0j8.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681292/MyProject/the-cut-16-matte-black-black/bsm88jvlxwzevefqtcx2.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681293/MyProject/the-cut-16-matte-black-black/qeyitturx7qvpyyy7efa.jpg"
-        ],
-        "isDefault": true
-      }
-    ],
-    "rating": {
-      "avg": 0,
-      "count": 0
-    },
-    "isActive": true,
-    "collectionId": "69d16583b964434b3c703378"
-  },
-  {
-    "name": "THE CUT 18 - Matte Black",
-    "slug": "the-cut-18---matte-black",
-    "brand": "SEESONvn",
-    "sale": false,
-    "availability": "in_stock",
-    "type": "Sunglasses",
-    "description": "Tương phản dày mỏng giữa các phần của mặt gọng trong The Cut 18 được tiết chế ở mức vừa phải, trong khi hiệu ứng sharp-edge đại diện cho tính hiện đại đặc trưng của SEESON vẫn được duy trì.",
-    "specifications": {
-      "material": "",
-      "lensMaterial": "",
-      "origin": "",
-      "gender": "Unisex",
-      "size": {
-        "dimensions": "",
-        "width": 0,
-        "angle": 0,
-        "bridge": 0,
-        "totalWidth": 0,
-        "longestDiameter": 0
-      }
-    },
-    "variants": [
-      {
-        "sku": "the-cut-18-matte-black-black",
-        "color": "Black",
-        "size": "",
-        "price": 2360000,
-        "originalPrice": 2360000,
-        "images": [
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681501/MyProject/the-cut-18-matte-black-black/rrhdttdbli6mld30cq6a.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681502/MyProject/the-cut-18-matte-black-black/wiurn5suoj7boujgqqz8.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681502/MyProject/the-cut-18-matte-black-black/zh2bswyzzsbaxgdr6ijn.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681503/MyProject/the-cut-18-matte-black-black/dfawwbtzw8wdzv0cfd8n.jpg",
-          "https://res.cloudinary.com/dolrkudlw/image/upload/v1774681504/MyProject/the-cut-18-matte-black-black/t21vyndiwtkyp8onhkxf.jpg"
-        ],
-        "isDefault": true
-      }
-    ],
-    "rating": {
-      "avg": 0,
-      "count": 0
-    },
-    "isActive": true,
-    "collectionId": "69d16583b964434b3c703378"
+    "collectionId": "69d26072602c7bb2c42e30f5"
   }
 ]

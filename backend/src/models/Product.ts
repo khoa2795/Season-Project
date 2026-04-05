@@ -25,6 +25,11 @@ export interface ISpecifications {
   };
 }
 
+export interface IFrameType {
+  material: 'Acetate' | 'Metal';
+  size: 'Small' | 'Medium' | 'Big';
+}
+
 export interface IProduct extends Document {
   name: string;
   slug: string;
@@ -33,6 +38,7 @@ export interface IProduct extends Document {
   sale: boolean;
   availability: 'in_stock' | 'out_of_stock' | 'pre_order';
   type: string;
+  frameType?: IFrameType; // Only for eyeglasses, empty/undefined for sunglasses
   description: string;
   specifications: ISpecifications;
   variants: IVariant[];
@@ -51,6 +57,10 @@ const ProductSchema = new Schema({
   sale: { type: Boolean, default: false },
   availability: { type: String, enum: ['in_stock', 'out_of_stock', 'pre_order'], default: 'in_stock' },
   type: { type: String, default: "Sunglasses" },
+  frameType: {
+    material: { type: String, enum: ['Acetate', 'Metal'] },
+    size: { type: String, enum: ['Small', 'Medium', 'Big'] }
+  },
   description: { type: String, required: true },
   specifications: {
     material: String,
@@ -67,7 +77,7 @@ const ProductSchema = new Schema({
     }
   },
   variants: [{
-    sku: { type: String, required: true }, // Not globally unique here, just within the variants or maybe globally
+    sku: { type: String, required: true },
     color: String,
     size: String,
     price: { type: Number, required: true, min: 0 },

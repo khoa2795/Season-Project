@@ -12,16 +12,16 @@ const collectionsPath = path.join(
 );
 const productsPath = path.join(
   __dirname,
-  "../../season_data/Products_Grouped (1).json",
+  "../../season_data/sunglasses-grouped.json",
 );
 
 const normalizedCollectionsPath = path.join(
   __dirname,
-  "../../season_data/normalized_collections.json",
+  "../../season_data/collections-normalized.json",
 );
 const normalizedProductsPath = path.join(
   __dirname,
-  "../../season_data/normalized_products.json",
+  "../../season_data/sunglasses-normalized.json",
 );
 
 const normalizeData = () => {
@@ -124,6 +124,7 @@ const normalizeData = () => {
       delete groupedProducts[baseName].categoryId;
       delete groupedProducts[baseName].CollectionId;
       delete groupedProducts[baseName].images; // Images should only be in variants
+      delete groupedProducts[baseName].frameType; // Not applicable for sunglasses
     }
 
     // Normalize variants - extract and normalize colors from each variant's SKU
