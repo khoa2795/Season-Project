@@ -11,6 +11,7 @@ node_modules/
 /dist
 *.tsbuildinfo
 *.map
+backend/dist/**/*.d.ts
 
 # Misc
 .DS_Store
