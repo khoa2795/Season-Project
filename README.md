@@ -1,90 +1,122 @@
-# Project Season
+# Season - Luxury Eyewear E-Commerce
 
-A modern Next.js application designed for a seasonal shopping experience.
+A unified full-stack repository for the Season luxury eyewear e-commerce platform with frontend and backend services.
 
-## Prerequisites
+## Repository Structure
 
-Before you begin, ensure you have the following installed:
-- [Node.js](https://nodejs.org/) (v18.17 or later recommended)
-- [npm](https://www.npmjs.com/) (usually comes with Node.js)
-
-## Getting Started
-
-Follow these steps to set up the project locally:
-
-### 1. Clone the repository
-```bash
-git clone <repository-url>
-cd ProjectSeason/my-app
+```
+season/
+├── frontend/          # Next.js React application
+│   ├── app/          # Next.js app directory
+│   ├── components/   # React components
+│   │   ├── menu/     # Mega menu navigation
+│   │   ├── sections/ # Page sections
+│   │   └── ui/       # shadcn/ui components
+│   ├── lib/          # Utilities
+│   ├── public/       # Static assets
+│   ├── package.json
+│   └── tailwind.config.js
+│
+├── backend/           # Express.js API server
+│   ├── src/          # TypeScript source
+│   │   ├── app.ts
+│   │   ├── models/   # Database models
+│   │   ├── routes/   # API endpoints
+│   │   └── services/ # Business logic
+│   ├── season_data/  # Product JSON data
+│   ├── package.json
+│   └── tsconfig.json
+│
+└── .gitignore        # Git ignore rules
 ```
 
-### 2. Install dependencies
-Install the required packages using npm:
+## Quick Start
+
+### Frontend Setup
 ```bash
+cd frontend
 npm install
+npm run dev
+# Runs on http://localhost:3000
 ```
 
-### 3. Run the development server
-Start the local development server:
+### Backend Setup
 ```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## Installation on Windows
-
-If you're using Windows, follow these additional steps:
-
-### 1. Install Node.js and npm
-- Download the installer from [Node.js Official Website](https://nodejs.org/)
-- Run the `.msi` installer and follow the setup wizard
-- Ensure "Add to PATH" is checked during installation
-- Verify installation by opening Command Prompt and running:
-```cmd
-node --version
-npm --version
-```
-
-### 2. Clone the repository using Git Bash or Command Prompt
-```cmd
-git clone <repository-url>
-cd ProjectSeason\my-app
-```
-
-### 3. Install dependencies
-```cmd
+cd backend
 npm install
-```
-
-### 4. Run the development server
-```cmd
 npm run dev
+# Runs on http://localhost:3001
 ```
 
-Then open [http://localhost:3000](http://localhost:3000) in your browser.
+## Features
 
-## Project Structure
+### Frontend
+- **Mega Menu Navigation**
+  - Responsive: 80vw (mobile) / 40vw (desktop)
+  - 3-column layout: Eyeglasses, Sunglasses, Support
+  - Badge system: Bestsellers (yellow), View All (gray), Sale (red)
+  
+- **Tech Stack**
+  - Next.js 16.2.1
+  - React 19
+  - TypeScript
+  - Tailwind CSS v4
+  - shadcn/ui
 
-- `app/`: Next.js App Router pages and layouts.
-- `components/`: Reusable UI components.
-  - `sections/`: Main page sections (Hero, Category, Newsletter, etc.).
-  - `ui/`: Base UI components (Button, Card, Input, etc.).
-- `lib/`: Utility functions and shared logic.
-- `public/`: Static assets like icons and fonts.
-- `images/`: Project images and assets.
+### Backend
+- **RESTful API**
+  - Product management
+  - Collection filtering
+  - Sale/clearance items
+  
+- **Tech Stack**
+  - Express.js
+  - TypeScript
+  - MongoDB (configurable)
+  - Node.js
 
-## Scripts
+## Development Workflow
 
-- `npm run dev`: Starts the development server.
-- `npm run build`: Builds the application for production.
-- `npm run start`: Starts the production server.
-- `npm run lint`: Runs ESLint to check for code quality issues.
+### Committing Changes
 
-## Technologies Used
+When making changes, commit to the unified Season repository:
 
-- **Framework**: [Next.js](https://nextjs.org/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **UI Components**: [Radix UI](https://www.radix-ui.com/) & [Lucide React](https://lucide.dev/)
-- **Carousel**: [Embla Carousel](https://www.embla-carousel.com/)
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
+```bash
+# Frontend changes
+git add frontend/components/...
+git commit -m "feat: description of change"
+
+# Backend changes
+git add backend/src/...
+git commit -m "feat: description of change"
+
+# Both
+git add frontend/ backend/
+git commit -m "feat: description of changes"
+```
+
+## Environment Configuration
+
+Create `.env` files in both directories:
+
+**frontend/.env**
+```
+NEXT_PUBLIC_API_URL=http://localhost:3001
+```
+
+**backend/.env**
+```
+MONGODB_URI=mongodb://localhost:27017/season
+PORT=3001
+```
+
+## Project Status
+
+✅ Unified repository structure  
+✅ Mega menu with responsive design  
+✅ Badge system for categorization  
+✅ Frontend and backend ready for development  
+
+## License
+
+Season Eyewear © 2024
