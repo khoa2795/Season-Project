@@ -1,261 +1,205 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import mongoose from "mongoose";
+import dotenv from "dotenv";
+import { v2 as cloudinary } from "cloudinary";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const collectionsPath = path.join(
-  __dirname,
-  "../../season_data/collections.json",
-);
-const productsPath = path.join(
-  __dirname,
-  "../../season_data/sunglasses-grouped.json",
-);
-const clearanceSalePath = path.join(
-  __dirname,
-  "../../season_data/clearance-sale.json",
-);
+dotenv.config({ path: path.resolve(process.cwd(), ".env") });
 
-const normalizedCollectionsPath = path.join(
+const inputPath = path.resolve(
+  __dirname,
+  "../../season_data/sunglasses_with_collection.json",
+);
+const collectionsPath = path.resolve(
   __dirname,
   "../../season_data/collections-normalized.json",
 );
-const normalizedProductsPath = path.join(
+const imagesRoot = path.resolve(__dirname, "../../season_data/images");
+const outputPath = path.resolve(
   __dirname,
   "../../season_data/sunglasses-normalized.json",
 );
 
-const normalizeData = () => {
-  // 1. Read files
-  const collectionsData = JSON.parse(fs.readFileSync(collectionsPath, "utf-8"));
-  const productsData = JSON.parse(fs.readFileSync(productsPath, "utf-8"));
-  const clearanceSaleData = JSON.parse(fs.readFileSync(clearanceSalePath, "utf-8"));
-
-  // Extract base names from clearance sale products (remove colors)
-  const clearanceSaleBaseNames = new Set(
-    clearanceSaleData.product_names.map((name: string) => {
-      const dashIndex = name.indexOf(" - ");
-      return dashIndex !== -1 ? name.substring(0, dashIndex).trim() : name;
-    })
-  );
-
-  // Helper function to generate random sale percent (1-30%)
-  const getRandomSalePercent = () => Math.floor(Math.random() * 30) + 1;
-  
-  // Helper function to generate random stock (1-10)
-  const getRandomStock = () => Math.floor(Math.random() * 10) + 1;
-
-  // 2. Generate normalized collections with ObjectIds
-  const normalizedCollections = collectionsData.collections.map(
-    (name: string) => ({
-      _id: new mongoose.Types.ObjectId().toString(),
-      name: name,
-      slug: name.toLowerCase().replace(/\s+/g, "-"),
-    }),
-  );
-
-  // 3. Group products by base name and extract colors from SKU
-  const groupedProducts: Record<string, any> = {};
-
-  productsData.forEach((product: any) => {
-    // Extract base product name by matching against collections
-    let baseName = "";
-    let color = "";
-    let collectionId = null;
-    let matchingCollection = null;
-
-    // Find which collection this product belongs to
-    for (const collection of normalizedCollections) {
-      if (product.name.toLowerCase().startsWith(collection.name.toLowerCase())) {
-        matchingCollection = collection;
-        collectionId = collection._id;
-
-        // Check if product name contains "SUNGLASSES"
-        if (product.name.toUpperCase().includes(" SUNGLASSES")) {
-          const sunglassesIndex = product.name.toUpperCase().indexOf(" SUNGLASSES");
-          baseName = product.name.substring(0, sunglassesIndex).trim();
-          // For SUNGLASSES products, don't extract color from name - use variant SKU instead
-          color = "";
-        } else {
-          // Extract everything up to the first " - "
-          const dashIndex = product.name.indexOf(" - ");
-          if (dashIndex !== -1) {
-            baseName = product.name.substring(0, dashIndex).trim();
-            color = product.name.substring(dashIndex + 3).trim();
-          } else {
-            baseName = product.name;
-          }
-        }
-        break;
-      }
-    }
-
-    if (!baseName) {
-      console.warn(`⚠️ No collection found for product: ${product.name}`);
-      baseName = product.name;
-    }
-
-    // Normalize color from name to match SKU format (lowercase with hyphens)
-    // "Brown - Rhino" -> "brown-rhino"
-    if (color) {
-      color = color.toLowerCase().replace(/\s*-\s*/g, "-").replace(/\s+/g, "-");
-    }
-
-    // Extract color from SKU if not already extracted from name
-    if (!color && product.sku) {
-      // e.g., "the-paper-knife-01-brown" -> color = "brown"
-      // e.g., "the-athletes-10-blue-rhino" -> color = "blue-rhino"
-      const collectionSlug = matchingCollection?.slug || baseName.toLowerCase().replace(/\s+/g, "-");
-
-      if (product.sku.startsWith(collectionSlug + "-")) {
-        // Remove collection slug and separator
-        const afterCollection = product.sku.substring(collectionSlug.length + 1);
-        const colorParts = afterCollection.split("-");
-
-        // Skip numeric parts (like "01", "02", "10", etc.)
-        let colorStartIndex = 0;
-        while (colorStartIndex < colorParts.length && /^\d+$/.test(colorParts[colorStartIndex])) {
-          colorStartIndex++;
-        }
-
-        if (colorStartIndex < colorParts.length) {
-          color = colorParts.slice(colorStartIndex).join("-");
-        }
-      }
-    }
-
-    // Determine base slug - always generate from base name to ensure consistency
-    let baseSlug = baseName.toLowerCase().replace(/\s+/g, "-");
-
-    // Group products by base name
-    if (!groupedProducts[baseName]) {
-      // Check if this product is in clearance sale
-      const isInClearanceSale = clearanceSaleBaseNames.has(baseName);
-      const salePercent = isInClearanceSale ? getRandomSalePercent() : undefined;
-
-      groupedProducts[baseName] = {
-        ...product,
-        name: baseName,
-        slug: baseSlug,
-        collectionId: collectionId,
-        saleInfo: {
-          isOnSale: isInClearanceSale,
-          ...(isInClearanceSale && { salePercent: salePercent })
-        },
-        specifications: {
-          gender: 'Unisex'
-        },
-        variants: [],
-      };
-      // Remove fields that shouldn't be at root level or are outdated
-      delete groupedProducts[baseName].categoryId;
-      delete groupedProducts[baseName].CollectionId;
-      delete groupedProducts[baseName].images; // Images should only be in variants
-      delete groupedProducts[baseName].sale; // Replace with saleInfo
-    }
-
-    // Normalize variants - extract and normalize colors from each variant's SKU
-    if (product.variants && Array.isArray(product.variants)) {
-      product.variants.forEach((variant: any, index: number) => {
-        let variantColor = "";
-
-        // For SUNGLASSES products, always extract color from SKU
-        if (product.name.toUpperCase().includes(" SUNGLASSES") && variant.sku && matchingCollection) {
-          const collectionSlug = matchingCollection.slug;
-          if (variant.sku.startsWith(collectionSlug + "-")) {
-            const afterCollection = variant.sku.substring(collectionSlug.length + 1);
-            const colorParts = afterCollection.split("-");
-
-            // Skip numeric parts and "sunglasses" keyword
-            let colorStartIndex = 0;
-            while (
-              colorStartIndex < colorParts.length &&
-              (/^\d+$/.test(colorParts[colorStartIndex]) ||
-                colorParts[colorStartIndex].toLowerCase() === "sunglasses")
-            ) {
-              colorStartIndex++;
-            }
-
-            if (colorStartIndex < colorParts.length) {
-              variantColor = colorParts.slice(colorStartIndex).join("-");
-            }
-          }
-        } else {
-          // For other products, use variant.color field
-          variantColor = variant.color || "";
-
-          // Normalize the color (convert to lowercase with hyphens)
-          if (variantColor !== "") {
-            variantColor = variantColor.toLowerCase().replace(/\s*-\s*/g, "-").replace(/\s+/g, "-");
-          } else if (variant.sku && matchingCollection) {
-            // Try to extract color from variant SKU if color is empty
-            const collectionSlug = matchingCollection.slug;
-            if (variant.sku.startsWith(collectionSlug + "-")) {
-              const afterCollection = variant.sku.substring(collectionSlug.length + 1);
-              const colorParts = afterCollection.split("-");
-
-              // Skip numeric parts and "sunglasses" keyword
-              let colorStartIndex = 0;
-              while (
-                colorStartIndex < colorParts.length &&
-                (/^\d+$/.test(colorParts[colorStartIndex]) ||
-                  colorParts[colorStartIndex].toLowerCase() === "sunglasses")
-              ) {
-                colorStartIndex++;
-              }
-
-              if (colorStartIndex < colorParts.length) {
-                variantColor = colorParts.slice(colorStartIndex).join("-");
-              }
-            }
-          }
-        }
-
-        groupedProducts[baseName].variants.push({
-          sku: variant.sku,
-          color: variantColor,
-          size: variant.size || "",
-          price: variant.price,
-          originalPrice: variant.originalPrice || variant.price,
-          images: variant.images || [],
-          isDefault: index === 0, // First variant is default
-          stock: getRandomStock(), // Random stock 1-10
-        });
-      });
-    } else {
-      // If no variants array, add a single variant entry
-      groupedProducts[baseName].variants.push({
-        sku: product.sku || "",
-        color: color,
-        size: product.size || "",
-        price: product.price,
-        originalPrice: product.originalPrice || product.price,
-        images: product.images || [],
-        isDefault: groupedProducts[baseName].variants.length === 0,
-        stock: getRandomStock(), // Random stock 1-10
-      });
-    }
-  });
-
-  const normalizedProducts = Object.values(groupedProducts);
-
-  // 4. Write normalized files
-  fs.writeFileSync(
-    normalizedCollectionsPath,
-    JSON.stringify(normalizedCollections, null, 2),
-  );
-  console.log(
-    `✅ Normalized collections saved to ${normalizedCollectionsPath}`,
-  );
-
-  fs.writeFileSync(
-    normalizedProductsPath,
-    JSON.stringify(normalizedProducts, null, 2),
-  );
-  console.log(`✅ Normalized products saved to ${normalizedProductsPath}`);
+type SourceProduct = {
+  slug: string;
+  name: string;
+  availability?: string;
+  type?: string;
+  vendor?: string;
+  images?: string[];
+  description?: string;
+  price?: {
+    amount?: number;
+  };
+  sale?: boolean;
+  collection?: string;
 };
 
-normalizeData();
+type NormalizedVariant = {
+  sku: string;
+  color: string;
+  size: string;
+  price: number;
+  originalPrice: number;
+  images: string[];
+  isDefault: boolean;
+  stock: number;
+};
+
+const toBaseName = (value: string) => {
+  const trimmed = value.toUpperCase();
+  const sunglassesIndex = trimmed.indexOf(" SUNGLASSES");
+  const raw = sunglassesIndex !== -1 ? value.substring(0, sunglassesIndex).trim() : value;
+  const dashIndex = raw.indexOf(" - ");
+  return dashIndex !== -1 ? raw.substring(0, dashIndex).trim() : raw.trim();
+};
+
+const toSlugBase = (value: string) => normalizeLabel(value);
+
+const getRandomStock = () => Math.floor(Math.random() * 10) + 1;
+
+const normalizeColorFromName = (value: string) =>
+  value.toLowerCase().replace(/\s*-/g, "-").replace(/\s+/g, "-");
+
+const parseCloudinaryUrl = (value: string) => {
+  const parsed = new URL(value);
+  const cloudName = parsed.hostname;
+  const apiKey = parsed.username;
+  const apiSecret = parsed.password;
+
+  return { cloudName, apiKey, apiSecret };
+};
+
+const uploadFolderImages = async (folderPath: string, publicFolder: string) => {
+  const files = fs
+    .readdirSync(folderPath)
+    .filter((file) => !file.includes(":Zone.Identifier"))
+    .filter((file) => /\.(jpe?g|png)$/i.test(file))
+    .sort((left, right) => left.localeCompare(right));
+
+  const uploaded = [] as string[];
+
+  for (const file of files) {
+    const uploadedFile = await cloudinary.uploader.upload(path.join(folderPath, file), {
+      folder: publicFolder,
+      public_id: path.parse(file).name,
+      overwrite: true,
+      unique_filename: false,
+      resource_type: "image",
+    });
+    uploaded.push(uploadedFile.secure_url);
+  }
+
+  return uploaded;
+};
+
+const seedDatabase = async () => {
+  const cloudinaryUrl = process.env.CLOUDINARY_URL;
+  if (cloudinaryUrl === undefined || cloudinaryUrl === "") {
+    throw new Error("Please provide CLOUDINARY_URL in .env");
+  }
+
+  const cloudinaryConfig = parseCloudinaryUrl(cloudinaryUrl);
+  cloudinary.config({
+    cloud_name: cloudinaryConfig.cloudName,
+    api_key: cloudinaryConfig.apiKey,
+    api_secret: cloudinaryConfig.apiSecret,
+    secure: true,
+  });
+
+  const collectionsData = JSON.parse(fs.readFileSync(collectionsPath, "utf-8")) as Array<{
+    _id: string;
+    name: string;
+    slug: string;
+  }>;
+
+  const source = JSON.parse(fs.readFileSync(inputPath, "utf-8")) as {
+    products: SourceProduct[];
+  };
+
+  const collectionByName = new Map(collectionsData.map((collection) => [collection.name.toLowerCase(), collection]));
+  const collectionBySlug = new Map(collectionsData.map((collection) => [collection.slug, collection]));
+
+  const parsePrice = (product: SourceProduct) => {
+    const formatted = product.price?.amount;
+    if (typeof formatted === "number" && formatted > 0 && formatted < 10000000) {
+      return formatted;
+    }
+
+    const text = product.price?.formatted ?? "";
+    const match = text.match(/([0-9][0-9,\.]*)\s*VND/);
+    if (match !== null) {
+      return Number(match[1].replace(/,/g, ""));
+    }
+
+    return 2400000;
+  };
+
+  const normalizedProducts = [] as Array<Record<string, unknown>>;
+
+  for (const product of source.products) {
+    const baseName = toBaseName(product.name);
+    const slugBase = product.slug;
+    const collectionKey = (product.collection ?? "").toLowerCase().replace(/\s+/g, "-");
+    const matchingCollection = collectionByName.get((product.collection ?? "").toLowerCase()) ?? collectionBySlug.get(collectionKey);
+
+    if (matchingCollection === undefined) {
+      throw new Error(`Missing collection mapping for product: ${product.name}`);
+    }
+
+    const productFolder = path.join(imagesRoot, product.slug);
+    if (fs.existsSync(productFolder) === false) {
+      throw new Error(`Missing image folder for slug: ${product.slug}`);
+    }
+
+    const cloudinaryImages = await uploadFolderImages(productFolder, `MyProject/${product.slug}`);
+    const price = parsePrice(product);
+    const color = normalizeColorFromName(product.slug.replace(/^.*?-sunglasses-/, "").replace(/-/g, " "));
+
+    const variants: NormalizedVariant[] = [
+      {
+        sku: product.slug,
+        color,
+        size: "",
+        price,
+        originalPrice: price,
+        images: cloudinaryImages,
+        isDefault: true,
+        stock: getRandomStock(),
+      },
+    ];
+
+    normalizedProducts.push({
+      name: baseName,
+      slug: slugBase,
+      brand: product.vendor ?? "SEESONvn",
+      availability: product.availability ?? "in_stock",
+      type: product.type ?? "Sunglasses",
+      description: product.description ?? "",
+      specifications: {
+        gender: "Unisex",
+      },
+      variants,
+      rating: {
+        avg: 0,
+        count: 0,
+      },
+      isActive: true,
+      collectionId: matchingCollection._id,
+      saleInfo: {
+        isOnSale: product.sale === true,
+      },
+    });
+  }
+
+  fs.writeFileSync(outputPath, JSON.stringify(normalizedProducts, null, 2));
+  console.log(`✅ Normalized sunglasses saved to ${outputPath}`);
+};
+
+seedDatabase().catch((error: unknown) => {
+  console.error("❌ Error normalizing sunglasses:", error);
+  process.exit(1);
+});

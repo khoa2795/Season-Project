@@ -7,7 +7,7 @@ import { fileURLToPath } from "url";
 import { Collection } from "../models/Collection.js";
 import { Product } from "../models/Product.js";
 
-dotenv.config({ path: "../.env" });
+dotenv.config({ path: path.resolve(process.cwd(), ".env") });
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -44,6 +44,9 @@ const seedDatabase = async () => {
     const sunglasses = JSON.parse(sunglassesRaw);
     const eyeglasses = JSON.parse(eyeglassesRaw);
     const products = [...sunglasses, ...eyeglasses];
+    const uniqueProducts = Array.from(
+      new Map(products.map((product) => [product.slug, product])).values(),
+    );
 
     // 2. Clear entire database (drop all schemas and data)
     if (mongoose.connection.db) {
@@ -59,8 +62,8 @@ const seedDatabase = async () => {
     await Collection.insertMany(collections);
     console.log(`Successfully seeded ${collections.length} collections!`);
 
-    await Product.insertMany(products);
-    console.log(`Successfully seeded ${products.length} products!`);
+    await Product.insertMany(uniqueProducts);
+    console.log(`Successfully seeded ${uniqueProducts.length} products!`);
 
     process.exit(0);
   } catch (error) {
