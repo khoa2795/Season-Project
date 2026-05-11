@@ -33,6 +33,7 @@ type SourceProduct = {
   description?: string;
   price?: {
     amount?: number;
+    formatted?: string;
   };
   sale?: boolean;
   collection?: string;
@@ -56,8 +57,6 @@ const toBaseName = (value: string) => {
   const dashIndex = raw.indexOf(" - ");
   return dashIndex !== -1 ? raw.substring(0, dashIndex).trim() : raw.trim();
 };
-
-const toSlugBase = (value: string) => normalizeLabel(value);
 
 const getRandomStock = () => Math.floor(Math.random() * 10) + 1;
 
@@ -131,7 +130,7 @@ const seedDatabase = async () => {
 
     const text = product.price?.formatted ?? "";
     const match = text.match(/([0-9][0-9,\.]*)\s*VND/);
-    if (match !== null) {
+    if (match !== null && match[1] !== undefined) {
       return Number(match[1].replace(/,/g, ""));
     }
 
@@ -144,7 +143,9 @@ const seedDatabase = async () => {
     const baseName = toBaseName(product.name);
     const slugBase = product.slug;
     const collectionKey = (product.collection ?? "").toLowerCase().replace(/\s+/g, "-");
-    const matchingCollection = collectionByName.get((product.collection ?? "").toLowerCase()) ?? collectionBySlug.get(collectionKey);
+    const matchingCollection =
+      collectionByName.get((product.collection ?? "").toLowerCase()) ??
+      collectionBySlug.get(collectionKey);
 
     if (matchingCollection === undefined) {
       throw new Error(`Missing collection mapping for product: ${product.name}`);

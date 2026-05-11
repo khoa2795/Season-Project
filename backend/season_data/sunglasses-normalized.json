@@ -17,16 +17,16 @@
         "price": 2950000,
         "originalPrice": 2950000,
         "images": [
-          "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471846/MyProject/the-set-square-01-sunglasses-black-black/image_01.jpg",
-          "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471847/MyProject/the-set-square-01-sunglasses-black-black/image_02.jpg",
-          "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471849/MyProject/the-set-square-01-sunglasses-black-black/image_03.jpg",
+          "https://res.cloudinary.com/dzpflddlo/image/upload/v1778472700/MyProject/the-set-square-01-sunglasses-black-black/image_01.jpg",
+          "https://res.cloudinary.com/dzpflddlo/image/upload/v1778472704/MyProject/the-set-square-01-sunglasses-black-black/image_02.jpg",
+          "https://res.cloudinary.com/dzpflddlo/image/upload/v1778472707/MyProject/the-set-square-01-sunglasses-black-black/image_03.jpg",
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471850/MyProject/the-set-square-01-sunglasses-black-black/image_04.jpg",
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471851/MyProject/the-set-square-01-sunglasses-black-black/image_05.jpg",
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471853/MyProject/the-set-square-01-sunglasses-black-black/image_06.jpg",
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471854/MyProject/the-set-square-01-sunglasses-black-black/image_07.jpg"
         ],
         "isDefault": true,
-        "stock": 9
+        "stock": 3
       }
     ],
     "rating": {
@@ -65,7 +65,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471860/MyProject/the-obsidian-02-sunglasses-black-black/image_06.jpg"
         ],
         "isDefault": true,
-        "stock": 2
+        "stock": 8
       }
     ],
     "rating": {
@@ -96,15 +96,15 @@
         "price": 3350000,
         "originalPrice": 3350000,
         "images": [
-          "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471862/MyProject/the-athletes-01-sunglasses-black-black/image_01.png",
-          "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471863/MyProject/the-athletes-01-sunglasses-black-black/image_02.png",
-          "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471864/MyProject/the-athletes-01-sunglasses-black-black/image_03.png",
+          "https://res.cloudinary.com/dzpflddlo/image/upload/v1778472751/MyProject/the-athletes-01-sunglasses-black-black/image_01.png",
+          "https://res.cloudinary.com/dzpflddlo/image/upload/v1778472807/MyProject/the-athletes-01-sunglasses-black-black/image_02.png",
+          "https://res.cloudinary.com/dzpflddlo/image/upload/v1778472814/MyProject/the-athletes-01-sunglasses-black-black/image_03.png",
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471865/MyProject/the-athletes-01-sunglasses-black-black/image_04.png",
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471866/MyProject/the-athletes-01-sunglasses-black-black/image_05.png",
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471868/MyProject/the-athletes-01-sunglasses-black-black/image_06.jpg"
         ],
         "isDefault": true,
-        "stock": 8
+        "stock": 5
       }
     ],
     "rating": {
@@ -142,7 +142,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471873/MyProject/the-soap-08-sunglasses-grey-rhino/image_05.jpg"
         ],
         "isDefault": true,
-        "stock": 5
+        "stock": 6
       }
     ],
     "rating": {
@@ -181,7 +181,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471880/MyProject/the-vertebra-02-sunglasses-purple-purple/image_06.jpg"
         ],
         "isDefault": true,
-        "stock": 10
+        "stock": 6
       }
     ],
     "rating": {
@@ -214,13 +214,13 @@
         "images": [
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471881/MyProject/the-vertebra-01-sunglasses-purple-purple/image_01.jpg",
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471883/MyProject/the-vertebra-01-sunglasses-purple-purple/image_02.jpg",
-          "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471884/MyProject/the-vertebra-01-sunglasses-purple-purple/image_03.jpg",
-          "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471885/MyProject/the-vertebra-01-sunglasses-purple-purple/image_04.jpg",
-          "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471886/MyProject/the-vertebra-01-sunglasses-purple-purple/image_05.jpg",
-          "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471887/MyProject/the-vertebra-01-sunglasses-purple-purple/image_06.jpg"
+          "https://res.cloudinary.com/dzpflddlo/image/upload/v1778472923/MyProject/the-vertebra-01-sunglasses-purple-purple/image_03.jpg",
+          "https://res.cloudinary.com/dzpflddlo/image/upload/v1778472929/MyProject/the-vertebra-01-sunglasses-purple-purple/image_04.jpg",
+          "https://res.cloudinary.com/dzpflddlo/image/upload/v1778472932/MyProject/the-vertebra-01-sunglasses-purple-purple/image_05.jpg",
+          "https://res.cloudinary.com/dzpflddlo/image/upload/v1778472934/MyProject/the-vertebra-01-sunglasses-purple-purple/image_06.jpg"
         ],
         "isDefault": true,
-        "stock": 2
+        "stock": 9
       }
     ],
     "rating": {
@@ -260,7 +260,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471895/MyProject/the-ruler-03-sunglasses-silver-brown/image_07.jpg"
         ],
         "isDefault": true,
-        "stock": 3
+        "stock": 4
       }
     ],
     "rating": {
@@ -299,7 +299,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471902/MyProject/the-assembled-10-sunglasses-light-grey-mirror-iron/image_06.jpg"
         ],
         "isDefault": true,
-        "stock": 6
+        "stock": 7
       }
     ],
     "rating": {
@@ -338,7 +338,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471910/MyProject/the-vertebra-04-sunglasses-black-green-black/image_06.jpg"
         ],
         "isDefault": true,
-        "stock": 8
+        "stock": 2
       }
     ],
     "rating": {
@@ -378,7 +378,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471917/MyProject/the-ruler-03-sunglasses-silver-tinted-blue/image_07.jpg"
         ],
         "isDefault": true,
-        "stock": 10
+        "stock": 5
       }
     ],
     "rating": {
@@ -417,7 +417,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471925/MyProject/the-vertebra-04-sunglasses-silver-black/image_06.jpg"
         ],
         "isDefault": true,
-        "stock": 7
+        "stock": 4
       }
     ],
     "rating": {
@@ -457,7 +457,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471933/MyProject/the-assembled-10-sunglasses-light-grey-black/image_07.jpg"
         ],
         "isDefault": true,
-        "stock": 9
+        "stock": 8
       }
     ],
     "rating": {
@@ -496,7 +496,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471939/MyProject/the-cut-edge-01-sunglasses-teal-teal/image_06.jpg"
         ],
         "isDefault": true,
-        "stock": 5
+        "stock": 3
       }
     ],
     "rating": {
@@ -534,7 +534,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471946/MyProject/the-vertebra-04-sunglasses-black-purple-black/image_05.jpg"
         ],
         "isDefault": true,
-        "stock": 6
+        "stock": 10
       }
     ],
     "rating": {
@@ -572,7 +572,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471951/MyProject/the-athletes-12-sunglasses-solid-brown-black/image_05.jpg"
         ],
         "isDefault": true,
-        "stock": 3
+        "stock": 6
       }
     ],
     "rating": {
@@ -612,7 +612,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778471958/MyProject/the-obsidian-02-sunglasses-havana-green/image_07.jpg"
         ],
         "isDefault": true,
-        "stock": 7
+        "stock": 5
       }
     ],
     "rating": {
@@ -650,7 +650,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778472105/MyProject/the-athletes-12-sunglasses-grey-black/image_05.jpg"
         ],
         "isDefault": true,
-        "stock": 2
+        "stock": 9
       }
     ],
     "rating": {
@@ -689,7 +689,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778472113/MyProject/the-athletes-01-sunglasses-silver-black/image_06.jpg"
         ],
         "isDefault": true,
-        "stock": 1
+        "stock": 9
       }
     ],
     "rating": {
@@ -729,7 +729,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778472121/MyProject/the-soap-03-sunglasses-purple-purple/image_07.jpg"
         ],
         "isDefault": true,
-        "stock": 8
+        "stock": 5
       }
     ],
     "rating": {
@@ -769,7 +769,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778472129/MyProject/the-paper-knife-01-sunglasses-black-black/image_07.jpg"
         ],
         "isDefault": true,
-        "stock": 3
+        "stock": 1
       }
     ],
     "rating": {
@@ -809,7 +809,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778472139/MyProject/the-set-square-02-sunglasses-grey-rhino/image_07.jpg"
         ],
         "isDefault": true,
-        "stock": 9
+        "stock": 1
       }
     ],
     "rating": {
@@ -847,7 +847,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778472145/MyProject/the-soap-07-sunglasses-grey-rhino/image_06.jpg"
         ],
         "isDefault": true,
-        "stock": 8
+        "stock": 2
       }
     ],
     "rating": {
@@ -887,7 +887,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778472156/MyProject/the-snorkel-03-sunglasses-purple-mirror-iron/image_07.jpg"
         ],
         "isDefault": true,
-        "stock": 4
+        "stock": 3
       }
     ],
     "rating": {
@@ -927,7 +927,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778472166/MyProject/the-paper-knife-02-sunglasses-black-black/image_07.jpg"
         ],
         "isDefault": true,
-        "stock": 8
+        "stock": 9
       }
     ],
     "rating": {
@@ -965,7 +965,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778472175/MyProject/the-athletes-10-sunglasses-grey-black/image_05.jpg"
         ],
         "isDefault": true,
-        "stock": 3
+        "stock": 8
       }
     ],
     "rating": {
@@ -1041,7 +1041,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778472187/MyProject/the-athletes-14-sunglasses-grey-black/image_05.jpg"
         ],
         "isDefault": true,
-        "stock": 4
+        "stock": 9
       }
     ],
     "rating": {
@@ -1079,7 +1079,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778472194/MyProject/the-athletes-05-sunglasses-silver-tinted-blue/image_05.jpg"
         ],
         "isDefault": true,
-        "stock": 2
+        "stock": 5
       }
     ],
     "rating": {
@@ -1117,7 +1117,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778472201/MyProject/the-athletes-06-sunglasses-silver-yellow/image_05.jpg"
         ],
         "isDefault": true,
-        "stock": 10
+        "stock": 8
       }
     ],
     "rating": {
@@ -1155,7 +1155,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778472210/MyProject/the-athletes-07-sunglasses-silver-tinted-blue/image_05.jpg"
         ],
         "isDefault": true,
-        "stock": 8
+        "stock": 5
       }
     ],
     "rating": {
@@ -1193,7 +1193,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778472218/MyProject/the-athletes-15-sunglasses-brown-brown/image_05.jpg"
         ],
         "isDefault": true,
-        "stock": 2
+        "stock": 7
       }
     ],
     "rating": {
@@ -1269,7 +1269,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778472230/MyProject/the-athletes-07-sunglasses-silver-orange/image_05.jpg"
         ],
         "isDefault": true,
-        "stock": 1
+        "stock": 7
       }
     ],
     "rating": {
@@ -1307,7 +1307,7 @@
           "https://res.cloudinary.com/dzpflddlo/image/upload/v1778472236/MyProject/the-athletes-05-sunglasses-silver-yellow/image_05.jpg"
         ],
         "isDefault": true,
-        "stock": 9
+        "stock": 3
       }
     ],
     "rating": {
