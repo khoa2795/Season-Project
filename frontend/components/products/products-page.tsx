@@ -27,7 +27,7 @@ export function ProductsPage({ category }: ProductsPageProps) {
   if (categoryConfig === undefined) {
     return (
       <main className="bg-[#f5f5f7] text-neutral-950">
-        <section className="mx-auto flex w-full max-w-[1600px] flex-col gap-6 px-4 py-8 md:px-8 lg:px-10 lg:py-10">
+        <section className="mx-auto flex w-full max-w-400 flex-col gap-6 px-4 py-8 md:px-8 lg:px-10 lg:py-10">
           <p className="text-sm uppercase tracking-[0.2em] text-neutral-500">
             Category not found.
           </p>
@@ -38,7 +38,7 @@ export function ProductsPage({ category }: ProductsPageProps) {
 
   return (
     <main className="bg-[#f5f5f7] text-neutral-950">
-      <section className="mx-auto flex w-full max-w-[1600px] flex-col gap-6 px-4 py-8 md:px-8 lg:px-10 lg:py-10">
+      <section className="mx-auto flex w-full max-w-400 flex-col gap-6 px-4 py-8 md:px-8 lg:px-10 lg:py-10">
         <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2 text-xs uppercase tracking-[0.28em] text-neutral-500">
@@ -111,7 +111,7 @@ export function ProductsPage({ category }: ProductsPageProps) {
                       </CardHeader>
 
                       <CardContent className="p-4 pt-0">
-                        <div className="relative aspect-[3/4] overflow-hidden bg-white shadow-[0_12px_40px_rgba(0,0,0,0.04)] transition-transform duration-500 group-hover:-translate-y-1">
+                        <div className="relative aspect-3/4 overflow-hidden bg-white shadow-[0_12px_40px_rgba(0,0,0,0.04)] transition-transform duration-500 group-hover:-translate-y-1">
                           <div className="absolute inset-0 flex items-center justify-center p-8">
                             <div className="relative aspect-square w-[80%] overflow-hidden">
                               {product.image !== "" ? (
