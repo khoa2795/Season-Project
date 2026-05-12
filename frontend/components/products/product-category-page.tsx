@@ -8,7 +8,7 @@ type CategoryRouteProps = {
   }>;
 };
 
-export default async function CategoryRoute({ params }: CategoryRouteProps) {
+export default async function ProductCategoryPage({ params }: CategoryRouteProps) {
   const { category } = await params;
   const categoryConfig = getProductCategoryConfig(category);
 
