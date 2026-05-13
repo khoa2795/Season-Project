@@ -5,7 +5,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 import { Collection } from "../models/Collection.js";
-import { Product } from "../models/Product.js";
+import { Eyeglasses } from "../models/Eyeglasses.js";
+import { Sunglasses } from "../models/Sunglasses.js";
 
 dotenv.config({ path: path.resolve(process.cwd(), ".env") });
 
@@ -43,9 +44,11 @@ const seedDatabase = async () => {
     const collections = JSON.parse(collectionsRaw);
     const sunglasses = JSON.parse(sunglassesRaw);
     const eyeglasses = JSON.parse(eyeglassesRaw);
-    const products = [...sunglasses, ...eyeglasses];
-    const uniqueProducts = Array.from(
-      new Map(products.map((product) => [product.slug, product])).values(),
+    const uniqueSunglasses = Array.from(
+      new Map(sunglasses.map((product: { slug: string }) => [product.slug, product])).values(),
+    );
+    const uniqueEyeglasses = Array.from(
+      new Map(eyeglasses.map((product: { slug: string }) => [product.slug, product])).values(),
     );
 
     // 2. Clear entire database (drop all schemas and data)
@@ -62,8 +65,11 @@ const seedDatabase = async () => {
     await Collection.insertMany(collections);
     console.log(`Successfully seeded ${collections.length} collections!`);
 
-    await Product.insertMany(uniqueProducts);
-    console.log(`Successfully seeded ${uniqueProducts.length} products!`);
+    await Sunglasses.insertMany(uniqueSunglasses);
+    console.log(`Successfully seeded ${uniqueSunglasses.length} sunglasses!`);
+
+    await Eyeglasses.insertMany(uniqueEyeglasses);
+    console.log(`Successfully seeded ${uniqueEyeglasses.length} eyeglasses!`);
 
     process.exit(0);
   } catch (error) {

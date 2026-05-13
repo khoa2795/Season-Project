@@ -1,40 +1,59 @@
-/**
- * Validation middleware for glasses query parameters
- */
-import type { Request, Response, NextFunction } from 'express';
-import type { ValidatedGlassesQuery, GlassesQueryParams } from '../types/glasses.js';
+import type { NextFunction, Request, Response } from "express";
+import type {
+  EyeglassesQueryParams,
+  SunglassesQueryParams,
+  ValidatedEyeglassesQuery,
+  ValidatedSunglassesQuery,
+} from "../types/eyewear.js";
 
-export interface ValidatedRequest extends Request {
-  validatedQuery?: ValidatedGlassesQuery;
+export interface EyeglassesValidatedRequest extends Request {
+  validatedQuery?: ValidatedEyeglassesQuery;
 }
 
-/**
- * Validates and normalizes query parameters
- */
-export const validateGlassesQuery = (
-  req: ValidatedRequest,
-  res: Response,
-  next: NextFunction
-): void => {
-  const query = req.query as GlassesQueryParams;
+export interface SunglassesValidatedRequest extends Request {
+  validatedQuery?: ValidatedSunglassesQuery;
+}
 
-  // Parse and normalize parameters
-  let category = query.category?.toLowerCase().trim() || null;
-  let frameType = query.frameType?.trim() || null;
-  let offset = parseInt(query.offset as string) || 0;
+const parsePagination = (query: { offset?: number | string; limit?: number | string }) => {
+  const offset = parseInt(query.offset as string) || 0;
   let limit = parseInt(query.limit as string) || 12;
 
-  // Validate category
-  if (category && !['sunglasses', 'eyeglasses'].includes(category)) {
+  if (offset < 0) {
+    return { error: "Offset must be a non-negative number" };
+  }
+
+  if (limit < 1) {
+    return { error: "Limit must be at least 1" };
+  }
+
+  if (limit > 100) {
+    limit = 100;
+  }
+
+  return {
+    offset,
+    limit,
+  };
+};
+
+export const validateEyeglassesQuery = (
+  req: EyeglassesValidatedRequest,
+  res: Response,
+  next: NextFunction,
+): void => {
+  const query = req.query as EyeglassesQueryParams;
+  const pagination = parsePagination(query);
+
+  if ("error" in pagination) {
     res.status(400).json({
       success: false,
-      error: "Invalid category. Use 'sunglasses' or 'eyeglasses'",
+      error: pagination.error,
     });
     return;
   }
 
-  // Validate frameType
-  if (frameType && !['acetate', 'metal'].includes(frameType.toLowerCase())) {
+  let frameType = query.frameType?.trim() || null;
+  if (frameType && !["acetate", "metal"].includes(frameType.toLowerCase())) {
     res.status(400).json({
       success: false,
       error: "Invalid frameType. Use 'Acetate' or 'Metal'",
@@ -42,45 +61,36 @@ export const validateGlassesQuery = (
     return;
   }
 
-  // Normalize frameType to proper case
   if (frameType) {
-    frameType = frameType.charAt(0).toUpperCase() + frameType.slice(1).toLowerCase();
+    frameType =
+      frameType.charAt(0).toUpperCase() + frameType.slice(1).toLowerCase();
   }
 
-  // Validate offset
-  if (offset < 0) {
-    res.status(400).json({
-      success: false,
-      error: 'Offset must be a non-negative number',
-    });
-    return;
-  }
-
-  // Validate and cap limit
-  if (limit < 1) {
-    res.status(400).json({
-      success: false,
-      error: 'Limit must be at least 1',
-    });
-    return;
-  }
-
-  if (limit > 100) {
-    limit = 100;
-  }
-
-  // Normalize category to proper case if specified
-  if (category) {
-    category = category === 'sunglasses' ? 'Sunglasses' : 'Eyeglasses';
-  }
-
-  // Attach validated query to request
   req.validatedQuery = {
-    category,
-    frameType,
-    offset,
-    limit,
+    frameType: frameType as ValidatedEyeglassesQuery["frameType"],
+    offset: pagination.offset,
+    limit: pagination.limit,
   };
 
+  next();
+};
+
+export const validateSunglassesQuery = (
+  req: SunglassesValidatedRequest,
+  res: Response,
+  next: NextFunction,
+): void => {
+  const query = req.query as SunglassesQueryParams;
+  const pagination = parsePagination(query);
+
+  if ("error" in pagination) {
+    res.status(400).json({
+      success: false,
+      error: pagination.error,
+    });
+    return;
+  }
+
+  req.validatedQuery = pagination;
   next();
 };
