@@ -9,6 +9,7 @@ import { transformProduct } from "./eyewearServiceShared.js";
 function buildFilter(query: ValidatedEyeglassesQuery): Record<string, unknown> {
   const filter: Record<string, unknown> = {
     isActive: true,
+    availability: "in_stock",
   };
 
   if (query.frameType) {
