@@ -1,10 +1,11 @@
 import type { DatabaseProduct, ProductResponse } from "../types/eyewear.js";
 
 export function transformProduct(product: DatabaseProduct): ProductResponse {
-  const defaultVariant = product.variants.find((variant) => variant.isDefault)
-    ?? product.variants[0];
+  const defaultVariant =
+    product.variants.find((variant) => variant.isDefault) ??
+    product.variants[0];
 
-  if (!defaultVariant) {
+  if (defaultVariant === undefined) {
     throw new Error(`Product ${product._id} has no variants`);
   }
 
