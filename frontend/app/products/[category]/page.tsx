@@ -1,5 +1,4 @@
-import { notFound } from "next/navigation";
-import { ProductsPage } from "@/components/products/products-page";
+import { notFound, redirect } from "next/navigation";
 import { getProductCategoryConfig } from "@/components/products/products-data";
 
 type CategoryRouteProps = {
@@ -8,7 +7,7 @@ type CategoryRouteProps = {
   }>;
 };
 
-export default async function ProductCategoryPage({ params }: CategoryRouteProps) {
+export default async function CategoryPage({ params }: CategoryRouteProps) {
   const { category } = await params;
   const categoryConfig = getProductCategoryConfig(category);
 
@@ -16,5 +15,5 @@ export default async function ProductCategoryPage({ params }: CategoryRouteProps
     notFound();
   }
 
-  return <ProductsPage category={category} />;
+  redirect(`/products/${category}/view-all`);
 }

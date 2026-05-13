@@ -52,7 +52,7 @@ export const menuConfig: MenuCategory[] = [
         items: [
           {
             label: "View All Eyeglasses",
-            href: "/products",
+            href: "/products/eyeglasses/view-all",
             badge: "viewall",
           },
         ],

@@ -16,12 +16,12 @@ import { Separator } from "@/components/ui/separator";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getProductCategoryConfig, productTabs } from "./products-data";
+import { Category, ProductsPageProps } from "./type";
 
-type ProductsPageProps = {
-  category: string;
-};
-
-export function ProductsPage({ category }: ProductsPageProps) {
+export function ProductsPage<C extends Category>({
+  category,
+  view,
+}: ProductsPageProps<C>) {
   const categoryConfig = getProductCategoryConfig(category);
 
   if (categoryConfig === undefined) {
