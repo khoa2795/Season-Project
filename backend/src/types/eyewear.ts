@@ -1,5 +1,10 @@
 import type { IBaseProductFields, IVariant } from "../models/sharedProduct.js";
-import type { IFrameType } from "../models/Eyeglasses.js";
+import type {
+  IEyeglassesSpecifications,
+  IFrameType,
+} from "../models/Eyeglasses.js";
+import type { ISunglasses } from "../models/Sunglasses.js";
+import type { Types } from "mongoose";
 
 export interface BaseQueryParams {
   offset?: number | string;
@@ -23,17 +28,27 @@ export interface ValidatedSunglassesQuery {
   limit: number;
 }
 
-export interface ProductResponse {
+export interface BaseProductResponse {
   id: string;
   name: string;
   slug: string;
   type: string;
   brand: string;
-  price: number;
-  originalPrice: number;
-  images: string[];
+  collectionId: string;
+  saleInfo: IBaseProductFields["saleInfo"];
   availability: IBaseProductFields["availability"];
+  description: string;
+  variants: IVariant[];
   rating: IBaseProductFields["rating"];
+  isActive: boolean;
+}
+
+export interface EyeglassesProductResponse extends BaseProductResponse {
+  specifications: IEyeglassesSpecifications;
+}
+
+export interface SunglassesProductResponse extends BaseProductResponse {
+  specifications: ISunglasses["specifications"];
 }
 
 export interface PaginationData {
@@ -43,8 +58,13 @@ export interface PaginationData {
   hasMore: boolean;
 }
 
-export interface EyewearResponseData {
-  products: ProductResponse[];
+export interface EyeglassesResponseData {
+  products: EyeglassesProductResponse[];
+  pagination: PaginationData;
+}
+
+export interface SunglassesResponseData {
+  products: SunglassesProductResponse[];
   pagination: PaginationData;
 }
 
@@ -52,13 +72,25 @@ export interface ErrorResponse {
   error?: string;
 }
 
-export interface DatabaseProduct {
+export interface BaseDatabaseProduct {
   _id: string;
   name: string;
   slug: string;
   type: string;
+  collectionId: Types.ObjectId | string;
   brand: string;
+  saleInfo: IBaseProductFields["saleInfo"];
   availability: IBaseProductFields["availability"];
+  description: string;
   rating: IBaseProductFields["rating"];
   variants: IVariant[];
+  isActive: boolean;
+}
+
+export interface DatabaseEyeglassesProduct extends BaseDatabaseProduct {
+  specifications: IEyeglassesSpecifications;
+}
+
+export interface DatabaseSunglassesProduct extends BaseDatabaseProduct {
+  specifications: ISunglasses["specifications"];
 }

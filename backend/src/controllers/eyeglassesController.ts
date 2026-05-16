@@ -1,11 +1,14 @@
 import type { Response } from "express";
 import { getEyeglassesByFilters } from "../services/eyeglassesService.js";
-import type { ErrorResponse, EyewearResponseData } from "../types/eyewear.js";
+import type {
+  ErrorResponse,
+  EyeglassesResponseData,
+} from "../types/eyewear.js";
 import type { EyeglassesValidatedRequest } from "../middleware/validation.js";
 
 export async function getEyeglasses(
   req: EyeglassesValidatedRequest,
-  res: Response<EyewearResponseData | ErrorResponse>,
+  res: Response<EyeglassesResponseData | ErrorResponse>,
 ): Promise<void> {
   try {
     const validatedQuery = req.validatedQuery;

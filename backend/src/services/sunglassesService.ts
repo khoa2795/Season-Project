@@ -1,26 +1,48 @@
 import { Sunglasses } from "../models/Sunglasses.js";
 import type {
-  DatabaseProduct,
-  EyewearResponseData,
+  DatabaseSunglassesProduct,
+  SunglassesProductResponse,
+  SunglassesResponseData,
   ValidatedSunglassesQuery,
 } from "../types/eyewear.js";
-import { transformProduct } from "./eyewearServiceShared.js";
+
+function transformSunglassesProduct(
+  product: DatabaseSunglassesProduct,
+): SunglassesProductResponse {
+  return {
+    id: product._id.toString(),
+    name: product.name,
+    slug: product.slug,
+    type: product.type,
+    collectionId: product.collectionId.toString(),
+    brand: product.brand,
+    saleInfo: product.saleInfo,
+    availability: product.availability,
+    description: product.description,
+    specifications: product.specifications,
+    variants: product.variants,
+    rating: product.rating,
+    isActive: product.isActive,
+  };
+}
 
 export async function getSunglassesByFilters(
   query: ValidatedSunglassesQuery,
-): Promise<EyewearResponseData> {
+): Promise<SunglassesResponseData> {
   try {
     const filter = { isActive: true };
     const total = await Sunglasses.countDocuments(filter);
 
     const products = await Sunglasses.find(filter)
-      .select("name slug type brand availability rating variants")
+      .select(
+        "name slug type collectionId brand saleInfo availability description specifications variants rating isActive",
+      )
       .skip(query.offset)
       .limit(query.limit)
-      .lean<DatabaseProduct[]>();
+      .lean<DatabaseSunglassesProduct[]>();
 
     return {
-      products: products.map(transformProduct),
+      products: products.map(transformSunglassesProduct),
       pagination: {
         offset: query.offset,
         limit: query.limit,
