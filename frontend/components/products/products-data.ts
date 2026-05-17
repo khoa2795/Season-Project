@@ -5,7 +5,6 @@ export type ProductVariant = {
   color: string;
   size: string;
   price: number;
-  originalPrice: number;
   images: string[];
   isDefault: boolean;
   stock: number;
@@ -16,9 +15,7 @@ export type ProductItem = {
   slug: string;
   collectionId: string;
   brand: string;
-  saleInfo: {
-    isOnSale: boolean;
-  };
+  salePercent: number;
   availability: string;
   type: string;
   description: string;
@@ -66,8 +63,11 @@ export const getProductPreview = (product: ProductItem) => {
     image: defaultVariant?.images[0] ?? "",
     colorCount: getVariantCountLabel(product.variants.length),
     price: defaultVariant?.price ?? 0,
-    originalPrice: defaultVariant?.originalPrice ?? 0,
-    isOnSale: product.saleInfo.isOnSale,
+    originalPrice:
+      product.salePercent > 0
+        ? Math.round((defaultVariant?.price ?? 0) / (1 - product.salePercent / 100))
+        : defaultVariant?.price ?? 0,
+    isOnSale: product.salePercent > 0,
     frameType: product.specifications.frameType.size,
     material: product.specifications.frameType.material,
   };
