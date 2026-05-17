@@ -1,3 +1,4 @@
+import cors from "cors";
 import express, { type Request, type Response } from "express";
 import dotenv from "dotenv";
 import eyeglassesRouter from "./routes/eyeglasses.js";
@@ -7,12 +8,18 @@ import sunglassesRouter from "./routes/sunglasses.js";
 dotenv.config({ path: "../.env" });
 
 const app = express();
-const port = process.env.PORT || 3001;
+const allowedOrigin = process.env.ALLOWED_ORIGIN;
 
+app.use(
+  cors({
+    origin: allowedOrigin,
+    credentials: true,
+  }),
+);
 app.use(express.json());
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('TypeScript Express Backend is running!');
+app.get("/", (req: Request, res: Response) => {
+  res.send("TypeScript Express Backend is running!");
 });
 
 app.use("/api/eyeglasses", eyeglassesRouter);
