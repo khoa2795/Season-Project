@@ -1,8 +1,5 @@
-import {
-  ProductAvailabilityEnum,
-  ProductGenderEnum,
-} from "../../enums";
-import type { ProductAvailability, ProductGender } from "../type";
+import { ProductAvailabilityEnum, ProductGenderEnum } from "../enums";
+import type { ProductAvailability, ProductGender } from "./type";
 
 export interface RatingArgs {
   avg: number;

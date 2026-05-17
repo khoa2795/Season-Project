@@ -1,46 +1,56 @@
-import { ProductTypeEnum } from "../../../enums";
-import type { ProductAvailability, ProductGender } from "../../type";
+import { FrameMaterialEnum, FrameSizeEnum, ProductTypeEnum } from "../../enums";
+import type {
+  FrameMaterial,
+  FrameSize,
+  ProductAvailability,
+  ProductGender,
+} from "../type";
 import { getAvailabilityOrDefault, ProductVariant, Rating } from "../shared";
 
-export interface SunglassesSpecificationsArgs {
+export interface EyeglassesSpecificationsArgs {
   gender: ProductGender;
+  frameType: FrameType;
 }
 
-export class SunglassesSpecifications {
-  gender: ProductGender;
+export class FrameType {
+  material: FrameMaterial;
+  size: FrameSize;
 
-  constructor(args: SunglassesSpecificationsArgs) {
-    this.gender = args.gender;
+  constructor(args: { material: FrameMaterial; size: FrameSize }) {
+    this.material = args.material;
+    this.size = args.size;
   }
 
-  static deser(data: any): SunglassesSpecifications {
-    return new SunglassesSpecifications({
-      gender: data?.gender,
+  static deser(data: any): FrameType {
+    return new FrameType({
+      material: data?.material ?? FrameMaterialEnum.Acetate,
+      size: data?.size ?? FrameSizeEnum.Medium,
     });
   }
 }
 
-export interface SunglassesProductArgs {
-  type: ProductTypeEnum.Sunglasses;
-  id: string;
-  name: string;
-  slug: string;
-  collectionId: string;
-  brand: string;
-  salePercent: number;
-  availability: ProductAvailability;
-  description: string;
-  variants: ProductVariant[];
-  rating: Rating;
-  isActive: boolean;
-  specifications: SunglassesSpecifications;
+export class EyeglassesSpecifications {
+  gender: ProductGender;
+  frameType: FrameType;
+
+  constructor(args: EyeglassesSpecificationsArgs) {
+    this.gender = args.gender;
+    this.frameType = args.frameType;
+  }
+
+  static deser(data: any): EyeglassesSpecifications {
+    return new EyeglassesSpecifications({
+      gender: data?.gender,
+      frameType: FrameType.deser(data?.frameType),
+    });
+  }
 }
 
-export class SunglassesProduct {
+export interface EyeglassesProductArgs {
+  type: ProductTypeEnum.Eyeglasses;
   id: string;
   name: string;
   slug: string;
-  type: ProductTypeEnum.Sunglasses;
   collectionId: string;
   brand: string;
   salePercent: number;
@@ -49,9 +59,25 @@ export class SunglassesProduct {
   variants: ProductVariant[];
   rating: Rating;
   isActive: boolean;
-  specifications: SunglassesSpecifications;
+  specifications: EyeglassesSpecifications;
+}
 
-  constructor(args: SunglassesProductArgs) {
+export class EyeglassesProduct {
+  id: string;
+  name: string;
+  slug: string;
+  type: ProductTypeEnum.Eyeglasses;
+  collectionId: string;
+  brand: string;
+  salePercent: number;
+  availability: ProductAvailability;
+  description: string;
+  variants: ProductVariant[];
+  rating: Rating;
+  isActive: boolean;
+  specifications: EyeglassesSpecifications;
+
+  constructor(args: EyeglassesProductArgs) {
     this.id = args.id;
     this.name = args.name;
     this.slug = args.slug;
@@ -67,18 +93,19 @@ export class SunglassesProduct {
     this.specifications = args.specifications;
   }
 
-  static deser(data: any): SunglassesProduct {
-    return new SunglassesProduct({
+  // Converts the raw backend DTO into a frontend model instance.
+  static deser(data: any): EyeglassesProduct {
+    return new EyeglassesProduct({
       id: data.id,
       name: data.name,
       slug: data.slug,
-      type: data.type ?? ProductTypeEnum.Sunglasses,
+      type: data.type ?? ProductTypeEnum.Eyeglasses,
       collectionId: data.collectionId,
       brand: data.brand,
       salePercent: data.salePercent ?? 0,
       availability: getAvailabilityOrDefault(data.availability),
       description: data.description,
-      specifications: SunglassesSpecifications.deser(data.specifications),
+      specifications: EyeglassesSpecifications.deser(data.specifications),
       variants: (data.variants ?? []).map((variant: any) =>
         ProductVariant.deser(variant),
       ),
@@ -112,5 +139,12 @@ export class SunglassesProduct {
   get isOnSale(): boolean {
     return this.salePercent > 0;
   }
-}
 
+  get frameMaterial(): FrameMaterial {
+    return this.specifications.frameType.material;
+  }
+
+  get frameSize(): FrameSize {
+    return this.specifications.frameType.size;
+  }
+}
