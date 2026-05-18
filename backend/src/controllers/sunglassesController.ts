@@ -13,7 +13,7 @@ export async function getSunglasses(
   try {
     const validatedQuery = req.validatedQuery;
 
-    if (!validatedQuery) {
+    if (validatedQuery === undefined) {
       res.status(400).json({
         error: "Invalid query parameters",
       });

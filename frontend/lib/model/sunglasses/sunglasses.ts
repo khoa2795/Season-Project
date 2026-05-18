@@ -21,7 +21,7 @@ export class SunglassesSpecifications {
 }
 
 export interface SunglassesProductArgs {
-  type: ProductTypeEnum.Sunglasses;
+  type: ProductTypeEnum.sunglasses;
   id: string;
   name: string;
   slug: string;
@@ -40,7 +40,7 @@ export class SunglassesProduct {
   id: string;
   name: string;
   slug: string;
-  type: ProductTypeEnum.Sunglasses;
+  type: ProductTypeEnum.sunglasses;
   collectionId: string;
   brand: string;
   salePercent: number;
@@ -72,7 +72,7 @@ export class SunglassesProduct {
       id: data.id,
       name: data.name,
       slug: data.slug,
-      type: data.type ?? ProductTypeEnum.Sunglasses,
+      type: data.type ?? ProductTypeEnum.sunglasses,
       collectionId: data.collectionId,
       brand: data.brand,
       salePercent: data.salePercent ?? 0,

@@ -1,13 +1,10 @@
-export type GetEyeglassesParams = {
-  frameType?: "acetate" | "metal";
+export type GetPaginationParams = {
   offset?: number;
   limit?: number;
 };
 
-// Serializes frontend filter state into query params expected by the backend.
-export function serializeEyeglassesQuery(params: GetEyeglassesParams) {
+export function serializePaginationQuery(params: GetPaginationParams) {
   return {
-    frameType: params.frameType,
     offset: params.offset,
     limit: params.limit,
   };

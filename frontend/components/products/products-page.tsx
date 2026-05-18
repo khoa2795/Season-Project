@@ -1,8 +1,7 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { Bookmark, ChevronRight } from "lucide-react";
+import { ProductTypeEnum } from "@/lib/enums";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,13 +14,21 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getProductCategoryConfig, productTabs } from "./products-data";
-import { Category, ProductsPageProps } from "./type";
+import { getProductCategoryConfig } from "./utils";
+import type { ProductCard } from "../../lib/model/misc";
+import type { ProductsPageProps } from "./type";
 
-export function ProductsPage<C extends Category>({
+type ProductsPageViewProps<C extends ProductTypeEnum = ProductTypeEnum> =
+  ProductsPageProps<C> & {
+    products: ProductCard[];
+    totalItems: number;
+  };
+
+export function ProductsPage<C extends ProductTypeEnum = ProductTypeEnum>({
   category,
-  view,
-}: ProductsPageProps<C>) {
+  products,
+  totalItems,
+}: ProductsPageViewProps<C>) {
   const categoryConfig = getProductCategoryConfig(category);
 
   if (categoryConfig === undefined) {
@@ -56,7 +63,7 @@ export function ProductsPage<C extends Category>({
                 variant="secondary"
                 className="w-fit rounded-full px-3 py-1 text-[11px] uppercase tracking-[0.2em]"
               >
-                {categoryConfig.itemsLabel}
+                {totalItems} Items
               </Badge>
             </div>
           </div>
@@ -73,9 +80,9 @@ export function ProductsPage<C extends Category>({
 
         <div className="flex flex-col gap-4">
           <ScrollArea className="w-full whitespace-nowrap">
-            <Tabs defaultValue="All Eyeglasses" className="w-full">
+            <Tabs defaultValue={categoryConfig.tabs[0]} className="w-full">
               <TabsList className="h-auto w-full justify-start rounded-none bg-transparent p-0">
-                {productTabs.map((tab) => (
+                {categoryConfig.tabs.map((tab) => (
                   <TabsTrigger
                     key={tab}
                     value={tab}
@@ -87,9 +94,9 @@ export function ProductsPage<C extends Category>({
               </TabsList>
               <ScrollBar orientation="horizontal" />
 
-              <TabsContent value="All Eyeglasses" className="mt-6">
+              <TabsContent value={categoryConfig.tabs[0]} className="mt-6">
                 <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                  {categoryConfig.products.map((product) => (
+                  {products.map((product, index) => (
                     <Card
                       key={product.slug}
                       className="group overflow-hidden border-0 bg-[#f5f5f7] shadow-none"
@@ -119,6 +126,7 @@ export function ProductsPage<C extends Category>({
                                   src={product.image}
                                   alt={product.title}
                                   fill
+                                  loading={index === 0 ? "eager" : "lazy"}
                                   className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
                                   sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                                 />
@@ -130,9 +138,11 @@ export function ProductsPage<C extends Category>({
 
                       <CardFooter className="flex items-end justify-between gap-3 px-4 pb-4 pt-0">
                         <div className="flex flex-col gap-1">
-                          <p className="text-xs uppercase tracking-[0.22em] text-neutral-500">
-                            {product.frameType} / {product.material}
-                          </p>
+                          {product.meta ? (
+                            <p className="text-xs uppercase tracking-[0.22em] text-neutral-500">
+                              {product.meta}
+                            </p>
+                          ) : null}
                           <CardTitle className="text-lg font-serif font-normal uppercase tracking-[0.12em]">
                             {product.title}
                           </CardTitle>
@@ -151,8 +161,8 @@ export function ProductsPage<C extends Category>({
                 </div>
               </TabsContent>
 
-              {productTabs
-                .filter((tab) => tab !== "All Eyeglasses")
+              {categoryConfig.tabs
+                .filter((tab) => tab !== categoryConfig.tabs[0])
                 .map((tab) => (
                   <TabsContent
                     key={tab}

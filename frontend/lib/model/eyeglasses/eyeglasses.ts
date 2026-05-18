@@ -47,7 +47,7 @@ export class EyeglassesSpecifications {
 }
 
 export interface EyeglassesProductArgs {
-  type: ProductTypeEnum.Eyeglasses;
+  type: ProductTypeEnum.eyeglasses;
   id: string;
   name: string;
   slug: string;
@@ -66,7 +66,7 @@ export class EyeglassesProduct {
   id: string;
   name: string;
   slug: string;
-  type: ProductTypeEnum.Eyeglasses;
+  type: ProductTypeEnum.eyeglasses;
   collectionId: string;
   brand: string;
   salePercent: number;
@@ -99,7 +99,7 @@ export class EyeglassesProduct {
       id: data.id,
       name: data.name,
       slug: data.slug,
-      type: data.type ?? ProductTypeEnum.Eyeglasses,
+      type: data.type ?? ProductTypeEnum.eyeglasses,
       collectionId: data.collectionId,
       brand: data.brand,
       salePercent: data.salePercent ?? 0,

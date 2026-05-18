@@ -1,8 +1,8 @@
 // These enums mirror persisted/backend string values so components and models
 // can share one source of truth for comparisons and return types.
 export enum ProductTypeEnum {
-  Eyeglasses = "Eyeglasses",
-  Sunglasses = "Sunglasses",
+  eyeglasses = "eyeglasses",
+  sunglasses = "sunglasses",
 }
 
 export enum ProductAvailabilityEnum {

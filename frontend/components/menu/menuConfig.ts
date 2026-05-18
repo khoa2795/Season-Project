@@ -79,7 +79,7 @@ export const menuConfig: MenuCategory[] = [
         items: [
           {
             label: "View All Sunglasses",
-            href: "/products/sunglasses",
+            href: "/products/sunglasses/view-all",
           },
         ],
       },

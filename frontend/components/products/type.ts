@@ -1,30 +1,12 @@
-export type Category = "eyeglasses" | "sunglasses";
-
-export type EyeglassesView =
-  | "big"
-  | "medium"
-  | "small"
-  | "acetate"
-  | "metal"
-  | "sale"
-  | "bestsellers"
-  | "view-all";
-export type SunglassesView =
-  | "The Athletes"
-  | "The Soap"
-  | "The Ruler"
-  | "The Cut"
-  | "The Edge"
-  | "sale"
-  | "bestsellers"
-  | "view-all";
+import { ProductTypeEnum } from "@/lib/enums";
+import { EyeglassesView, SunglassesView } from "@/lib/model/type";
 
 export type ViewByCategory = {
-  eyeglasses: EyeglassesView;
-  sunglasses: SunglassesView;
+  [ProductTypeEnum.eyeglasses]: EyeglassesView;
+  [ProductTypeEnum.sunglasses]: SunglassesView;
 };
 
-export type ProductsPageProps<C extends Category = Category> = {
+export type ProductsPageProps<C extends ProductTypeEnum = ProductTypeEnum> = {
   category: C;
   view: ViewByCategory[C];
 };
