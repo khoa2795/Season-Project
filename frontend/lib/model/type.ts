@@ -19,7 +19,7 @@ export enum EyeglassesView {
   Medium = "Medium",
   Small = "Small",
   Sale = "Sale",
-  Bestsellers = "bestsellers",
+  Bestsellers = "Bestsellers",
   ViewAll = "view-all",
 }
 
@@ -29,7 +29,7 @@ export enum SunglassesView {
   TheRuler = "The Ruler",
   TheCut = "The Cut",
   TheEdge = "The Edge",
-  Sale = "sale",
-  Bestsellers = "bestsellers",
+  Sale = "Sale",
+  Bestsellers = "Bestsellers",
   ViewAll = "view-all",
 }

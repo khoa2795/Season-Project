@@ -25,6 +25,7 @@ export function ProductsPageShell<C extends ProductTypeEnum = ProductTypeEnum>({
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [isPending, startTransition] = useTransition();
 
+  const [error, setError] = useState<string | null>(null);
   const loadedCount = products.length;
   const canLoadMore = loadedCount < initialData.totalItems;
 
@@ -46,6 +47,8 @@ export function ProductsPageShell<C extends ProductTypeEnum = ProductTypeEnum>({
       startTransition(() => {
         setProducts((current) => [...current, ...response.records]);
       });
+    } catch (error) {
+      setError("Failed to load more products.");
     } finally {
       setIsLoadingMore(false);
     }
@@ -62,11 +65,12 @@ export function ProductsPageShell<C extends ProductTypeEnum = ProductTypeEnum>({
 
       <div className="flex flex-col items-center gap-4 pb-8">
         <p className="text-center text-[15px] italic text-neutral-600">
-          Showing {products.length} of {initialData.totalItems} products
+          <div className="h-px w-28 bg-linear-to-r from-neutral-400 via-neutral-300 to-transparent" />
         </p>
 
         <div className="h-px w-28 bg-linear-to-r from-neutral-400 via-neutral-300 to-transparent" />
 
+        {error && <p className="text-sm text-red-600">{error}</p>}
         {canLoadMore ? (
           <Button
             variant="outline"
