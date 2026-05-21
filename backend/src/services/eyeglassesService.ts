@@ -26,6 +26,25 @@ function buildFilter(query: ValidatedEyeglassesQuery): Record<string, unknown> {
   return filter;
 }
 
+function buildSortOrder(
+  sort: "price_asc" | "price_desc" | "name_asc" | "newest" | "rating_desc",
+): Record<string, 1 | -1> {
+  switch (sort) {
+    case "price_asc":
+      return { "variants.price": 1 };
+    case "price_desc":
+      return { "variants.price": -1 };
+    case "name_asc":
+      return { name: 1 };
+    case "newest":
+      return { _id: -1 };
+    case "rating_desc":
+      return { "rating.avg": -1, "rating.count": -1 };
+    default:
+      return { _id: -1 };
+  }
+}
+
 function transformEyeglassesProduct(
   product: DatabaseEyeglassesProduct,
 ): EyeglassesProductResponse {
@@ -51,12 +70,14 @@ export async function getEyeglassesByFilters(
 ): Promise<EyeglassesResponseData> {
   try {
     const filter = buildFilter(query);
+    const sortOrder = buildSortOrder(query.sort);
     const total = await Eyeglasses.countDocuments(filter);
 
     const products = await Eyeglasses.find(filter)
       .select(
         "name slug type collectionId brand salePercent availability description specifications variants rating isActive",
       )
+      .sort(sortOrder)
       .skip(query.offset)
       .limit(query.limit)
       .lean<DatabaseEyeglassesProduct[]>();

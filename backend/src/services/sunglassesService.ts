@@ -27,6 +27,25 @@ function transformSunglassesProduct(
   };
 }
 
+function buildSortOrder(
+  sort: "price_asc" | "price_desc" | "name_asc" | "newest" | "rating_desc",
+): Record<string, 1 | -1> {
+  switch (sort) {
+    case "price_asc":
+      return { "variants.price": 1 };
+    case "price_desc":
+      return { "variants.price": -1 };
+    case "name_asc":
+      return { name: 1 };
+    case "newest":
+      return { _id: -1 };
+    case "rating_desc":
+      return { "rating.avg": -1, "rating.count": -1 };
+    default:
+      return { _id: -1 };
+  }
+}
+
 export async function getSunglassesByFilters(
   query: ValidatedSunglassesQuery,
 ): Promise<SunglassesResponseData> {
@@ -56,12 +75,14 @@ export async function getSunglassesByFilters(
       filter.salePercent = { $gt: 0 };
     }
 
+    const sortOrder = buildSortOrder(query.sort);
     const total = await Sunglasses.countDocuments(filter);
 
     const products = await Sunglasses.find(filter)
       .select(
         "name slug type collectionId brand salePercent availability description specifications variants rating isActive",
       )
+      .sort(sortOrder)
       .skip(query.offset)
       .limit(query.limit)
       .lean<DatabaseSunglassesProduct[]>();

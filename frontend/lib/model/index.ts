@@ -1,6 +1,8 @@
 import { ListResponse } from "@/lib/fetcher";
 import { ProductTypeEnum } from "@/lib/enums";
 import type { EyeglassesView, SunglassesView } from "./type";
+import type { EyeglassesQuery } from "./eyeglasses/eyeglasses-query";
+import type { SunglassesQuery } from "./sunglasses/sunglasses-query";
 import { isSunglassesSlug, isEyeglassesSlug } from "./misc";
 import { PAGE_SIZE, ProductCard } from "./misc";
 import { fetchSunglassesBatch } from "./sunglasses/sunglasses-api";
@@ -11,13 +13,14 @@ export async function fetchProductsBatchByCategory(
   view: EyeglassesView | SunglassesView,
   offset: number,
   limit: number = PAGE_SIZE,
+  query?: EyeglassesQuery | SunglassesQuery,
 ): Promise<ListResponse<ProductCard>> {
   if (category === ProductTypeEnum.eyeglasses && isEyeglassesSlug(view)) {
-    return fetchEyeglassesBatch(view, offset, limit);
+    return fetchEyeglassesBatch(view, offset, limit, query as EyeglassesQuery);
   }
 
   if (category === ProductTypeEnum.sunglasses && isSunglassesSlug(view)) {
-    return fetchSunglassesBatch(view, offset, limit);
+    return fetchSunglassesBatch(view, offset, limit, query as SunglassesQuery);
   }
 
   return {

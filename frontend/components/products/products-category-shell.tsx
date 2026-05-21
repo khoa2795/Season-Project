@@ -5,7 +5,6 @@ import { useSelectedLayoutSegment } from "next/navigation";
 import type { ReactNode } from "react";
 import { ChevronRight } from "lucide-react";
 import { ProductTypeEnum } from "@/lib/enums";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { ProductCategoryConfig } from "./utils";
@@ -42,13 +41,6 @@ export function ProductsCategoryShell({
             <h1 className="text-2xl font-serif uppercase tracking-[0.18em] md:text-5xl">
               {categoryConfig.title}
             </h1>
-
-            <Button
-              variant="outline"
-              className="shrink-0 rounded-full px-4 text-xs uppercase tracking-[0.2em] sm:px-5 md:text-sm md:tracking-[0.22em]"
-            >
-              Sort & Filter
-            </Button>
           </div>
         </div>
 

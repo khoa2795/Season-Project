@@ -4,10 +4,10 @@ import { useEffect, useState, useTransition } from "react";
 import { ProductTypeEnum } from "@/lib/enums";
 import { Button } from "@/components/ui/button";
 import { ProductsPage } from "./products-page";
+import { SortSelector, type SortValue } from "./sort-selector";
 import { fetchProductsBatchByCategory } from "../../lib/model/";
 import { PAGE_SIZE, ProductCard, ProductsPageData } from "../../lib/model/misc";
 import { ProductsPageProps } from "./type";
-
 
 type ProductsPageShellProps<C extends ProductTypeEnum = ProductTypeEnum> = {
   category: C;
@@ -23,17 +23,46 @@ export function ProductsPageShell<C extends ProductTypeEnum = ProductTypeEnum>({
   const [products, setProducts] = useState<ProductCard[]>(
     initialData.initialProducts,
   );
+  const [totalItems, setTotalItems] = useState(initialData.totalItems);
+  const [sort, setSort] = useState<SortValue>("newest");
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setProducts(initialData.initialProducts);
+    setTotalItems(initialData.totalItems);
     setError(null);
+    setSort("newest");
   }, [initialData, view]);
 
   const loadedCount = products.length;
-  const canLoadMore = loadedCount < initialData.totalItems;
+  const canLoadMore = loadedCount < totalItems;
+
+  const handleSortChange = async (newSort: SortValue) => {
+    setSort(newSort);
+    setIsLoadingMore(true);
+
+    try {
+      const response = await fetchProductsBatchByCategory(
+        category,
+        view,
+        0,
+        PAGE_SIZE,
+        { sort: newSort },
+      );
+
+      startTransition(() => {
+        setProducts(response.records);
+        setTotalItems(response.total);
+        setError(null);
+      });
+    } catch (error) {
+      setError("Failed to change sort.");
+    } finally {
+      setIsLoadingMore(false);
+    }
+  };
 
   const loadMore = async () => {
     if (canLoadMore === false) {
@@ -48,6 +77,7 @@ export function ProductsPageShell<C extends ProductTypeEnum = ProductTypeEnum>({
         view,
         loadedCount,
         PAGE_SIZE,
+        { sort },
       );
 
       startTransition(() => {
@@ -62,17 +92,24 @@ export function ProductsPageShell<C extends ProductTypeEnum = ProductTypeEnum>({
 
   return (
     <div className="flex flex-col gap-8">
-      <ProductsPage products={products} totalItems={initialData.totalItems} />
+      {/* Sort Selector */}
+      <div className="flex justify-end">
+        <SortSelector value={sort} onChange={handleSortChange} />
+      </div>
 
+      {/* Products Grid */}
+      <ProductsPage products={products} totalItems={totalItems} />
+
+      {/* Load More Section */}
       <div className="flex flex-col items-center gap-4 pb-8">
         <p className="text-center text-[15px] italic text-neutral-600">
-          Showing {products.length} of {initialData.totalItems} products
+          Showing {products.length} of {totalItems} products
         </p>
 
         <div className="h-px w-28 bg-linear-to-r from-neutral-400 via-neutral-300 to-transparent" />
 
         {error && <p className="text-sm text-red-600">{error}</p>}
-        {canLoadMore ? (
+        {canLoadMore === true ? (
           <Button
             variant="outline"
             className="min-w-32 rounded-none px-8 py-6 uppercase tracking-[0.18em]"

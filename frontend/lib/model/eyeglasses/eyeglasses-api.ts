@@ -68,6 +68,7 @@ export async function fetchEyeglassesBatch(
   view: EyeglassesView,
   offset: number,
   limit: number = PAGE_SIZE,
+  query: EyeglassesQuery = {},
 ): Promise<ListResponse<ProductCard>> {
   if (view === EyeglassesView.Bestsellers) {
     return {
@@ -77,7 +78,7 @@ export async function fetchEyeglassesBatch(
   }
 
   const response = await fetchEyeglassesPage(
-    getEyeglassesQueryByView(view),
+    { ...getEyeglassesQueryByView(view), ...query },
     offset,
     limit,
   );

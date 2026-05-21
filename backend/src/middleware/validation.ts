@@ -72,6 +72,41 @@ const normalizeCollectionSlug = (value?: string): string | null => {
   return normalized === "" ? null : normalized;
 };
 
+const parseSort = (
+  sortParam?: string,
+): {
+  sort: "price_asc" | "price_desc" | "name_asc" | "newest" | "rating_desc";
+} | { error: string } => {
+  const validSortValues = [
+    "price_asc",
+    "price_desc",
+    "name_asc",
+    "newest",
+    "rating_desc",
+  ];
+
+  if (sortParam === undefined) {
+    return { sort: "newest" };
+  }
+
+  const normalized = sortParam.trim().toLowerCase();
+
+  if (validSortValues.includes(normalized)) {
+    return {
+      sort: normalized as
+        | "price_asc"
+        | "price_desc"
+        | "name_asc"
+        | "newest"
+        | "rating_desc",
+    };
+  }
+
+  return {
+    error: `Invalid sort value. Valid values are: ${validSortValues.join(", ")}`,
+  };
+};
+
 export const validateEyeglassesQuery = (
   req: EyeglassesValidatedRequest,
   res: Response,
@@ -112,10 +147,17 @@ export const validateEyeglassesQuery = (
     return;
   }
 
+  const sort = parseSort(query.sort);
+  if ("error" in sort) {
+    res.status(400).json({ error: sort.error });
+    return;
+  }
+
   req.validatedQuery = {
     frameType: frameType,
     frameSize: frameSize,
     sale: sale.sale,
+    sort: sort.sort,
     offset: pagination.offset,
     limit: pagination.limit,
   };
@@ -144,12 +186,19 @@ export const validateSunglassesQuery = (
     return;
   }
 
+  const sort = parseSort(query.sort);
+  if ("error" in sort) {
+    res.status(400).json({ error: sort.error });
+    return;
+  }
+
   const collectionSlug = normalizeCollectionSlug(query.collectionSlug);
 
   req.validatedQuery = {
     collectionSlug,
     ...pagination,
     sale: sale.sale,
+    sort: sort.sort,
   };
   next();
 };

@@ -59,9 +59,10 @@ export async function fetchSunglassesBatch(
   view: SunglassesView,
   offset: number,
   limit: number = PAGE_SIZE,
+  query: SunglassesQuery = {},
 ): Promise<ListResponse<ProductCard>> {
   const response = await fetchSunglassesPage(
-    getSunglassesQueryByView(view),
+    { ...getSunglassesQueryByView(view), ...query },
     offset,
     limit,
   );
