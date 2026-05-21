@@ -16,6 +16,13 @@ export type ProductsPageData = {
   totalItems: number;
 };
 
+export type CollectionFilterRecord = {
+  id: string;
+  name: string;
+  slug: string;
+  inStockCount: number;
+};
+
 export const getVariantCountLabel = (count: number) => {
   if (count === 1) {
     return "1 Color";

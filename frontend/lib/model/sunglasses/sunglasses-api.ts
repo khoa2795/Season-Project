@@ -1,4 +1,5 @@
 import { fetchList, ListResponse } from "@/lib/fetcher";
+import { ProductGenderEnum } from "@/lib/enums";
 import {
   SunglassesProduct,
   type SunglassesQuery,
@@ -25,16 +26,12 @@ const toSunglassesCard = (product: SunglassesProduct): ProductCard => ({
 });
 
 function getSunglassesQueryByView(view: SunglassesView): SunglassesQuery {
-  if (
-    view === SunglassesView.TheAssembled ||
-    view === SunglassesView.TheAthletes ||
-    view === SunglassesView.TheCutEdge ||
-    view === SunglassesView.TheObsidian ||
-    view === SunglassesView.TheSoap ||
-    view === SunglassesView.TheOffice ||
-    view === SunglassesView.TheVertebra
-  ) {
-    return { collectionSlug: view };
+  if (view === SunglassesView.Men) {
+    return { gender: ProductGenderEnum.Male };
+  }
+
+  if (view === SunglassesView.Women) {
+    return { gender: ProductGenderEnum.Female };
   }
 
   if (view === SunglassesView.Sale) {
@@ -80,5 +77,18 @@ export async function getSunglassesPageData(
   return {
     initialProducts: response.records,
     totalItems: response.total,
+  };
+}
+
+export async function fetchSunglassesCollectionBatch(
+  collectionSlug: string,
+  offset: number,
+  limit: number = PAGE_SIZE,
+): Promise<ListResponse<ProductCard>> {
+  const response = await fetchSunglassesPage({ collectionSlug }, offset, limit);
+
+  return {
+    records: response.records.map(toSunglassesCard),
+    total: response.total,
   };
 }

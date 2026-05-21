@@ -17,7 +17,6 @@ type ProductsPageViewProps = {
 };
 
 export function ProductsPage({ products, totalItems }: ProductsPageViewProps) {
-  console.log("Rendering ProductsPage with products:", products, "Total items:", totalItems);
   return (
     <div className="flex flex-col gap-4">
       <Badge

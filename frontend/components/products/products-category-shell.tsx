@@ -1,10 +1,13 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useSelectedLayoutSegment } from "next/navigation";
+import { useSelectedLayoutSegments } from "next/navigation";
 import type { ReactNode } from "react";
 import { ChevronRight } from "lucide-react";
 import { ProductTypeEnum } from "@/lib/enums";
+import { fetchCollectionFilters } from "@/lib/model";
+import { EyeglassesView, SunglassesView } from "@/lib/model/type";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
@@ -20,11 +23,72 @@ export function ProductsCategoryShell({
   categoryConfig,
   children,
 }: ProductsCategoryShellProps) {
-  const activeSlug = useSelectedLayoutSegment();
+  const segments = useSelectedLayoutSegments();
+  const activeSlug = segments[0];
+  const activeCollectionSlug = segments[1];
+  const [collectionFilters, setCollectionFilters] = useState<
+    Array<{ label: string; slug: string; href: string }>
+  >([]);
+  const [isLoadingCollectionFilters, setIsLoadingCollectionFilters] =
+    useState(false);
+
+  const isCollectionMode =
+    activeSlug === EyeglassesView.ViewByCollection ||
+    activeSlug === SunglassesView.ViewByCollection;
+
+  useEffect(() => {
+    if (!isCollectionMode) {
+      setCollectionFilters([]);
+      setIsLoadingCollectionFilters(false);
+      return;
+    }
+
+    let isCancelled = false;
+    setIsLoadingCollectionFilters(true);
+
+    const loadCollectionFilters = async () => {
+      try {
+        const collections = await fetchCollectionFilters(category);
+
+        if (isCancelled) {
+          return;
+        }
+
+        setCollectionFilters(
+          collections.map((collection) => ({
+            label: collection.name,
+            slug: collection.slug,
+            href: `/products/${category}/view-by-collection/${collection.slug}`,
+          })),
+        );
+        setIsLoadingCollectionFilters(false);
+      } catch (error) {
+        if (!isCancelled) {
+          console.error("Failed to load collection filters:", error);
+          setCollectionFilters([]);
+          setIsLoadingCollectionFilters(false);
+        }
+      }
+    };
+
+    void loadCollectionFilters();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [category, isCollectionMode]);
 
   if (categoryConfig === undefined) {
     return <>{children}</>;
   }
+
+  const visibleFilters = isCollectionMode
+    ? collectionFilters
+    : categoryConfig.filters.map((filter) => ({
+        label: filter.label,
+        slug: filter.slug,
+        href: `/products/${category}/${filter.slug}`,
+      }));
 
   return (
     <main className="bg-[#f5f5f7] text-neutral-950">
@@ -56,26 +120,36 @@ export function ProductsCategoryShell({
 
         <div className="flex flex-col gap-2">
           <ScrollArea className="w-full whitespace-nowrap">
-            <div className="flex min-w-max items-center gap-1">
-              {categoryConfig.filters.map((filter) => {
-                const isActive = activeSlug === filter.slug;
+            {isCollectionMode && isLoadingCollectionFilters ? (
+              <div className="flex min-w-max items-center gap-1">
+                <span className="border-b-2 border-transparent px-4 py-3 text-sm uppercase tracking-[0.2em] text-neutral-400">
+                  Loading Collections...
+                </span>
+              </div>
+            ) : (
+              <div className="flex min-w-max items-center gap-1">
+                {visibleFilters.map((filter) => {
+                  const isActive = isCollectionMode
+                    ? activeCollectionSlug === filter.slug
+                    : activeSlug === filter.slug;
 
-                return (
-                  <Link
-                    key={filter.slug}
-                    href={`/products/${category}/${filter.slug}`}
-                    className={[
-                      "border-b-2 px-4 py-3 text-sm uppercase tracking-[0.2em] transition-colors",
-                      isActive
-                        ? "border-neutral-900 text-neutral-950"
-                        : "border-transparent text-neutral-500 hover:text-neutral-900",
-                    ].join(" ")}
-                  >
-                    {filter.label}
-                  </Link>
-                );
-              })}
-            </div>
+                  return (
+                    <Link
+                      key={filter.slug}
+                      href={filter.href}
+                      className={[
+                        "border-b-2 px-4 py-3 text-sm uppercase tracking-[0.2em] transition-colors",
+                        isActive
+                          ? "border-neutral-900 text-neutral-950"
+                          : "border-transparent text-neutral-500 hover:text-neutral-900",
+                      ].join(" ")}
+                    >
+                      {filter.label}
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
             <ScrollBar orientation="horizontal" />
           </ScrollArea>
 

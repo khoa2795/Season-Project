@@ -52,6 +52,10 @@ export async function getSunglassesByFilters(
       filter.collectionId = collection._id;
     }
 
+    if (query.gender !== null) {
+      filter["specifications.gender"] = query.gender;
+    }
+
     if (query.sale === true) {
       filter.salePercent = { $gt: 0 };
     }

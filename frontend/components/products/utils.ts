@@ -7,6 +7,13 @@ export type ProductCategoryFilter = {
   slug: EyeglassesView | SunglassesView;
 };
 
+export type ProductCollectionFilter = {
+  label: string;
+  slug: string;
+  href: string;
+  inStockCount: number;
+};
+
 export type ProductCategoryConfig = {
   key: ProductCategoryKey;
   title: string;
@@ -23,12 +30,11 @@ export const productCategories: Record<
     title: "Eyeglasses",
     breadcrumb: "Eyeglasses",
     filters: [
+      { label: "Women", slug: EyeglassesView.Women },
+      { label: "Men", slug: EyeglassesView.Men },
       { label: "All Eyeglasses", slug: EyeglassesView.ViewAll },
       { label: "Metal", slug: EyeglassesView.Metal },
       { label: "Acetate", slug: EyeglassesView.Acetate },
-      { label: "Small", slug: EyeglassesView.Small },
-      { label: "Medium", slug: EyeglassesView.Medium },
-      { label: "Big", slug: EyeglassesView.Big },
       { label: "Sale", slug: EyeglassesView.Sale },
     ],
   },
@@ -37,13 +43,9 @@ export const productCategories: Record<
     title: "Sunglasses",
     breadcrumb: "Sunglasses",
     filters: [
+      { label: "Women", slug: SunglassesView.Women },
+      { label: "Men", slug: SunglassesView.Men },
       { label: "All Sunglasses", slug: SunglassesView.ViewAll },
-      { label: "The Assembled", slug: SunglassesView.TheAssembled },
-      { label: "The Athletes", slug: SunglassesView.TheAthletes },
-      { label: "The Obsidian", slug: SunglassesView.TheObsidian },
-      { label: "The Soap", slug: SunglassesView.TheSoap },
-      { label: "The Office", slug: SunglassesView.TheOffice },
-      { label: "The Vertebra", slug: SunglassesView.TheVertebra },
       { label: "Sale", slug: SunglassesView.Sale },
     ],
   },

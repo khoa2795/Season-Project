@@ -6,23 +6,8 @@ export const menuConfig: MenuCategory[] = [
     sections: [
       {
         items: [
-          { label: "Big", href: "/products/eyeglasses/big" },
-          { label: "Medium", href: "/products/eyeglasses/medium" },
-          { label: "Small", href: "/products/eyeglasses/small" },
-        ],
-      },
-      {
-        items: [
-          { label: "Acetate", href: "/products/eyeglasses/acetate" },
-          { label: "Metal", href: "/products/eyeglasses/metal" },
-        ],
-      },
-      {
-        items: [
-          {
-            label: "Clearance Sale",
-            href: "/products/eyeglasses/sale",
-          },
+          { label: "Men Eyeglasses", href: "/products/eyeglasses/men" },
+          { label: "Women Eyeglasses", href: "/products/eyeglasses/women" },
         ],
       },
       {
@@ -30,6 +15,10 @@ export const menuConfig: MenuCategory[] = [
           {
             label: "View All Eyeglasses",
             href: "/products/eyeglasses/view-all",
+          },
+          {
+            label: "View By Collections",
+            href: "/products/eyeglasses/view-by-collection",
           },
         ],
       },
@@ -41,40 +30,8 @@ export const menuConfig: MenuCategory[] = [
     sections: [
       {
         items: [
-          {
-            label: "The Assembled",
-            href: "/products/sunglasses/the-assembled",
-          },
-          {
-            label: "The Athletes",
-            href: "/products/sunglasses/the-athletes",
-          },
-          {
-            label: "The Obsidian",
-            href: "/products/sunglasses/the-obsidian",
-          },
-          {
-            label: "The Paper Knife",
-            href: "/products/sunglasses/the-paper-knife",
-          },
-          { label: "The Soap", href: "/products/sunglasses/the-soap" },
-          { label: "The Ruler", href: "/products/sunglasses/the-ruler" },
-          {
-            label: "The Set Square",
-            href: "/products/sunglasses/the-set-square",
-          },
-          {
-            label: "The Vertebra",
-            href: "/products/sunglasses/the-vertebra",
-          },
-        ],
-      },
-      {
-        items: [
-          {
-            label: "Clearance Sale",
-            href: "/products/sunglasses/sale",
-          },
+          { label: "Men Sunglasses", href: "/products/sunglasses/men" },
+          { label: "Women Sunglasses", href: "/products/sunglasses/women" },
         ],
       },
       {
@@ -82,6 +39,10 @@ export const menuConfig: MenuCategory[] = [
           {
             label: "View All Sunglasses",
             href: "/products/sunglasses/view-all",
+          },
+          {
+            label: "View By Collections",
+            href: "/products/sunglasses/view-by-collection",
           },
         ],
       },

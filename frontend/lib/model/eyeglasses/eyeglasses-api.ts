@@ -1,5 +1,5 @@
 import { fetchList, type ListResponse } from "@/lib/fetcher";
-import { FrameMaterialEnum, FrameSizeEnum } from "@/lib/enums";
+import { FrameMaterialEnum, ProductGenderEnum } from "@/lib/enums";
 import {
   EyeglassesProduct,
   serializeEyeglassesQuery,
@@ -26,24 +26,20 @@ const toEyeglassesCard = (product: EyeglassesProduct): ProductCard => ({
 });
 
 function getEyeglassesQueryByView(view: EyeglassesView): EyeglassesQuery {
+  if (view === EyeglassesView.Men) {
+    return { gender: ProductGenderEnum.Male };
+  }
+
+  if (view === EyeglassesView.Women) {
+    return { gender: ProductGenderEnum.Female };
+  }
+
   if (view === EyeglassesView.Acetate) {
     return { frameType: FrameMaterialEnum.Acetate };
   }
 
   if (view === EyeglassesView.Metal) {
     return { frameType: FrameMaterialEnum.Metal };
-  }
-
-  if (view === EyeglassesView.Small) {
-    return { frameSize: FrameSizeEnum.Small };
-  }
-
-  if (view === EyeglassesView.Medium) {
-    return { frameSize: FrameSizeEnum.Medium };
-  }
-
-  if (view === EyeglassesView.Big) {
-    return { frameSize: FrameSizeEnum.Big };
   }
 
   if (view === EyeglassesView.Sale) {
@@ -69,13 +65,6 @@ export async function fetchEyeglassesBatch(
   offset: number,
   limit: number = PAGE_SIZE,
 ): Promise<ListResponse<ProductCard>> {
-  if (view === EyeglassesView.Bestsellers) {
-    return {
-      records: [],
-      total: 0,
-    };
-  }
-
   const response = await fetchEyeglassesPage(
     getEyeglassesQueryByView(view),
     offset,
@@ -96,5 +85,18 @@ export async function getEyeglassesPageData(
   return {
     initialProducts: response.records,
     totalItems: response.total,
+  };
+}
+
+export async function fetchEyeglassesCollectionBatch(
+  collectionSlug: string,
+  offset: number,
+  limit: number = PAGE_SIZE,
+): Promise<ListResponse<ProductCard>> {
+  const response = await fetchEyeglassesPage({ collectionSlug }, offset, limit);
+
+  return {
+    records: response.records.map(toEyeglassesCard),
+    total: response.total,
   };
 }

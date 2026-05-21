@@ -1,11 +1,11 @@
 import type { IBaseProductFields, IVariant } from "../models/sharedProduct.js";
 import type {
   FrameMaterial,
-  FrameSize,
   IEyeglassesSpecifications,
 } from "../models/Eyeglasses.js";
 import type { ISunglasses } from "../models/Sunglasses.js";
 import type { Types } from "mongoose";
+import type { ProductGender } from "../models/sharedProduct.js";
 
 export interface BaseQueryParams {
   offset?: number | string;
@@ -14,18 +14,21 @@ export interface BaseQueryParams {
 
 export interface EyeglassesQueryParams extends BaseQueryParams {
   frameType?: string;
-  frameSize?: string;
+  collectionSlug?: string;
+  gender?: string;
   sale?: string;
 }
 
 export interface SunglassesQueryParams extends BaseQueryParams {
   collectionSlug?: string;
+  gender?: string;
   sale?: string;
 }
 
 export interface ValidatedEyeglassesQuery {
   frameType: FrameMaterial | null;
-  frameSize: FrameSize | null;
+  collectionSlug: string | null;
+  gender: ProductGender | null;
   sale: boolean;
   offset: number;
   limit: number;
@@ -33,9 +36,29 @@ export interface ValidatedEyeglassesQuery {
 
 export interface ValidatedSunglassesQuery {
   collectionSlug: string | null;
+  gender: ProductGender | null;
   sale: boolean;
   offset: number;
   limit: number;
+}
+
+export interface CollectionFiltersQueryParams {
+  productType?: string;
+}
+
+export interface ValidatedCollectionFiltersQuery {
+  productType: "eyeglasses" | "sunglasses";
+}
+
+export interface CollectionFilterResponse {
+  id: string;
+  name: string;
+  slug: string;
+  inStockCount: number;
+}
+
+export interface CollectionFiltersResponseData {
+  records: CollectionFilterResponse[];
 }
 
 export interface BaseProductResponse {

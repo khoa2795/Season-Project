@@ -25,7 +25,7 @@ export default async function CategoryPage({ params }: CategoryRouteProps) {
   }
 
   if (category === ProductTypeEnum.eyeglasses) {
-    if (!isEyeglassesSlug(slug)) {
+    if (!isEyeglassesSlug(slug) || slug === "view-by-collection") {
       notFound();
     }
 
@@ -37,7 +37,7 @@ export default async function CategoryPage({ params }: CategoryRouteProps) {
   }
 
   if (category === ProductTypeEnum.sunglasses) {
-    if (!isSunglassesSlug(slug)) {
+    if (!isSunglassesSlug(slug) || slug === "view-by-collection") {
       notFound();
     }
 

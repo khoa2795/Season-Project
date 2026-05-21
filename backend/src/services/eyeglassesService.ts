@@ -1,3 +1,4 @@
+import { Collection } from "../models/Collection.js";
 import { Eyeglasses } from "../models/Eyeglasses.js";
 import type {
   DatabaseEyeglassesProduct,
@@ -15,8 +16,8 @@ function buildFilter(query: ValidatedEyeglassesQuery): Record<string, unknown> {
     filter["specifications.frameType.material"] = query.frameType;
   }
 
-  if (query.frameSize !== null) {
-    filter["specifications.frameType.size"] = query.frameSize;
+  if (query.gender !== null) {
+    filter["specifications.gender"] = query.gender;
   }
 
   if (query.sale === true) {
@@ -51,6 +52,24 @@ export async function getEyeglassesByFilters(
 ): Promise<EyeglassesResponseData> {
   try {
     const filter = buildFilter(query);
+
+    if (query.collectionSlug !== null) {
+      const collection = await Collection.findOne({
+        slug: query.collectionSlug,
+      })
+        .select("_id")
+        .lean<{ _id: unknown } | null>();
+
+      if (collection === null) {
+        return {
+          records: [],
+          total: 0,
+        };
+      }
+
+      filter.collectionId = collection._id;
+    }
+
     const total = await Eyeglasses.countDocuments(filter);
 
     const products = await Eyeglasses.find(filter)

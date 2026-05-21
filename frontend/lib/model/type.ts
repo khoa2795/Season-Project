@@ -1,6 +1,5 @@
 import {
   FrameMaterialEnum,
-  FrameSizeEnum,
   ProductAvailabilityEnum,
   ProductGenderEnum,
   ProductTypeEnum,
@@ -10,27 +9,22 @@ export type ProductType = ProductTypeEnum;
 export type ProductAvailability = ProductAvailabilityEnum;
 export type ProductGender = ProductGenderEnum;
 export type FrameMaterial = FrameMaterialEnum;
-export type FrameSize = FrameSizeEnum;
+export type FrameSize = "Small" | "Medium" | "Big";
 
 export enum EyeglassesView {
+  Men = "men",
+  Women = "women",
+  ViewByCollection = "view-by-collection",
   Acetate = "acetate",
   Metal = "metal",
-  Big = "big",
-  Medium = "medium",
-  Small = "small",
   Sale = "sale",
-  Bestsellers = "bestsellers",
   ViewAll = "view-all",
 }
 
 export enum SunglassesView {
-  TheAssembled = "the-assembled",
-  TheAthletes = "the-athletes",
-  TheCutEdge = "the-cut-edge",
-  TheObsidian = "the-obsidian",
-  TheOffice = "the-office",
-  TheSoap = "the-soap",
-  TheVertebra = "the-vertebra",
+  Men = "men",
+  Women = "women",
+  ViewByCollection = "view-by-collection",
   Sale = "sale",
   ViewAll = "view-all",
 }

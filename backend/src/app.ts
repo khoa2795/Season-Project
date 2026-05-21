@@ -1,6 +1,7 @@
 import cors from "cors";
 import express, { type Request, type Response } from "express";
 import dotenv from "dotenv";
+import collectionsRouter from "./routes/collections.js";
 import eyeglassesRouter from "./routes/eyeglasses.js";
 import sunglassesRouter from "./routes/sunglasses.js";
 
@@ -22,6 +23,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("TypeScript Express Backend is running!");
 });
 
+app.use("/api/collections", collectionsRouter);
 app.use("/api/eyeglasses", eyeglassesRouter);
 app.use("/api/sunglasses", sunglassesRouter);
 

@@ -13,12 +13,14 @@ type ProductsPageShellProps<C extends ProductTypeEnum = ProductTypeEnum> = {
   category: C;
   view: ProductsPageProps<C>["view"];
   initialData: ProductsPageData;
+  collectionSlug?: string;
 };
 
 export function ProductsPageShell<C extends ProductTypeEnum = ProductTypeEnum>({
   category,
   view,
   initialData,
+  collectionSlug,
 }: ProductsPageShellProps<C>) {
   const [products, setProducts] = useState<ProductCard[]>(
     initialData.initialProducts,
@@ -30,7 +32,7 @@ export function ProductsPageShell<C extends ProductTypeEnum = ProductTypeEnum>({
   useEffect(() => {
     setProducts(initialData.initialProducts);
     setError(null);
-  }, [initialData, view]);
+  }, [initialData, view, collectionSlug]);
 
   const loadedCount = products.length;
   const canLoadMore = loadedCount < initialData.totalItems;
@@ -48,6 +50,7 @@ export function ProductsPageShell<C extends ProductTypeEnum = ProductTypeEnum>({
         view,
         loadedCount,
         PAGE_SIZE,
+        collectionSlug,
       );
 
       startTransition(() => {
