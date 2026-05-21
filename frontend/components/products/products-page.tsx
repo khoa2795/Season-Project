@@ -51,7 +51,7 @@ export function ProductsPage({ products, totalItems }: ProductsPageViewProps) {
             <CardContent className="p-3 pt-0 sm:p-4 sm:pt-0">
               <div className="relative aspect-4/5 overflow-hidden bg-white shadow-[0_12px_40px_rgba(0,0,0,0.04)] transition-transform duration-500 group-hover:-translate-y-1">
                 <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-6 md:p-8">
-                  <div className="relative aspect-square w-[80%] overflow-hidden">
+                  <div className="relative aspect-5/6 w-[80%] overflow-hidden">
                     {product.image !== "" ? (
                       <Image
                         src={product.image}

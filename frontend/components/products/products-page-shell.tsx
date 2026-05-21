@@ -7,7 +7,8 @@ import { ProductsPage } from "./products-page";
 import { fetchProductsBatchByCategory } from "../../lib/model/";
 import { PAGE_SIZE, ProductCard, ProductsPageData } from "../../lib/model/misc";
 import { ProductsPageProps } from "./type";
-
+import { Suspense } from "react";
+import { Spinner } from "../ui/spinner";
 
 type ProductsPageShellProps<C extends ProductTypeEnum = ProductTypeEnum> = {
   category: C;
@@ -45,12 +46,18 @@ export function ProductsPageShell<C extends ProductTypeEnum = ProductTypeEnum>({
     setIsLoadingMore(true);
 
     try {
+      if (initialData.allProducts !== undefined) {
+        startTransition(() => {
+          setProducts(initialData.allProducts!.slice(0, loadedCount + PAGE_SIZE));
+        });
+        return;
+      }
+
       const response = await fetchProductsBatchByCategory(
         category,
         view,
         loadedCount,
         PAGE_SIZE,
-        collectionSlug,
       );
 
       startTransition(() => {
@@ -65,8 +72,9 @@ export function ProductsPageShell<C extends ProductTypeEnum = ProductTypeEnum>({
 
   return (
     <div className="flex flex-col gap-8">
-      <ProductsPage products={products} totalItems={initialData.totalItems} />
-
+      <Suspense fallback={<Spinner className="size-4"></Spinner>}>
+        <ProductsPage products={products} totalItems={initialData.totalItems} />
+      </Suspense>
       <div className="flex flex-col items-center gap-4 pb-8">
         <p className="text-center text-[15px] italic text-neutral-600">
           Showing {products.length} of {initialData.totalItems} products

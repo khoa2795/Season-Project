@@ -1,10 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
 import { FrameMaterial } from "../models/Eyeglasses.js";
 import type {
-  CollectionFiltersQueryParams,
   EyeglassesQueryParams,
   SunglassesQueryParams,
-  ValidatedCollectionFiltersQuery,
   ValidatedEyeglassesQuery,
   ValidatedSunglassesQuery,
 } from "../types/eyewear.js";
@@ -16,15 +14,6 @@ export interface EyeglassesValidatedRequest extends Request {
 export interface SunglassesValidatedRequest extends Request {
   validatedQuery?: ValidatedSunglassesQuery;
 }
-
-export interface CollectionFiltersValidatedRequest extends Request {
-  validatedQuery?: ValidatedCollectionFiltersQuery;
-}
-
-const PRODUCT_TYPE_VALUES = {
-  eyeglasses: "eyeglasses",
-  sunglasses: "sunglasses",
-} as const;
 
 const parsePagination = (query: {
   offset?: number | string;
@@ -51,7 +40,9 @@ const parsePagination = (query: {
   };
 };
 
-const parseSaleParam = (saleParam?: string): { sale: boolean } | { error: string } => {
+const parseSaleParam = (
+  saleParam?: string,
+): { sale: boolean } | { error: string } => {
   if (saleParam === undefined) {
     return { sale: false };
   }
@@ -186,30 +177,6 @@ export const validateSunglassesQuery = (
     gender: gender.gender,
     ...pagination,
     sale: sale.sale,
-  };
-  next();
-};
-
-export const validateCollectionFiltersQuery = (
-  req: CollectionFiltersValidatedRequest,
-  res: Response,
-  next: NextFunction,
-): void => {
-  const query = req.query as CollectionFiltersQueryParams;
-  const productType = query.productType?.trim().toLowerCase();
-
-  if (
-    productType !== PRODUCT_TYPE_VALUES.eyeglasses &&
-    productType !== PRODUCT_TYPE_VALUES.sunglasses
-  ) {
-    res.status(400).json({
-      error: "Invalid productType.",
-    });
-    return;
-  }
-
-  req.validatedQuery = {
-    productType,
   };
   next();
 };

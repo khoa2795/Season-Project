@@ -3,84 +3,72 @@
     "_id": "69d267a4dd0dd4ea810abc8b",
     "name": "The Office",
     "slug": "the-office",
-    "eyeglassesInStockCount": 8,
-    "sunglassesInStockCount": 6
+    "inStockCount": 14
   },
   {
     "_id": "69d267a4dd0dd4ea810abc83",
     "name": "The Assembled",
     "slug": "the-assembled",
-    "eyeglassesInStockCount": 1,
-    "sunglassesInStockCount": 2
+    "inStockCount": 3
   },
   {
     "_id": "69d267a4dd0dd4ea810abc84",
     "name": "The Athletes",
     "slug": "the-athletes",
-    "eyeglassesInStockCount": 12,
-    "sunglassesInStockCount": 14
+    "inStockCount": 26
   },
   {
     "_id": "69d267a4dd0dd4ea810abc85",
     "name": "The Cut",
     "slug": "the-cut",
-    "eyeglassesInStockCount": 4,
-    "sunglassesInStockCount": 0
+    "inStockCount": 4
   },
   {
     "_id": "69d267a4dd0dd4ea810abc86",
     "name": "The Cut Edge",
     "slug": "the-cut-edge",
-    "eyeglassesInStockCount": 0,
-    "sunglassesInStockCount": 1
+    "inStockCount": 1
   },
   {
     "_id": "69d267a4dd0dd4ea810abc87",
     "name": "The Edge",
     "slug": "the-edge",
-    "eyeglassesInStockCount": 3,
-    "sunglassesInStockCount": 0
+    "inStockCount": 3
   },
   {
     "_id": "69d267a4dd0dd4ea810abc88",
     "name": "The Flow",
     "slug": "the-flow",
-    "eyeglassesInStockCount": 2,
-    "sunglassesInStockCount": 0
+    "inStockCount": 2
   },
   {
     "_id": "69d267a4dd0dd4ea810abc89",
     "name": "The Layered",
     "slug": "the-layered",
-    "eyeglassesInStockCount": 1,
-    "sunglassesInStockCount": 0
+    "inStockCount": 1
   },
   {
     "_id": "69d267a4dd0dd4ea810abc8a",
     "name": "The Obsidian",
     "slug": "the-obsidian",
-    "eyeglassesInStockCount": 1,
-    "sunglassesInStockCount": 2
+    "inStockCount": 3
   },
   {
     "_id": "69d267a4dd0dd4ea810abc8f",
     "name": "The Snorkel",
     "slug": "the-snorkel",
-    "eyeglassesInStockCount": 2,
-    "sunglassesInStockCount": 1
+    "inStockCount": 3
   },
   {
     "_id": "69d267a4dd0dd4ea810abc90",
     "name": "The Soap",
     "slug": "the-soap",
-    "eyeglassesInStockCount": 6,
-    "sunglassesInStockCount": 3
+    "inStockCount": 9
   },
   {
     "_id": "69d267a4dd0dd4ea810abc91",
     "name": "The Vertebra",
     "slug": "the-vertebra",
-    "eyeglassesInStockCount": 0,
-    "sunglassesInStockCount": 5
+    "inStockCount": 5
   }
 ]

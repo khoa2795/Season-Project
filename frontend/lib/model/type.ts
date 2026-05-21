@@ -12,19 +12,15 @@ export type FrameMaterial = FrameMaterialEnum;
 export type FrameSize = "Small" | "Medium" | "Big";
 
 export enum EyeglassesView {
+  ViewAll = "view-all",
   Men = "men",
   Women = "women",
-  ViewByCollection = "view-by-collection",
-  Acetate = "acetate",
-  Metal = "metal",
   Sale = "sale",
-  ViewAll = "view-all",
 }
 
 export enum SunglassesView {
+  ViewAll = "view-all",
   Men = "men",
   Women = "women",
-  ViewByCollection = "view-by-collection",
   Sale = "sale",
-  ViewAll = "view-all",
 }

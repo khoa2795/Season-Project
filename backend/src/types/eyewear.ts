@@ -42,14 +42,6 @@ export interface ValidatedSunglassesQuery {
   limit: number;
 }
 
-export interface CollectionFiltersQueryParams {
-  productType?: string;
-}
-
-export interface ValidatedCollectionFiltersQuery {
-  productType: "eyeglasses" | "sunglasses";
-}
-
 export interface CollectionFilterResponse {
   id: string;
   name: string;

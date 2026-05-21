@@ -14,6 +14,7 @@ export type ProductCard = {
 export type ProductsPageData = {
   initialProducts: ProductCard[];
   totalItems: number;
+  allProducts?: ProductCard[];
 };
 
 export type CollectionFilterRecord = {

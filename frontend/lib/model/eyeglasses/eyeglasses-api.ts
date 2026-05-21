@@ -1,5 +1,5 @@
 import { fetchList, type ListResponse } from "@/lib/fetcher";
-import { FrameMaterialEnum, ProductGenderEnum } from "@/lib/enums";
+import { ProductGenderEnum } from "@/lib/enums";
 import {
   EyeglassesProduct,
   serializeEyeglassesQuery,
@@ -32,14 +32,6 @@ function getEyeglassesQueryByView(view: EyeglassesView): EyeglassesQuery {
 
   if (view === EyeglassesView.Women) {
     return { gender: ProductGenderEnum.Female };
-  }
-
-  if (view === EyeglassesView.Acetate) {
-    return { frameType: FrameMaterialEnum.Acetate };
-  }
-
-  if (view === EyeglassesView.Metal) {
-    return { frameType: FrameMaterialEnum.Metal };
   }
 
   if (view === EyeglassesView.Sale) {

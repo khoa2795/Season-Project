@@ -6,8 +6,7 @@ type CollectionRecord = {
   _id: string;
   name: string;
   slug: string;
-  eyeglassesInStockCount?: number;
-  sunglassesInStockCount?: number;
+  inStockCount?: number;
 };
 
 type ProductRecord = {
@@ -71,8 +70,9 @@ const sunglassesCounts = countProductsByCollection(sunglasses);
 
 const updatedCollections = collections.map((collection) => ({
   ...collection,
-  eyeglassesInStockCount: eyeglassesCounts.get(collection._id) ?? 0,
-  sunglassesInStockCount: sunglassesCounts.get(collection._id) ?? 0,
+  inStockCount:
+    (eyeglassesCounts.get(collection._id) ?? 0) +
+    (sunglassesCounts.get(collection._id) ?? 0),
 }));
 
 fs.writeFileSync(collectionsPath, JSON.stringify(updatedCollections, null, 2));

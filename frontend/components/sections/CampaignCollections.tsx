@@ -1,12 +1,14 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { theSoap, theOffice } from "@/images/landing-page";
+import Link from "next/dist/client/link";
 
 // Collection data, this can be fetched from an API
 const collections = [
   {
     id: 1,
     name: "The Soap 25",
+    slug: "the-soap",
     description:
       "Inspired by the soft, inflated surface of a bar of soap, with its signature rounded contours, The Soap 25 presents a distinctive fusion of sharp, flat lenses and a full, rounded frame front - a striking intersection that echoes the subtle distortion of a soap bar upon sudden impact. The Soap 25 collection introduces a refined new design, featuring a carefully curated earth-tone palette. Thoughtfully developed to complement Asian skin tones, these warm and neutral hues offer a timeless aesthetic, delivering enduring value and effortless sophistication.",
     image: theSoap,
@@ -14,6 +16,7 @@ const collections = [
   {
     id: 2,
     name: "The Office 25",
+    slug: "the-office",
     description:
       "Drawing inspiration from everyday office tools - rulers, set squares, paper clips, and utility knives - The Office reimagines the ordinary beyond function, transforming these familiar elements into defining structural forms within eyewear design. Distinct from previous collections, The Office introduces a bold exploration of concept, structure, and silhouette. Elevated by the striking presence of metal, each piece is meticulously crafted to embody precision, refinement, and modern sophistication - culminating in a line of optical frames that seamlessly blends high aesthetics with contemporary elegance.",
     image: theOffice,
@@ -64,7 +67,9 @@ function CollectionCard({ collection }: CollectionCardProps) {
               variant="default"
               className="rounded-full bg-season-dark text-white px-8 py-6 uppercase text-xs tracking-widest hover:bg-season-dark/80 transition-colors duration-300"
             >
-              Explore Now
+              <Link href={`/products/collections/${collection.slug}/`}>
+                Explore Now
+              </Link>
             </Button>
           </div>
         </div>
@@ -92,7 +97,9 @@ function CollectionCard({ collection }: CollectionCardProps) {
               variant="default"
               className="rounded-full bg-transparent border border-white text-white uppercase text-xs tracking-widest hover:bg-season-gray transition-colors duration-300 "
             >
-              Explore Now
+              <Link href={`/products/collections/${collection.slug}/`}>
+                Explore Now
+              </Link>
             </Button>
           </div>
         </div>

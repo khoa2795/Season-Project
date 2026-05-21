@@ -30,11 +30,9 @@ export const productCategories: Record<
     title: "Eyeglasses",
     breadcrumb: "Eyeglasses",
     filters: [
+      { label: "View All", slug: EyeglassesView.ViewAll },
       { label: "Women", slug: EyeglassesView.Women },
       { label: "Men", slug: EyeglassesView.Men },
-      { label: "All Eyeglasses", slug: EyeglassesView.ViewAll },
-      { label: "Metal", slug: EyeglassesView.Metal },
-      { label: "Acetate", slug: EyeglassesView.Acetate },
       { label: "Sale", slug: EyeglassesView.Sale },
     ],
   },
@@ -43,9 +41,9 @@ export const productCategories: Record<
     title: "Sunglasses",
     breadcrumb: "Sunglasses",
     filters: [
+      { label: "View All", slug: SunglassesView.ViewAll },
       { label: "Women", slug: SunglassesView.Women },
       { label: "Men", slug: SunglassesView.Men },
-      { label: "All Sunglasses", slug: SunglassesView.ViewAll },
       { label: "Sale", slug: SunglassesView.Sale },
     ],
   },
