@@ -1,10 +1,10 @@
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
-import { ProductsCategoryShell } from "@/components/products/products-category-shell";
+import { CategoryLayout } from "@/components/products/view-by-category/category-layout";
 import {
   getProductCategoryConfig,
   parseProductCategory,
-} from "@/components/products/utils";
+} from "@/components/products/view-by-category/category-config";
 
 type CategoryLayoutProps = {
   children: ReactNode;
@@ -13,7 +13,7 @@ type CategoryLayoutProps = {
   }>;
 };
 
-export default async function CategoryLayout({
+export default async function CategoryRouteLayout({
   children,
   params,
 }: CategoryLayoutProps) {
@@ -31,8 +31,8 @@ export default async function CategoryLayout({
   }
 
   return (
-    <ProductsCategoryShell category={category} categoryConfig={categoryConfig}>
+    <CategoryLayout category={category} categoryConfig={categoryConfig}>
       {children}
-    </ProductsCategoryShell>
+    </CategoryLayout>
   );
 }

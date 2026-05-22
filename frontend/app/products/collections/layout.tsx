@@ -1,13 +1,12 @@
 import type { ReactNode } from "react";
-import { ProductsCollectionsShell } from "@/components/products/products-collections-shell";
+import { CollectionsLayout as CollectionsPageLayout } from "@/components/products/view-by-collection/collections-layout";
 
 type CollectionsLayoutProps = {
   children: ReactNode;
 };
 
-export default function CollectionsLayout({
+export default function CollectionsRouteLayout({
   children,
 }: CollectionsLayoutProps) {
-  return <ProductsCollectionsShell>{children}</ProductsCollectionsShell>;
+  return <CollectionsPageLayout>{children}</CollectionsPageLayout>;
 }
-

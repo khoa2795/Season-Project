@@ -1,8 +1,14 @@
 import type { NextFunction, Request, Response } from "express";
-import { FrameMaterial } from "../models/Eyeglasses.js";
+import { FrameMaterial, FrameSize } from "../models/Eyeglasses.js";
+import {
+  DEFAULT_PRODUCT_SORT,
+  PRODUCT_SORTS,
+} from "../types/eyewear.js";
 import type {
+  CollectionProductsQueryParams,
   EyeglassesQueryParams,
   SunglassesQueryParams,
+  ValidatedCollectionProductsQuery,
   ValidatedEyeglassesQuery,
   ValidatedSunglassesQuery,
 } from "../types/eyewear.js";
@@ -15,7 +21,11 @@ export interface SunglassesValidatedRequest extends Request {
   validatedQuery?: ValidatedSunglassesQuery;
 }
 
-const parsePagination = (query: {
+export interface CollectionProductsValidatedRequest extends Request {
+  validatedQuery?: ValidatedCollectionProductsQuery;
+}
+
+export const parsePagination = (query: {
   offset?: number | string;
   limit?: number | string;
 }) => {
@@ -59,6 +69,22 @@ const parseSaleParam = (
   return { error: "Invalid sale. Use true or false." };
 };
 
+export const parseSortParam = (
+  sortParam?: string,
+):
+  | { sort: ValidatedEyeglassesQuery["sort"] }
+  | { error: string } => {
+  if (sortParam === undefined) {
+    return { sort: DEFAULT_PRODUCT_SORT };
+  }
+
+  if (PRODUCT_SORTS.includes(sortParam as ValidatedEyeglassesQuery["sort"])) {
+    return { sort: sortParam as ValidatedEyeglassesQuery["sort"] };
+  }
+
+  return { error: "Invalid sort." };
+};
+
 const parseGenderParam = (
   genderParam?: string,
 ): { gender: "Male" | "Female" | null } | { error: string } => {
@@ -94,6 +120,34 @@ const normalizeCollectionSlug = (value?: string): string | null => {
   return normalized === "" ? null : normalized;
 };
 
+export const validateCollectionProductsQuery = (
+  req: CollectionProductsValidatedRequest,
+  res: Response,
+  next: NextFunction,
+): void => {
+  const query = req.query as CollectionProductsQueryParams;
+  const pagination = parsePagination(query);
+
+  if ("error" in pagination) {
+    res.status(400).json({ error: pagination.error });
+    return;
+  }
+
+  const sort = parseSortParam(query.sort);
+
+  if ("error" in sort) {
+    res.status(400).json({ error: sort.error });
+    return;
+  }
+
+  req.validatedQuery = {
+    ...pagination,
+    sort: sort.sort,
+  };
+
+  next();
+};
+
 export const validateEyeglassesQuery = (
   req: EyeglassesValidatedRequest,
   res: Response,
@@ -111,10 +165,18 @@ export const validateEyeglassesQuery = (
 
   const frameType =
     FrameMaterial[query.frameType as keyof typeof FrameMaterial] || null;
+  const frameSize = FrameSize[query.frameSize as keyof typeof FrameSize] || null;
 
   if (query.frameType && frameType === null) {
     res.status(400).json({
       error: "Invalid frameType.",
+    });
+    return;
+  }
+
+  if (query.frameSize && frameSize === null) {
+    res.status(400).json({
+      error: "Invalid frameSize.",
     });
     return;
   }
@@ -131,11 +193,19 @@ export const validateEyeglassesQuery = (
     return;
   }
 
+  const sort = parseSortParam(query.sort);
+  if ("error" in sort) {
+    res.status(400).json({ error: sort.error });
+    return;
+  }
+
   req.validatedQuery = {
     frameType: frameType,
+    frameSize: frameSize,
     collectionSlug: normalizeCollectionSlug(query.collectionSlug),
     gender: gender.gender,
     sale: sale.sale,
+    sort: sort.sort,
     offset: pagination.offset,
     limit: pagination.limit,
   };
@@ -171,12 +241,19 @@ export const validateSunglassesQuery = (
   }
 
   const collectionSlug = normalizeCollectionSlug(query.collectionSlug);
+  const sort = parseSortParam(query.sort);
+
+  if ("error" in sort) {
+    res.status(400).json({ error: sort.error });
+    return;
+  }
 
   req.validatedQuery = {
     collectionSlug,
     gender: gender.gender,
     ...pagination,
     sale: sale.sale,
+    sort: sort.sort,
   };
   next();
 };

@@ -6,6 +6,7 @@ import type {
   EyeglassesResponseData,
   ValidatedEyeglassesQuery,
 } from "../types/eyewear.js";
+import { buildSort } from "./utils.js";
 
 function buildFilter(query: ValidatedEyeglassesQuery): Record<string, unknown> {
   const filter: Record<string, unknown> = {
@@ -14,6 +15,10 @@ function buildFilter(query: ValidatedEyeglassesQuery): Record<string, unknown> {
 
   if (query.frameType !== null) {
     filter["specifications.frameType.material"] = query.frameType;
+  }
+
+  if (query.frameSize !== null) {
+    filter["specifications.frameType.size"] = query.frameSize;
   }
 
   if (query.gender !== null) {
@@ -76,6 +81,7 @@ export async function getEyeglassesByFilters(
       .select(
         "name slug type collectionId brand salePercent availability description specifications variants rating isActive",
       )
+      .sort(buildSort(query.sort))
       .skip(query.offset)
       .limit(query.limit)
       .lean<DatabaseEyeglassesProduct[]>();

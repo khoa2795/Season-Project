@@ -2,7 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import {
   getProductCategoryConfig,
   parseProductCategory,
-} from "@/components/products/utils";
+} from "@/components/products/view-by-category/category-config";
 
 type CategoryRouteProps = {
   params: Promise<{

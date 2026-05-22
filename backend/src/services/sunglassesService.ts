@@ -6,6 +6,7 @@ import type {
   SunglassesResponseData,
   ValidatedSunglassesQuery,
 } from "../types/eyewear.js";
+import { buildSort } from "./utils.js";
 
 function transformSunglassesProduct(
   product: DatabaseSunglassesProduct,
@@ -66,6 +67,7 @@ export async function getSunglassesByFilters(
       .select(
         "name slug type collectionId brand salePercent availability description specifications variants rating isActive",
       )
+      .sort(buildSort(query.sort))
       .skip(query.offset)
       .limit(query.limit)
       .lean<DatabaseSunglassesProduct[]>();

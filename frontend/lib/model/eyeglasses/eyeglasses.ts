@@ -136,6 +136,15 @@ export class EyeglassesProduct {
     return Math.round(this.price / (1 - this.salePercent / 100));
   }
 
+  get variantCountLabel(): string {
+    const count = this.variants.length;
+    if (count === 1) {
+      return "1 Color";
+    }
+
+    return `${count} Colors`;
+  }
+
   get isOnSale(): boolean {
     return this.salePercent > 0;
   }

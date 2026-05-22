@@ -1,17 +1,37 @@
 import { notFound } from "next/navigation";
 import { getCollectionPageData, fetchCollectionFilters } from "@/lib/model";
-import { ProductsPageShell } from "@/components/products/products-page-shell";
-import { ProductTypeEnum } from "@/lib/enums";
-import { EyeglassesView } from "@/lib/model/type";
+import { CollectionListShell } from "@/components/products/view-by-collection/collection-list-shell";
+import {
+  parseProductsQueryState,
+  toPlainObject,
+} from "@/lib/model/misc";
 
 type CollectionPageProps = {
   params: Promise<{
     slug: string;
   }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
-export default async function CollectionPage({ params }: CollectionPageProps) {
+function getSingleSearchParam(
+  value: string | string[] | undefined,
+): string | undefined {
+  if (Array.isArray(value)) {
+    return value[0];
+  }
+
+  return value;
+}
+
+export default async function CollectionPage({
+  params,
+  searchParams,
+}: CollectionPageProps) {
   const { slug } = await params;
+  const queryParams = await searchParams;
+  const queryState = parseProductsQueryState({
+    sort: getSingleSearchParam(queryParams.sort),
+  });
 
   const collections = await fetchCollectionFilters();
   const matchedCollection = collections.find((collection) => collection.slug === slug);
@@ -20,14 +40,12 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
     notFound();
   }
 
-  const data = await getCollectionPageData(slug);
+  const collectionProducts = await getCollectionPageData(slug, queryState.sort);
 
   return (
-    <ProductsPageShell
-      category={ProductTypeEnum.eyeglasses}
-      view={EyeglassesView.Women}
+    <CollectionListShell
       collectionSlug={slug}
-      initialData={data}
+      initialData={toPlainObject(collectionProducts)}
     />
   );
 }

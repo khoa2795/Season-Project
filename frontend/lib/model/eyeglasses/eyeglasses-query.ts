@@ -1,9 +1,14 @@
-import { FrameMaterialEnum, ProductGenderEnum } from "@/lib/enums";
+import {
+  FrameMaterialEnum,
+  FrameSizeEnum,
+  ProductGenderEnum,
+} from "@/lib/enums";
 
 export type EyeglassesQuery = {
   gender?: ProductGenderEnum;
   collectionSlug?: string;
   frameType?: FrameMaterialEnum;
+  frameSize?: FrameSizeEnum;
   sale?: boolean;
 };
 
@@ -13,5 +18,6 @@ export function serializeEyeglassesQuery(params: EyeglassesQuery) {
     gender: params.gender,
     sale: params.sale,
     frameType: params.frameType,
+    frameSize: params.frameSize,
   };
 }

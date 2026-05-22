@@ -6,89 +6,98 @@ import {
   EyeglassesQuery,
 } from "@/lib/model";
 import { serializePaginationQuery } from "@/lib/serialize";
-import { EyeglassesView } from "../type";
 import {
-  ProductCard,
-  ProductsPageData,
-  getVariantCountLabel,
+  DEFAULT_PRODUCT_SORT,
+  ProductsQueryState,
   PAGE_SIZE,
 } from "../misc";
+import { ProductRouteView } from "../type";
 
-const toEyeglassesCard = (product: EyeglassesProduct): ProductCard => ({
-  title: product.name,
-  slug: product.slug,
-  image: product.primaryImage,
-  colorCount: getVariantCountLabel(product.variants.length),
-  price: product.price,
-  originalPrice: product.originalPrice,
-  isOnSale: product.isOnSale,
-  meta: `${product.frameSize} / ${product.frameMaterial}`,
-});
+function getEyeglassesQueryByView(
+  view: ProductRouteView,
+  queryState: ProductsQueryState,
+): EyeglassesQuery {
+  const filters: EyeglassesQuery = {
+    frameType: queryState.frameType ?? undefined,
+    frameSize: queryState.frameSize ?? undefined,
+  };
 
-function getEyeglassesQueryByView(view: EyeglassesView): EyeglassesQuery {
-  if (view === EyeglassesView.Men) {
-    return { gender: ProductGenderEnum.Male };
+  if (view === "men") {
+    return {
+      ...filters,
+      gender: ProductGenderEnum.Male,
+    };
   }
 
-  if (view === EyeglassesView.Women) {
-    return { gender: ProductGenderEnum.Female };
+  if (view === "women") {
+    return {
+      ...filters,
+      gender: ProductGenderEnum.Female,
+    };
   }
 
-  if (view === EyeglassesView.Sale) {
-    return { sale: true };
+  if (view === "sale") {
+    return {
+      ...filters,
+      sale: true,
+    };
   }
 
-  return {};
+  return filters;
 }
 
 async function fetchEyeglassesPage(
   query: EyeglassesQuery,
+  sort: ProductsQueryState["sort"],
   offset: number,
   limit: number,
 ): Promise<ListResponse<EyeglassesProduct>> {
   return fetchList("/eyeglasses", EyeglassesProduct, {
     ...serializeEyeglassesQuery(query),
+    sort,
     ...serializePaginationQuery({ offset, limit }),
   });
 }
 
 export async function fetchEyeglassesBatch(
-  view: EyeglassesView,
+  view: ProductRouteView,
   offset: number,
   limit: number = PAGE_SIZE,
-): Promise<ListResponse<ProductCard>> {
-  const response = await fetchEyeglassesPage(
-    getEyeglassesQueryByView(view),
+  queryState: ProductsQueryState = {
+    sort: DEFAULT_PRODUCT_SORT,
+    frameType: null,
+    frameSize: null,
+  },
+): Promise<ListResponse<EyeglassesProduct>> {
+  return fetchEyeglassesPage(
+    getEyeglassesQueryByView(view, queryState),
+    queryState.sort,
     offset,
     limit,
   );
-
-  return {
-    records: response.records.map(toEyeglassesCard),
-    total: response.total,
-  };
 }
 
 export async function getEyeglassesPageData(
-  view: EyeglassesView,
-): Promise<ProductsPageData> {
-  const response = await fetchEyeglassesBatch(view, 0, PAGE_SIZE);
-
-  return {
-    initialProducts: response.records,
-    totalItems: response.total,
-  };
+  view: ProductRouteView,
+  queryState: ProductsQueryState = {
+    sort: DEFAULT_PRODUCT_SORT,
+    frameType: null,
+    frameSize: null,
+  },
+): Promise<ListResponse<EyeglassesProduct>> {
+  return fetchEyeglassesBatch(view, 0, PAGE_SIZE, queryState);
 }
 
 export async function fetchEyeglassesCollectionBatch(
   collectionSlug: string,
   offset: number,
   limit: number = PAGE_SIZE,
-): Promise<ListResponse<ProductCard>> {
-  const response = await fetchEyeglassesPage({ collectionSlug }, offset, limit);
-
-  return {
-    records: response.records.map(toEyeglassesCard),
-    total: response.total,
-  };
+  sort: ProductsQueryState["sort"] = DEFAULT_PRODUCT_SORT,
+): Promise<ListResponse<EyeglassesProduct>> {
+  return fetchEyeglassesPage(
+    { collectionSlug },
+    sort,
+    offset,
+    limit,
+  );
 }

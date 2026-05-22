@@ -1,4 +1,5 @@
-import { EyeglassesView, SunglassesView } from "./type";
+import { ProductRouteView } from "./type";
+import { FrameMaterialEnum, FrameSizeEnum, ProductTypeEnum } from "../enums";
 
 export type ProductCard = {
   title: string;
@@ -14,30 +15,93 @@ export type ProductCard = {
 export type ProductsPageData = {
   initialProducts: ProductCard[];
   totalItems: number;
-  allProducts?: ProductCard[];
 };
 
-export type CollectionFilterRecord = {
-  id: string;
-  name: string;
-  slug: string;
-  inStockCount: number;
+export type ProductSortValue =
+  | "title-asc"
+  | "title-desc"
+  | "price-desc"
+  | "price-asc";
+
+export type ProductsQueryState = {
+  sort: ProductSortValue;
+  frameType: FrameMaterialEnum | null;
+  frameSize: FrameSizeEnum | null;
 };
 
-export const getVariantCountLabel = (count: number) => {
-  if (count === 1) {
-    return "1 Color";
-  }
+export type FilterConfigKey = ProductTypeEnum | "collections";
 
-  return `${count} Colors`;
-};
+export const DEFAULT_PRODUCT_SORT: ProductSortValue = "title-asc";
 
 export const PAGE_SIZE = 12;
 
-export function isEyeglassesSlug(value: string): value is EyeglassesView {
-  return Object.values(EyeglassesView).includes(value as EyeglassesView);
+export function normalizeProductSort(
+  value: string | undefined,
+): ProductSortValue {
+  if (
+    value === "title-asc" ||
+    value === "title-desc" ||
+    value === "price-desc" ||
+    value === "price-asc"
+  ) {
+    return value;
+  }
+
+  return DEFAULT_PRODUCT_SORT;
 }
 
-export function isSunglassesSlug(value: string): value is SunglassesView {
-  return Object.values(SunglassesView).includes(value as SunglassesView);
+export function normalizeFrameType(
+  value: string | undefined,
+): FrameMaterialEnum | null {
+  if (
+    value === FrameMaterialEnum.Acetate ||
+    value === FrameMaterialEnum.Metal
+  ) {
+    return value;
+  }
+
+  return null;
+}
+
+export function normalizeFrameSize(
+  value: string | undefined,
+): FrameSizeEnum | null {
+  if (
+    value === FrameSizeEnum.Small ||
+    value === FrameSizeEnum.Medium ||
+    value === FrameSizeEnum.Big
+  ) {
+    return value;
+  }
+
+  return null;
+}
+
+export function parseProductsQueryState(params: {
+  sort?: string;
+  frameType?: string;
+  frameSize?: string;
+}): ProductsQueryState {
+  return {
+    sort: normalizeProductSort(params.sort),
+    frameType: normalizeFrameType(params.frameType),
+    frameSize: normalizeFrameSize(params.frameSize),
+  };
+}
+
+export function toPlainObject<T>(value: T): T {
+  return JSON.parse(JSON.stringify(value)) as T;
+}
+
+export function isEyeglassesSlug(value: string): value is ProductRouteView {
+  return (
+    value === "view-all" ||
+    value === "men" ||
+    value === "women" ||
+    value === "sale"
+  );
+}
+
+export function isSunglassesSlug(value: string): value is ProductRouteView {
+  return isEyeglassesSlug(value);
 }

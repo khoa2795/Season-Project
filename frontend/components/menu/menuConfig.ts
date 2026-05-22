@@ -6,7 +6,10 @@ export const menuConfig: MenuCategory[] = [
     sections: [
       {
         items: [
-          { label: "View All Eyeglasses", href: "/products/eyeglasses/view-all" },
+          {
+            label: "View All Eyeglasses",
+            href: "/products/eyeglasses/view-all",
+          },
           { label: "Women Eyeglasses", href: "/products/eyeglasses/women" },
           { label: "Men Eyeglasses", href: "/products/eyeglasses/men" },
           { label: "Clearance Sale", href: "/products/eyeglasses/sale" },
@@ -20,7 +23,10 @@ export const menuConfig: MenuCategory[] = [
     sections: [
       {
         items: [
-          { label: "View All Sunglasses", href: "/products/sunglasses/view-all" },
+          {
+            label: "View All Sunglasses",
+            href: "/products/sunglasses/view-all",
+          },
           { label: "Women Sunglasses", href: "/products/sunglasses/women" },
           { label: "Men Sunglasses", href: "/products/sunglasses/men" },
           { label: "Clearance Sale", href: "/products/sunglasses/sale" },
@@ -34,7 +40,6 @@ export const menuConfig: MenuCategory[] = [
     sections: [
       {
         items: [
-          { label: "View All", href: "/products/collections" },
           { label: "The Athletes", href: "/products/collections/the-athletes" },
           { label: "The Office", href: "/products/collections/the-office" },
           { label: "The Soap", href: "/products/collections/the-soap" },

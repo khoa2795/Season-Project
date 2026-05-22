@@ -6,35 +6,23 @@ import {
   serializeSunglassesQuery,
 } from "@/lib/model";
 import { serializePaginationQuery } from "@/lib/serialize";
-import { SunglassesView } from "../type";
 import {
-  getVariantCountLabel,
-  ProductCard,
-  ProductsPageData,
+  DEFAULT_PRODUCT_SORT,
+  ProductsQueryState,
   PAGE_SIZE,
 } from "../misc";
+import { ProductRouteView } from "../type";
 
-const toSunglassesCard = (product: SunglassesProduct): ProductCard => ({
-  title: product.name,
-  slug: product.slug,
-  image: product.primaryImage,
-  colorCount: getVariantCountLabel(product.variants.length),
-  price: product.price,
-  originalPrice: product.originalPrice,
-  isOnSale: product.isOnSale,
-  meta: product.brand,
-});
-
-function getSunglassesQueryByView(view: SunglassesView): SunglassesQuery {
-  if (view === SunglassesView.Men) {
+function getSunglassesQueryByView(view: ProductRouteView): SunglassesQuery {
+  if (view === "men") {
     return { gender: ProductGenderEnum.Male };
   }
 
-  if (view === SunglassesView.Women) {
+  if (view === "women") {
     return { gender: ProductGenderEnum.Female };
   }
 
-  if (view === SunglassesView.Sale) {
+  if (view === "sale") {
     return { sale: true };
   }
 
@@ -43,52 +31,48 @@ function getSunglassesQueryByView(view: SunglassesView): SunglassesQuery {
 
 async function fetchSunglassesPage(
   query: SunglassesQuery,
+  sort: ProductsQueryState["sort"],
   offset: number,
   limit: number,
 ): Promise<ListResponse<SunglassesProduct>> {
   return fetchList("/sunglasses", SunglassesProduct, {
     ...serializeSunglassesQuery(query),
+    sort,
     ...serializePaginationQuery({ offset, limit }),
   });
 }
 
 export async function fetchSunglassesBatch(
-  view: SunglassesView,
+  view: ProductRouteView,
   offset: number,
   limit: number = PAGE_SIZE,
-): Promise<ListResponse<ProductCard>> {
-  const response = await fetchSunglassesPage(
+  sort: ProductsQueryState["sort"] = DEFAULT_PRODUCT_SORT,
+): Promise<ListResponse<SunglassesProduct>> {
+  return fetchSunglassesPage(
     getSunglassesQueryByView(view),
+    sort,
     offset,
     limit,
   );
-
-  return {
-    records: response.records.map(toSunglassesCard),
-    total: response.total,
-  };
 }
 
 export async function getSunglassesPageData(
-  view: SunglassesView,
-): Promise<ProductsPageData> {
-  const response = await fetchSunglassesBatch(view, 0, PAGE_SIZE);
-
-  return {
-    initialProducts: response.records,
-    totalItems: response.total,
-  };
+  view: ProductRouteView,
+  sort: ProductsQueryState["sort"] = DEFAULT_PRODUCT_SORT,
+): Promise<ListResponse<SunglassesProduct>> {
+  return fetchSunglassesBatch(view, 0, PAGE_SIZE, sort);
 }
 
 export async function fetchSunglassesCollectionBatch(
   collectionSlug: string,
   offset: number,
   limit: number = PAGE_SIZE,
-): Promise<ListResponse<ProductCard>> {
-  const response = await fetchSunglassesPage({ collectionSlug }, offset, limit);
-
-  return {
-    records: response.records.map(toSunglassesCard),
-    total: response.total,
-  };
+  sort: ProductsQueryState["sort"] = DEFAULT_PRODUCT_SORT,
+): Promise<ListResponse<SunglassesProduct>> {
+  return fetchSunglassesPage(
+    { collectionSlug },
+    sort,
+    offset,
+    limit,
+  );
 }

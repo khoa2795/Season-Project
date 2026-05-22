@@ -9,13 +9,7 @@ import { fetchCollectionFilters } from "@/lib/model";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
-type ProductsCollectionsShellProps = {
-  children: ReactNode;
-};
-
-export function ProductsCollectionsShell({
-  children,
-}: ProductsCollectionsShellProps) {
+export function CollectionsLayout({ children }: { children: ReactNode }) {
   const activeCollectionSlug = useSelectedLayoutSegment();
   const [collectionFilters, setCollectionFilters] = useState<
     Array<{ label: string; slug: string; href: string }>

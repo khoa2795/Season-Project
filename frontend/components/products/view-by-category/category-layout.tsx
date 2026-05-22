@@ -7,18 +7,19 @@ import { ChevronRight } from "lucide-react";
 import { ProductTypeEnum } from "@/lib/enums";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { ProductCategoryConfig } from "./utils";
-type ProductsCategoryShellProps = {
+import { ProductCategoryConfig } from "./category-config";
+
+type CategoryLayoutProps = {
   category: ProductTypeEnum;
-  categoryConfig: ProductCategoryConfig;
+  categoryConfig: ProductCategoryConfig | undefined;
   children: ReactNode;
 };
 
-export function ProductsCategoryShell({
+export function CategoryLayout({
   category,
   categoryConfig,
   children,
-}: ProductsCategoryShellProps) {
+}: CategoryLayoutProps) {
   const segments = useSelectedLayoutSegments();
   const activeSlug = segments[0];
 

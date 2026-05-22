@@ -101,6 +101,15 @@ export class SunglassesProduct {
     return this.defaultVariant?.price ?? 0;
   }
 
+  get variantCountLabel(): string {
+    const count = this.variants.length;
+    if (count === 1) {
+      return "1 Color";
+    }
+
+    return `${count} Colors`;
+  }
+
   get originalPrice(): number {
     if (this.salePercent <= 0) {
       return this.price;
