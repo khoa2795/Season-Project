@@ -52,6 +52,8 @@ const EyeglassesSchema = new Schema<IEyeglasses>(
   { timestamps: true },
 );
 
+EyeglassesSchema.index({ "variants.sku": 1 });
+
 export const Eyeglasses = mongoose.model<IEyeglasses>(
   "Eyeglasses",
   EyeglassesSchema,

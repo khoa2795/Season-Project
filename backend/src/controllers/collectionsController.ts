@@ -8,13 +8,19 @@ import type {
   CollectionProductsResponseData,
   ErrorResponse,
 } from "../types/eyewear.js";
+<<<<<<< HEAD
 import type { Request } from "express";
 import type { CollectionProductsValidatedRequest } from "../middleware/validation.js";
+=======
+import type { CollectionFiltersValidatedRequest } from "../middleware/validation.js";
+import { AppError } from "../errors/AppError.js";
+>>>>>>> c9de448 (fix backend)
 
 export async function getCollectionFilters(
   _req: Request,
   res: Response<CollectionFiltersResponseData | ErrorResponse>,
 ): Promise<void> {
+<<<<<<< HEAD
   try {
     const responseData = await getCollectionFiltersData();
     res.status(200).json(responseData);
@@ -23,7 +29,16 @@ export async function getCollectionFilters(
     res.status(500).json({
       error: error instanceof Error ? error.message : "Internal server error",
     });
+=======
+  const validatedQuery = req.validatedQuery;
+
+  if (validatedQuery === undefined) {
+    throw AppError.badRequest("Invalid query parameters");
+>>>>>>> c9de448 (fix backend)
   }
+
+  const responseData = await getCollectionFiltersByProductType(validatedQuery);
+  res.status(200).json(responseData);
 }
 
 export async function getCollectionProducts(

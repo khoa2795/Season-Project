@@ -5,29 +5,19 @@ import type {
   EyeglassesResponseData,
 } from "../types/eyewear.js";
 import type { EyeglassesValidatedRequest } from "../middleware/validation.js";
+import { AppError } from "../errors/AppError.js";
 
 export async function getEyeglasses(
   req: EyeglassesValidatedRequest,
   res: Response<EyeglassesResponseData | ErrorResponse>,
 ): Promise<void> {
-  try {
-    const validatedQuery = req.validatedQuery;
+  const validatedQuery = req.validatedQuery;
 
-    if (validatedQuery === undefined) {
-      res.status(400).json({
-        error: "Invalid query parameters",
-      });
-      return;
-    }
-
-    const responseData = await getEyeglassesByFilters(validatedQuery);
-
-    res.status(200).json(responseData);
-  } catch (error) {
-    console.error("Error in getEyeglasses controller:", error);
-
-    res.status(500).json({
-      error: error instanceof Error ? error.message : "Internal server error",
-    });
+  if (validatedQuery === undefined) {
+    throw AppError.badRequest("Invalid query parameters");
   }
+
+  const responseData = await getEyeglassesByFilters(validatedQuery);
+
+  res.status(200).json(responseData);
 }

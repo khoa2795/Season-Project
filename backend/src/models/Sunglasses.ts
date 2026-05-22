@@ -22,6 +22,8 @@ const SunglassesSchema = new Schema<ISunglasses>(
   { timestamps: true },
 );
 
+SunglassesSchema.index({ "variants.sku": 1 });
+
 export const Sunglasses = mongoose.model<ISunglasses>(
   "Sunglasses",
   SunglassesSchema,

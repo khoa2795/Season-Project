@@ -124,7 +124,13 @@ export interface CollectionProductsResponseData {
 }
 
 export interface ErrorResponse {
-  error?: string;
+  success: false;
+  error: {
+    statusCode: number;
+    code: string;
+    message: string;
+    details?: unknown;
+  };
 }
 
 export interface ValidatedCollectionProductsQuery extends SortableQuery {
