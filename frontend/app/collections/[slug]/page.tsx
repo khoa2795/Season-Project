@@ -22,6 +22,8 @@ export default async function CollectionPage({
   const queryParams = await searchParams;
   const queryState = parseProductsQueryState({
     sort: getSingleSearchParam(queryParams.sort),
+    frameType: getSingleSearchParam(queryParams.frameType),
+    frameSize: getSingleSearchParam(queryParams.frameSize),
   });
 
   const collections = await fetchCollectionFilters();
@@ -31,7 +33,7 @@ export default async function CollectionPage({
     notFound();
   }
 
-  const collectionProducts = await getCollectionPageData(slug, queryState.sort);
+  const collectionProducts = await getCollectionPageData(slug, queryState);
   
   return (
     <CollectionListShell

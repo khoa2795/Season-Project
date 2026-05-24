@@ -7,14 +7,13 @@ import { Button } from "@/components/ui/button";
 import { ProductGrid } from "../products-grid";
 import { SortFilterControl } from "../sort-filter-control";
 import {
-  DEFAULT_PRODUCT_SORT,
   PAGE_SIZE,
   parseProductsQueryState,
 } from "@/lib/model/misc";
 import { Spinner } from "../../ui/spinner";
 import { cn } from "@/lib/utils";
 import { ListResponse } from "@/lib/fetcher";
-import { fetchCollectionProductsBatch } from "@/lib/model/collections/collections-api";
+import { fetchCollectionProductsBatch } from "@/lib/model";
 import {
   hydrateProducts,
   SerializedProductRecord,
@@ -32,12 +31,16 @@ export function CollectionListShell({
 }: CollectionListShellProps) {
   const searchParams = useSearchParams();
   const sortParam = searchParams.get("sort") ?? undefined;
+  const frameTypeParam = searchParams.get("frameType") ?? undefined;
+  const frameSizeParam = searchParams.get("frameSize") ?? undefined;
   const queryState = useMemo(
     () =>
       parseProductsQueryState({
         sort: sortParam,
+        frameType: frameTypeParam,
+        frameSize: frameSizeParam,
       }),
-    [sortParam],
+    [sortParam, frameTypeParam, frameSizeParam],
   );
   const initialProducts = useMemo(
     () => toProductCards(hydrateProducts(initialData.records)),
@@ -70,7 +73,7 @@ export function CollectionListShell({
         collectionSlug,
         loadedCount,
         PAGE_SIZE,
-        queryState.sort ?? DEFAULT_PRODUCT_SORT,
+        queryState,
       );
 
       startTransition(() => {

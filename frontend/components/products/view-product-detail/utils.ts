@@ -1,5 +1,4 @@
-import { ProductAvailabilityEnum } from "@/lib/enums";
-import { EyeglassesProduct } from "@/lib/model/eyeglasses/eyeglasses";
+import { ProductAvailabilityEnum, ProductTypeEnum } from "@/lib/enums";
 import type { ProductModel } from "../utils";
 
 export type AccordionSection = "info" | "size";
@@ -51,17 +50,14 @@ export function getVariantStartIndex(product: ProductModel): number {
 export function buildProductFacts(product: ProductModel): string[] {
   const facts = [product.brand, availabilityLabels[product.availability]];
 
-  if (product instanceof EyeglassesProduct) {
-    facts.unshift("Eyeglasses");
-    facts.push(
-      humanizeLabel(product.specifications.gender),
-      humanizeLabel(product.frameMaterial),
-      `${humanizeLabel(product.frameSize)} Frame`,
-    );
-  } else {
-    facts.unshift("Sunglasses");
-    facts.push(humanizeLabel(product.specifications.gender));
-  }
+  facts.unshift(
+    product.type === ProductTypeEnum.sunglasses ? "Sunglasses" : "Eyeglasses",
+  );
+  facts.push(
+    humanizeLabel(product.specifications.gender),
+    humanizeLabel(product.frameMaterial),
+    `${humanizeLabel(product.frameSize)} Frame`,
+  );
 
   return facts;
 }

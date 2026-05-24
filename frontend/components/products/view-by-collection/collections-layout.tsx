@@ -33,7 +33,7 @@ export function CollectionsLayout({ children }: { children: ReactNode }) {
           collections.map((collection) => ({
             label: collection.name,
             slug: collection.slug,
-            href: `/products/collections/${collection.slug}`,
+            href: `/collections/${collection.slug}`,
           })),
         );
         setIsLoadingCollectionFilters(false);

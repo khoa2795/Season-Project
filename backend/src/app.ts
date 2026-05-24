@@ -2,8 +2,7 @@ import cors from "cors";
 import express, { type Request, type Response } from "express";
 import dotenv from "dotenv";
 import collectionsRouter from "./routes/collections.js";
-import eyeglassesRouter from "./routes/eyeglasses.js";
-import sunglassesRouter from "./routes/sunglasses.js";
+import productsRouter from "./routes/products.js";
 
 // Load environment variables from the parent directory
 dotenv.config({ path: "../.env.backend" });
@@ -24,7 +23,6 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/collections", collectionsRouter);
-app.use("/api/eyeglasses", eyeglassesRouter);
-app.use("/api/sunglasses", sunglassesRouter);
+app.use("/api/products", productsRouter);
 
 export default app;

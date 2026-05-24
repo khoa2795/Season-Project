@@ -1,24 +1,19 @@
 import type { NextFunction, Request, Response } from "express";
-import { FrameMaterial, FrameSize } from "../models/Eyeglasses.js";
+import { FrameMaterial, FrameSize } from "../models/Product.js";
 import {
   DEFAULT_PRODUCT_SORT,
   PRODUCT_SORTS,
 } from "../types/eyewear.js";
 import type {
   CollectionProductsQueryParams,
-  EyeglassesQueryParams,
-  SunglassesQueryParams,
+  ProductQueryParams,
+  ProductType,
   ValidatedCollectionProductsQuery,
-  ValidatedEyeglassesQuery,
-  ValidatedSunglassesQuery,
+  ValidatedProductQuery,
 } from "../types/eyewear.js";
 
-export interface EyeglassesValidatedRequest extends Request {
-  validatedQuery?: ValidatedEyeglassesQuery;
-}
-
-export interface SunglassesValidatedRequest extends Request {
-  validatedQuery?: ValidatedSunglassesQuery;
+export interface ProductValidatedRequest extends Request {
+  validatedQuery?: ValidatedProductQuery;
 }
 
 export interface CollectionProductsValidatedRequest extends Request {
@@ -72,14 +67,14 @@ const parseSaleParam = (
 export const parseSortParam = (
   sortParam?: string,
 ):
-  | { sort: ValidatedEyeglassesQuery["sort"] }
+  | { sort: ValidatedProductQuery["sort"] }
   | { error: string } => {
   if (sortParam === undefined) {
     return { sort: DEFAULT_PRODUCT_SORT };
   }
 
-  if (PRODUCT_SORTS.includes(sortParam as ValidatedEyeglassesQuery["sort"])) {
-    return { sort: sortParam as ValidatedEyeglassesQuery["sort"] };
+  if (PRODUCT_SORTS.includes(sortParam as ValidatedProductQuery["sort"])) {
+    return { sort: sortParam as ValidatedProductQuery["sort"] };
   }
 
   return { error: "Invalid sort." };
@@ -133,6 +128,24 @@ export const validateCollectionProductsQuery = (
     return;
   }
 
+  const frameType =
+    FrameMaterial[query.frameType as keyof typeof FrameMaterial] || null;
+  const frameSize = FrameSize[query.frameSize as keyof typeof FrameSize] || null;
+
+  if (query.frameType && frameType === null) {
+    res.status(400).json({
+      error: "Invalid frameType.",
+    });
+    return;
+  }
+
+  if (query.frameSize && frameSize === null) {
+    res.status(400).json({
+      error: "Invalid frameSize.",
+    });
+    return;
+  }
+
   const sort = parseSortParam(query.sort);
 
   if ("error" in sort) {
@@ -141,6 +154,8 @@ export const validateCollectionProductsQuery = (
   }
 
   req.validatedQuery = {
+    frameType,
+    frameSize,
     ...pagination,
     sort: sort.sort,
   };
@@ -148,18 +163,24 @@ export const validateCollectionProductsQuery = (
   next();
 };
 
-export const validateEyeglassesQuery = (
-  req: EyeglassesValidatedRequest,
+const validateSharedProductQuery = (
+  req: ProductValidatedRequest,
   res: Response,
   next: NextFunction,
 ): void => {
-  const query = req.query as EyeglassesQueryParams;
+  const query = req.query as ProductQueryParams;
   const pagination = parsePagination(query);
 
   if ("error" in pagination) {
     res.status(400).json({
       error: pagination.error,
     });
+    return;
+  }
+
+  const type = parseTypeParam(query.type);
+  if ("error" in type) {
+    res.status(400).json({ error: type.error });
     return;
   }
 
@@ -200,6 +221,7 @@ export const validateEyeglassesQuery = (
   }
 
   req.validatedQuery = {
+    type: type.type,
     frameType: frameType,
     frameSize: frameSize,
     collectionSlug: normalizeCollectionSlug(query.collectionSlug),
@@ -209,51 +231,27 @@ export const validateEyeglassesQuery = (
     offset: pagination.offset,
     limit: pagination.limit,
   };
-
   next();
 };
 
-export const validateSunglassesQuery = (
-  req: SunglassesValidatedRequest,
-  res: Response,
-  next: NextFunction,
-): void => {
-  const query = req.query as SunglassesQueryParams;
-  const pagination = parsePagination(query);
-
-  if ("error" in pagination) {
-    res.status(400).json({
-      error: pagination.error,
-    });
-    return;
+const parseTypeParam = (
+  typeParam?: string,
+): { type: ProductType | null } | { error: string } => {
+  if (typeParam === undefined) {
+    return { type: null };
   }
 
-  const sale = parseSaleParam(query.sale);
-  if ("error" in sale) {
-    res.status(400).json({ error: sale.error });
-    return;
+  const normalized = typeParam.trim().toLowerCase();
+
+  if (normalized === "eyeglasses" || normalized === "eyeglass") {
+    return { type: "Eyeglasses" };
   }
 
-  const gender = parseGenderParam(query.gender);
-  if ("error" in gender) {
-    res.status(400).json({ error: gender.error });
-    return;
+  if (normalized === "sunglasses" || normalized === "sunglass") {
+    return { type: "Sunglasses" };
   }
 
-  const collectionSlug = normalizeCollectionSlug(query.collectionSlug);
-  const sort = parseSortParam(query.sort);
-
-  if ("error" in sort) {
-    res.status(400).json({ error: sort.error });
-    return;
-  }
-
-  req.validatedQuery = {
-    collectionSlug,
-    gender: gender.gender,
-    ...pagination,
-    sale: sale.sale,
-    sort: sort.sort,
-  };
-  next();
+  return { error: "Invalid type. Use Eyeglasses or Sunglasses." };
 };
+
+export const validateProductQuery = validateSharedProductQuery;

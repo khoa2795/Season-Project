@@ -5,13 +5,44 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 import { Collection } from "../models/Collection.js";
-import { Eyeglasses } from "../models/Eyeglasses.js";
-import { Sunglasses } from "../models/Sunglasses.js";
+import { Product } from "../models/Product.js";
 
 dotenv.config({ path: path.resolve(process.cwd(), ".env.backend") });
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+type SeedCollection = {
+  _id: string;
+  name: string;
+  slug: string;
+  inStockCount: number;
+};
+
+type SeedProduct = {
+  name: string;
+  slug: string;
+  collectionId?: string | null;
+  availability: string;
+};
+
+const toCollectionName = (productName: string) => {
+  const baseName = productName
+    .replace(/\s+SUNGLASSES$/i, "")
+    .split(" - ")[0]
+    ?.trim() ?? productName.trim();
+
+  const withoutSuffix = baseName.replace(/\s+\d+$/, "").trim();
+
+  return withoutSuffix
+    .toLowerCase()
+    .split(/\s+/)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+};
+
+const toCollectionSlug = (collectionName: string) =>
+  collectionName.trim().toLowerCase().replace(/\s+/g, "-");
 
 const seedDatabase = async () => {
   try {
@@ -41,15 +72,53 @@ const seedDatabase = async () => {
     const sunglassesRaw = fs.readFileSync(sunglassesPath, "utf-8");
     const eyeglassesRaw = fs.readFileSync(eyeglassesPath, "utf-8");
 
-    const collections = JSON.parse(collectionsRaw);
-    const sunglasses = JSON.parse(sunglassesRaw);
-    const eyeglasses = JSON.parse(eyeglassesRaw);
-    const uniqueSunglasses = Array.from(
-      new Map(sunglasses.map((product: { slug: string }) => [product.slug, product])).values(),
+    const collections = JSON.parse(collectionsRaw) as SeedCollection[];
+    const sunglasses = JSON.parse(sunglassesRaw) as SeedProduct[];
+    const eyeglasses = JSON.parse(eyeglassesRaw) as SeedProduct[];
+    const uniqueProducts = Array.from(
+      new Map(
+        [...sunglasses, ...eyeglasses].map((product: SeedProduct) => [
+          product.slug,
+          product,
+        ]),
+      ).values(),
+    ) as SeedProduct[];
+
+    for (const collection of collections) {
+      collection.inStockCount = 0;
+    }
+
+    const collectionBySlug = new Map(
+      collections.map((collection) => [collection.slug, collection]),
     );
-    const uniqueEyeglasses = Array.from(
-      new Map(eyeglasses.map((product: { slug: string }) => [product.slug, product])).values(),
-    );
+
+    for (const product of uniqueProducts) {
+      const inferredCollectionName = toCollectionName(product.name);
+      const inferredCollectionSlug = toCollectionSlug(inferredCollectionName);
+
+      if (!collectionBySlug.has(inferredCollectionSlug)) {
+        const collection = {
+          _id: new mongoose.Types.ObjectId().toString(),
+          name: inferredCollectionName,
+          slug: inferredCollectionSlug,
+          inStockCount: 0,
+        };
+
+        collections.push(collection);
+        collectionBySlug.set(inferredCollectionSlug, collection);
+      }
+
+      const collection = collectionBySlug.get(inferredCollectionSlug);
+      if (collection === undefined) {
+        throw new Error(`Missing collection for ${product.name}`);
+      }
+
+      product.collectionId = collection._id;
+
+      if (product.availability === "in_stock") {
+        collection.inStockCount += 1;
+      }
+    }
 
     // 2. Clear entire database (drop all schemas and data)
     if (mongoose.connection.db) {
@@ -65,11 +134,8 @@ const seedDatabase = async () => {
     await Collection.insertMany(collections);
     console.log(`Successfully seeded ${collections.length} collections!`);
 
-    await Sunglasses.insertMany(uniqueSunglasses);
-    console.log(`Successfully seeded ${uniqueSunglasses.length} sunglasses!`);
-
-    await Eyeglasses.insertMany(uniqueEyeglasses);
-    console.log(`Successfully seeded ${uniqueEyeglasses.length} eyeglasses!`);
+    await Product.insertMany(uniqueProducts);
+    console.log(`Successfully seeded ${uniqueProducts.length} products!`);
 
     process.exit(0);
   } catch (error) {

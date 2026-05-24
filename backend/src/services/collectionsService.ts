@@ -1,15 +1,13 @@
 import { Collection } from "../models/Collection.js";
-import { Eyeglasses } from "../models/Eyeglasses.js";
-import { Sunglasses } from "../models/Sunglasses.js";
+import { Product } from "../models/Product.js";
 import type {
   CollectionFiltersResponseData,
-  CollectionProductResponse,
-  CollectionProductsResponseData,
-  EyeglassesProductResponse,
-  SunglassesProductResponse,
+  DatabaseProduct,
+  ProductResponse,
+  ProductsResponseData,
   ValidatedCollectionProductsQuery,
 } from "../types/eyewear.js";
-import { buildSort } from "./utils.js";
+import { buildProductSort } from "./utils.js";
 import type { Types } from "mongoose";
 
 export async function getCollectionFilters(): Promise<CollectionFiltersResponseData> {
@@ -48,83 +46,31 @@ function normalizeCollectionSlug(value: string): string {
     .replace(/^-|-$/g, "");
 }
 
-function buildCollectionProductsProject(type: "Eyeglasses" | "Sunglasses") {
-  return {
-    _id: 1,
-    name: 1,
-    slug: 1,
-    type: { $literal: type },
-    collectionId: 1,
-    brand: 1,
-    salePercent: 1,
-    availability: 1,
-    description: 1,
-    variants: 1,
-    rating: 1,
-    isActive: 1,
-    specifications: 1,
-    sortPrice: {
-      $ifNull: [{ $arrayElemAt: ["$variants.price", 0] }, 0],
-    },
-  };
-}
+const PRODUCT_SELECT_FIELDS =
+  "name slug type collectionId brand salePercent availability description specifications variants rating isActive";
 
-function transformCollectionProduct(product: {
-  _id: unknown;
-  name: string;
-  slug: string;
-  type: string;
-  collectionId: Types.ObjectId | string;
-  brand: string;
-  salePercent: number;
-  availability: string;
-  description: string;
-  variants: unknown[];
-  rating: unknown;
-  isActive: boolean;
-  specifications: unknown;
-}): CollectionProductResponse {
-  if (product.type === "Eyeglasses") {
-    return {
-      id: String(product._id),
-      name: product.name,
-      slug: product.slug,
-      type: product.type,
-      collectionId: String(product.collectionId),
-      brand: product.brand,
-      salePercent: product.salePercent,
-      availability: product.availability as EyeglassesProductResponse["availability"],
-      description: product.description,
-      variants: product.variants as EyeglassesProductResponse["variants"],
-      rating: product.rating as EyeglassesProductResponse["rating"],
-      isActive: product.isActive,
-      specifications:
-        product.specifications as EyeglassesProductResponse["specifications"],
-    };
-  }
-
+function transformCollectionProduct(product: DatabaseProduct): ProductResponse {
   return {
-    id: String(product._id),
+    id: product._id.toString(),
     name: product.name,
     slug: product.slug,
     type: product.type,
-    collectionId: String(product.collectionId),
+    collectionId: product.collectionId.toString(),
     brand: product.brand,
     salePercent: product.salePercent,
-    availability: product.availability as SunglassesProductResponse["availability"],
+    availability: product.availability,
     description: product.description,
-    variants: product.variants as SunglassesProductResponse["variants"],
-    rating: product.rating as SunglassesProductResponse["rating"],
+    variants: product.variants,
+    rating: product.rating,
     isActive: product.isActive,
-    specifications:
-      product.specifications as SunglassesProductResponse["specifications"],
+    specifications: product.specifications,
   };
 }
 
 export async function getCollectionProductsBySlug(
   collectionSlug: string,
   query: ValidatedCollectionProductsQuery,
-): Promise<CollectionProductsResponseData> {
+): Promise<ProductsResponseData> {
   const normalizedSlug = normalizeCollectionSlug(collectionSlug);
   const collection = await Collection.findOne({ slug: normalizedSlug })
     .select("_id")
@@ -140,54 +86,26 @@ export async function getCollectionProductsBySlug(
   const match = {
     isActive: true,
     collectionId: collection._id,
-  };
+  } as Record<string, unknown>;
 
-  const aggregation = await Eyeglasses.aggregate<{
-    records: Array<{
-      _id: unknown;
-      name: string;
-      slug: string;
-      type: string;
-      collectionId: Types.ObjectId | string;
-      brand: string;
-      salePercent: number;
-      availability: string;
-      description: string;
-      variants: unknown[];
-      rating: unknown;
-      isActive: boolean;
-      specifications: unknown;
-    }>;
-    total: Array<{ count: number }>;
-  }>([
-    { $match: match },
-    { $project: buildCollectionProductsProject("Eyeglasses") },
-    {
-      $unionWith: {
-        coll: Sunglasses.collection.name,
-        pipeline: [
-          { $match: match },
-          { $project: buildCollectionProductsProject("Sunglasses") },
-        ],
-      },
-    },
-    { $sort: buildSort(query.sort) },
-    {
-      $facet: {
-        records: [
-          { $skip: query.offset },
-          { $limit: query.limit },
-          { $project: { sortPrice: 0 } },
-        ],
-        total: [{ $count: "count" }],
-      },
-    },
-  ]);
+  if (query.frameType !== null) {
+    match["specifications.frameType.material"] = query.frameType;
+  }
 
-  const result = aggregation[0] ?? { records: [], total: [] };
+  if (query.frameSize !== null) {
+    match["specifications.frameType.size.label"] = query.frameSize;
+  }
+
+  const total = await Product.countDocuments(match);
+  const products = await Product.find(match)
+    .select(PRODUCT_SELECT_FIELDS)
+    .sort(buildProductSort(query.sort))
+    .skip(query.offset)
+    .limit(query.limit)
+    .lean<DatabaseProduct[]>();
 
   return {
-    records: result.records.map(transformCollectionProduct),
-    total: result.total[0]?.count ?? 0,
+    records: products.map(transformCollectionProduct),
+    total,
   };
 }

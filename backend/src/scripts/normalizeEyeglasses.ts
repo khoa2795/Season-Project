@@ -1,10 +1,13 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import mongoose from "mongoose";
+import dotenv from "dotenv";
+import { v2 as cloudinary } from "cloudinary";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.resolve(process.cwd(), ".env.backend") });
 
 // Input file paths
 const inputPath = path.resolve(
@@ -15,6 +18,12 @@ const collectionsPath = path.resolve(
   __dirname,
   "../../season_data/collections-normalized.json",
 );
+
+const sizeGuideRoots = {
+  Big: path.resolve(__dirname, "../../season_data/big"),
+  Medium: path.resolve(__dirname, "../../season_data/medium"),
+  Small: path.resolve(__dirname, "../../season_data/small"),
+} as const;
 
 // Frame size reference files
 const bigsizePath = path.resolve(__dirname, "../../season_data/frame-size-big.json");
@@ -41,6 +50,69 @@ const outputPath = path.resolve(
   "../../season_data/eyeglasses-normalized.json",
 );
 
+type FrameSize = keyof typeof sizeGuideRoots;
+
+const pickRandomItem = <T,>(items: T[]): T => {
+  const index = Math.floor(Math.random() * items.length);
+  const item = items[index];
+
+  if (item === undefined) {
+    throw new Error("Cannot pick an item from an empty list");
+  }
+
+  return item;
+};
+
+const parseCloudinaryUrl = (value: string) => {
+  const parsed = new URL(value);
+
+  return {
+    cloudName: parsed.hostname,
+    apiKey: parsed.username,
+    apiSecret: parsed.password,
+  };
+};
+
+const uploadFolderImages = async (folderPath: string, publicFolder: string) => {
+  const files = fs
+    .readdirSync(folderPath)
+    .filter((file) => !file.includes(":Zone.Identifier"))
+    .filter((file) => /\.(jpe?g|png)$/i.test(file))
+    .sort((left, right) => left.localeCompare(right));
+
+  const uploaded = [] as string[];
+
+  for (const file of files) {
+    const uploadedFile = await cloudinary.uploader.upload(path.join(folderPath, file), {
+      folder: publicFolder,
+      public_id: path.parse(file).name,
+      overwrite: true,
+      unique_filename: false,
+      resource_type: "image",
+    });
+    uploaded.push(uploadedFile.secure_url);
+  }
+
+  return uploaded;
+};
+
+const uploadSizeGuideImages = async () => {
+  const entries = await Promise.all(
+    (Object.entries(sizeGuideRoots) as Array<[FrameSize, string]>).map(
+      async ([sizeLabel, folderPath]) => {
+        const images = await uploadFolderImages(
+          folderPath,
+          `MyProject/size-guides/eyewear/${sizeLabel.toLowerCase()}`,
+        );
+
+        return [sizeLabel, images] as const;
+      },
+    ),
+  );
+
+  return Object.fromEntries(entries) as Record<FrameSize, string[]>;
+};
+
 const assignGenderBySplit = <T extends { slug: string; specifications: { gender: string } }>(
   products: T[],
 ) => {
@@ -54,7 +126,20 @@ const assignGenderBySplit = <T extends { slug: string; specifications: { gender:
   });
 };
 
-const normalizeNewData = () => {
+const normalizeNewData = async () => {
+  const cloudinaryUrl = process.env.CLOUDINARY_URL;
+  if (cloudinaryUrl === undefined || cloudinaryUrl === "") {
+    throw new Error("Please provide CLOUDINARY_URL in .env.backend");
+  }
+
+  const cloudinaryConfig = parseCloudinaryUrl(cloudinaryUrl);
+  cloudinary.config({
+    cloud_name: cloudinaryConfig.cloudName,
+    api_key: cloudinaryConfig.apiKey,
+    api_secret: cloudinaryConfig.apiSecret,
+    secure: true,
+  });
+
   const rawData = fs.readFileSync(inputPath, "utf8");
   const data = JSON.parse(rawData);
 
@@ -68,6 +153,7 @@ const normalizeNewData = () => {
   const mediumSizeData = JSON.parse(fs.readFileSync(mediumSizePath, "utf8"));
   const smallSizeData = JSON.parse(fs.readFileSync(smallSizePath, "utf8"));
   const metalFrameData = JSON.parse(fs.readFileSync(metalFramePath, "utf8"));
+  const sizeGuideImages = await uploadSizeGuideImages();
   
   // Extract base names from clearance sale products (remove colors)
   const clearanceSaleBaseNames = new Set(
@@ -132,7 +218,7 @@ const normalizeNewData = () => {
     }
 
     // Determine frameType object - size and material
-    let frameSize = "Medium"; // Default to Medium
+    let frameSize: FrameSize = "Medium"; // Default to Medium
     let frameMaterial = "Acetate"; // Default to Acetate
     
     // Check frame size - product can only have ONE size
@@ -152,8 +238,11 @@ const normalizeNewData = () => {
     // Otherwise default to Acetate (already set above)
     
     const frameType = {
-      size: frameSize,
-      material: frameMaterial
+      material: frameMaterial,
+      size: {
+        label: frameSize,
+        image: pickRandomItem(sizeGuideImages[frameSize]),
+      },
     };
 
     if (!color && product.slug && matchingCollection) {
@@ -244,4 +333,7 @@ const normalizeNewData = () => {
   console.log(`✅ Normalized newly scraped products saved to ${outputPath}`);
 };
 
-normalizeNewData();
+normalizeNewData().catch((error: unknown) => {
+  console.error("❌ Error normalizing eyeglasses:", error);
+  process.exit(1);
+});

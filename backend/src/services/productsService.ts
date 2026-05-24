@@ -1,27 +1,31 @@
 import { Collection } from "../models/Collection.js";
-import { Eyeglasses } from "../models/Eyeglasses.js";
+import { Product } from "../models/Product.js";
 import type {
-  DatabaseEyeglassesProduct,
-  EyeglassesProductResponse,
-  EyeglassesResponseData,
-  ValidatedEyeglassesQuery,
+  DatabaseProduct,
+  ProductResponse,
+  ProductsResponseData,
+  ValidatedProductQuery,
 } from "../types/eyewear.js";
-import { buildSort } from "./utils.js";
+import { buildProductSort } from "./utils.js";
 
 const PRODUCT_SELECT_FIELDS =
   "name slug type collectionId brand salePercent availability description specifications variants rating isActive";
 
-function buildFilter(query: ValidatedEyeglassesQuery): Record<string, unknown> {
+function buildFilter(query: ValidatedProductQuery): Record<string, unknown> {
   const filter: Record<string, unknown> = {
     isActive: true,
   };
+
+  if (query.type !== null) {
+    filter.type = query.type;
+  }
 
   if (query.frameType !== null) {
     filter["specifications.frameType.material"] = query.frameType;
   }
 
   if (query.frameSize !== null) {
-    filter["specifications.frameType.size"] = query.frameSize;
+    filter["specifications.frameType.size.label"] = query.frameSize;
   }
 
   if (query.gender !== null) {
@@ -35,9 +39,7 @@ function buildFilter(query: ValidatedEyeglassesQuery): Record<string, unknown> {
   return filter;
 }
 
-function transformEyeglassesProduct(
-  product: DatabaseEyeglassesProduct,
-): EyeglassesProductResponse {
+function transformProduct(product: DatabaseProduct): ProductResponse {
   return {
     id: product._id.toString(),
     name: product.name,
@@ -55,9 +57,9 @@ function transformEyeglassesProduct(
   };
 }
 
-export async function getEyeglassesByFilters(
-  query: ValidatedEyeglassesQuery,
-): Promise<EyeglassesResponseData> {
+export async function getProductsByFilters(
+  query: ValidatedProductQuery,
+): Promise<ProductsResponseData> {
   try {
     const filter = buildFilter(query);
 
@@ -78,43 +80,43 @@ export async function getEyeglassesByFilters(
       filter.collectionId = collection._id;
     }
 
-    const total = await Eyeglasses.countDocuments(filter);
+    const total = await Product.countDocuments(filter);
 
-    const products = await Eyeglasses.find(filter)
+    const products = await Product.find(filter)
       .select(PRODUCT_SELECT_FIELDS)
-      .sort(buildSort(query.sort))
+      .sort(buildProductSort(query.sort))
       .skip(query.offset)
       .limit(query.limit)
-      .lean<DatabaseEyeglassesProduct[]>();
+      .lean<DatabaseProduct[]>();
 
     return {
-      records: products.map(transformEyeglassesProduct),
+      records: products.map(transformProduct),
       total,
     };
   } catch (error) {
-    console.error("Error fetching eyeglasses:", error);
-    throw new Error("Failed to fetch eyeglasses");
+    console.error("Error fetching products:", error);
+    throw new Error("Failed to fetch products");
   }
 }
 
-export async function getEyeglassesById(
+export async function getProductById(
   id: string,
-): Promise<EyeglassesProductResponse | null> {
+): Promise<ProductResponse | null> {
   try {
-    const product = await Eyeglasses.findOne({
+    const product = await Product.findOne({
       _id: id,
       isActive: true,
     })
       .select(PRODUCT_SELECT_FIELDS)
-      .lean<DatabaseEyeglassesProduct | null>();
+      .lean<DatabaseProduct | null>();
 
     if (product === null) {
       return null;
     }
 
-    return transformEyeglassesProduct(product);
+    return transformProduct(product);
   } catch (error) {
-    console.error("Error fetching eyeglasses by id:", error);
-    throw new Error("Failed to fetch eyeglasses");
+    console.error("Error fetching product by id:", error);
+    throw new Error("Failed to fetch product");
   }
 }

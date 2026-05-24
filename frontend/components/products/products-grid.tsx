@@ -28,7 +28,7 @@ function ProductImageCard({ product, index }: ProductImageCardProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [hasManualNavigation, setHasManualNavigation] = useState(false);
-  const detailHref = `/products/${product.id}?type=${product.type}`;
+  const detailHref = `/products/${product.id}`;
 
   const displayedIndex = useMemo(() => {
     if (

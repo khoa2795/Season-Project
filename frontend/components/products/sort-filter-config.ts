@@ -53,7 +53,42 @@ export const FILTER_CONFIG: Record<FilterConfigKey, FilterGroup[]> = {
       ],
     },
   ],
-  [ProductTypeEnum.sunglasses]: [],
-  collections: [],
+  [ProductTypeEnum.sunglasses]: [
+    {
+      key: "frameType",
+      label: "Frame Type",
+      options: [
+        { label: "Acetate", value: FrameMaterialEnum.Acetate },
+        { label: "Metal", value: FrameMaterialEnum.Metal },
+      ],
+    },
+    {
+      key: "frameSize",
+      label: "Frame Size",
+      options: [
+        { label: "Small", value: FrameSizeEnum.Small },
+        { label: "Medium", value: FrameSizeEnum.Medium },
+        { label: "Big", value: FrameSizeEnum.Big },
+      ],
+    },
+  ],
+  collections: [
+    {
+      key: "frameType",
+      label: "Frame Type",
+      options: [
+        { label: "Acetate", value: FrameMaterialEnum.Acetate },
+        { label: "Metal", value: FrameMaterialEnum.Metal },
+      ],
+    },
+    {
+      key: "frameSize",
+      label: "Frame Size",
+      options: [
+        { label: "Small", value: FrameSizeEnum.Small },
+        { label: "Medium", value: FrameSizeEnum.Medium },
+        { label: "Big", value: FrameSizeEnum.Big },
+      ],
+    },
+  ],
 };
-

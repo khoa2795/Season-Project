@@ -15,6 +15,7 @@ export class Rating {
     this.count = args.count;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static deser(data: any): Rating {
     return new Rating({
       avg: data?.avg ?? 0,
@@ -49,35 +50,31 @@ export class ProductVariant {
     this.stock = args.stock;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static deser(data: any): ProductVariant {
     return new ProductVariant({
-      sku: data.sku,
-      color: data.color ?? undefined,
-      price: data.price,
-      images: data.images ?? [],
-      isDefault: data.isDefault,
-      stock: data.stock,
+      sku: data?.sku ?? "",
+      color: data?.color ?? undefined,
+      price: data?.price ?? 0,
+      images: data?.images ?? [],
+      isDefault: data?.isDefault ?? false,
+      stock: data?.stock ?? 0,
     });
   }
 }
 
-export interface BaseSpecificationsArgs {
-  gender: ProductGender;
-}
-
-export class BaseSpecifications {
-  gender: ProductGender;
-
-  constructor(args: BaseSpecificationsArgs) {
-    this.gender = args.gender;
-  }
-
-  static deser(data: any): BaseSpecifications {
-    return new BaseSpecifications({
-      gender: data?.gender ?? ProductGenderEnum.Unisex,
-    });
-  }
-}
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getAvailabilityOrDefault = (value: any): ProductAvailability =>
-  value ?? ProductAvailabilityEnum.InStock;
+  value === ProductAvailabilityEnum.InStock ||
+  value === ProductAvailabilityEnum.OutOfStock ||
+  value === ProductAvailabilityEnum.PreOrder
+    ? value
+    : ProductAvailabilityEnum.InStock;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const getGenderOrDefault = (value: any): ProductGender =>
+  value === ProductGenderEnum.Male ||
+  value === ProductGenderEnum.Female ||
+  value === ProductGenderEnum.Unisex
+    ? value
+    : ProductGenderEnum.Unisex;

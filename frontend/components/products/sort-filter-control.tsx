@@ -17,7 +17,6 @@ import {
   type FilterConfigKey,
   type ProductsQueryState,
 } from "@/lib/model/misc";
-import { ProductTypeEnum } from "@/lib/enums";
 import { FILTER_CONFIG, SORT_OPTIONS } from "./sort-filter-config";
 import { DEFAULT_PRODUCT_SORT as FALLBACK_SORT } from "@/lib/model/misc";
 
@@ -88,20 +87,15 @@ export function SortFilterControl({
       nextSearchParams.delete("sort");
     }
 
-    if (filterConfigKey === ProductTypeEnum.eyeglasses) {
-      if (draftQueryState.frameType !== null) {
-        nextSearchParams.set("frameType", draftQueryState.frameType);
-      } else {
-        nextSearchParams.delete("frameType");
-      }
-
-      if (draftQueryState.frameSize !== null) {
-        nextSearchParams.set("frameSize", draftQueryState.frameSize);
-      } else {
-        nextSearchParams.delete("frameSize");
-      }
+    if (draftQueryState.frameType !== null) {
+      nextSearchParams.set("frameType", draftQueryState.frameType);
     } else {
       nextSearchParams.delete("frameType");
+    }
+
+    if (draftQueryState.frameSize !== null) {
+      nextSearchParams.set("frameSize", draftQueryState.frameSize);
+    } else {
       nextSearchParams.delete("frameSize");
     }
 

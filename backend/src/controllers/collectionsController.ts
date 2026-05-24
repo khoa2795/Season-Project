@@ -5,8 +5,8 @@ import {
 } from "../services/collectionsService.js";
 import type {
   CollectionFiltersResponseData,
-  CollectionProductsResponseData,
   ErrorResponse,
+  ProductsResponseData,
 } from "../types/eyewear.js";
 import type { Request } from "express";
 import type { CollectionProductsValidatedRequest } from "../middleware/validation.js";
@@ -28,7 +28,7 @@ export async function getCollectionFilters(
 
 export async function getCollectionProducts(
   req: CollectionProductsValidatedRequest,
-  res: Response<CollectionProductsResponseData | ErrorResponse>,
+  res: Response<ProductsResponseData | ErrorResponse>,
 ): Promise<void> {
   try {
     const slug = req.params.slug;

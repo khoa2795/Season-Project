@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { use, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Bookmark, Minus, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
@@ -94,10 +94,8 @@ export function ProductDetailView({ product }: ProductDetailViewProps) {
     hydratedProduct.defaultVariant ??
     hydratedProduct.variants[0];
   const variantImages = selectedVariant?.images ?? [];
-  const sizeImage =
-    variantImages.length > 0 ? variantImages[variantImages.length - 1] : "";
-  const galleryImages =
-    variantImages.length > 1 ? variantImages.slice(0, -1) : variantImages;
+  const sizeImage = hydratedProduct.sizeGuideImage ?? "";
+  const galleryImages = variantImages;
   const selectedColor = humanizeLabel(selectedVariant?.color);
   const productFacts = buildProductFacts(hydratedProduct);
   const descriptionParagraphs = splitDescription(hydratedProduct.description);
@@ -224,12 +222,13 @@ export function ProductDetailView({ product }: ProductDetailViewProps) {
     return (
       <div className="space-y-5 font-afacad text-[12px] uppercase tracking-[0.18em] text-black/56">
         {sizeImage !== "" ? (
-          <div className="relative aspect-4/3 overflow-hidden bg-white/70">
+          <div className="overflow-hidden bg-white/70">
             <Image
               src={sizeImage}
               alt={`${hydratedProduct.name} size guide`}
-              fill
-              className="object-contain"
+              width={1200}
+              height={900}
+              className="h-auto w-full"
               sizes="(max-width: 767px) calc(100vw - 32px), 300px"
             />
           </div>

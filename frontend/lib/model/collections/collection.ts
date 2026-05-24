@@ -18,6 +18,7 @@ export class Collection {
     this.inStockCount = args.inStockCount;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static deser(data: any): Collection {
     return new Collection({
       id: data?.id ?? "",

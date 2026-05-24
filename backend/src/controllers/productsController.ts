@@ -1,19 +1,19 @@
 import mongoose from "mongoose";
 import type { Response } from "express";
 import {
-  getSunglassesByFilters,
-  getSunglassesById,
-} from "../services/sunglassesService.js";
+  getProductById,
+  getProductsByFilters,
+} from "../services/productsService.js";
 import type {
   ErrorResponse,
-  SunglassesProductResponse,
-  SunglassesResponseData,
+  ProductResponse,
+  ProductsResponseData,
 } from "../types/eyewear.js";
-import type { SunglassesValidatedRequest } from "../middleware/validation.js";
+import type { ProductValidatedRequest } from "../middleware/validation.js";
 
-export async function getSunglasses(
-  req: SunglassesValidatedRequest,
-  res: Response<SunglassesResponseData | ErrorResponse>,
+export async function getProducts(
+  req: ProductValidatedRequest,
+  res: Response<ProductsResponseData | ErrorResponse>,
 ): Promise<void> {
   try {
     const validatedQuery = req.validatedQuery;
@@ -25,11 +25,11 @@ export async function getSunglasses(
       return;
     }
 
-    const responseData = await getSunglassesByFilters(validatedQuery);
+    const responseData = await getProductsByFilters(validatedQuery);
 
     res.status(200).json(responseData);
   } catch (error) {
-    console.error("Error in getSunglasses controller:", error);
+    console.error("Error in getProducts controller:", error);
 
     res.status(500).json({
       error: error instanceof Error ? error.message : "Internal server error",
@@ -37,9 +37,9 @@ export async function getSunglasses(
   }
 }
 
-export async function getSunglassById(
+export async function getProduct(
   req: { params: { id?: string } },
-  res: Response<SunglassesProductResponse | ErrorResponse>,
+  res: Response<ProductResponse | ErrorResponse>,
 ): Promise<void> {
   try {
     const id = req.params.id;
@@ -58,7 +58,7 @@ export async function getSunglassById(
       return;
     }
 
-    const product = await getSunglassesById(id);
+    const product = await getProductById(id);
 
     if (product === null) {
       res.status(404).json({
@@ -69,7 +69,7 @@ export async function getSunglassById(
 
     res.status(200).json(product);
   } catch (error) {
-    console.error("Error in getSunglassById controller:", error);
+    console.error("Error in getProduct controller:", error);
 
     res.status(500).json({
       error: error instanceof Error ? error.message : "Internal server error",

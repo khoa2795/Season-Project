@@ -18,10 +18,72 @@ const collectionsPath = path.resolve(
   "../../season_data/collections-normalized.json",
 );
 const imagesRoot = path.resolve(__dirname, "../../season_data/images");
+const sizeGuideRoots = {
+  Big: path.resolve(__dirname, "../../season_data/big"),
+  Medium: path.resolve(__dirname, "../../season_data/medium"),
+  Small: path.resolve(__dirname, "../../season_data/small"),
+} as const;
 const outputPath = path.resolve(
   __dirname,
   "../../season_data/sunglasses-normalized.json",
 );
+
+const FRAME_MATERIAL_BY_NAME = {
+  "THE ASSEMBLED 10": "Acetate",
+  "THE ATHLETES 01": "Metal",
+  "THE ATHLETES 05": "Metal",
+  "THE ATHLETES 06": "Metal",
+  "THE ATHLETES 07": "Metal",
+  "THE ATHLETES 10": "Acetate",
+  "THE ATHLETES 12": "Acetate",
+  "THE ATHLETES 14": "Acetate",
+  "THE ATHLETES 15": "Metal",
+  "THE CUT EDGE 01": "Acetate",
+  "THE OBSIDIAN 02": "Acetate",
+  "THE PAPER KNIFE 01": "Acetate",
+  "THE PAPER KNIFE 02": "Metal",
+  "THE RULER 03": "Metal",
+  "THE SET SQUARE 01": "Metal",
+  "THE SET SQUARE 02": "Metal",
+  "THE SNORKEL 03": "Metal",
+  "THE SOAP 03": "Acetate",
+  "THE SOAP 07": "Acetate",
+  "THE SOAP 08": "Metal",
+  "THE VERTEBRA 01": "Acetate",
+  "THE VERTEBRA 02": "Acetate",
+  "THE VERTEBRA 04": "Metal",
+} as const;
+
+const FRAME_SIZE_BY_NAME = {
+  "THE ATHLETES 05": "Small",
+  "THE ATHLETES 06": "Small",
+  "THE RULER 03": "Small",
+  "THE SET SQUARE 01": "Medium",
+  "THE OBSIDIAN 02": "Medium",
+  "THE ATHLETES 01": "Medium",
+  "THE SOAP 08": "Medium",
+  "THE VERTEBRA 02": "Medium",
+  "THE SOAP 03": "Medium",
+  "THE PAPER KNIFE 01": "Medium",
+  "THE SET SQUARE 02": "Medium",
+  "THE SOAP 07": "Medium",
+  "THE PAPER KNIFE 02": "Medium",
+  "THE ATHLETES 10": "Medium",
+  "THE ATHLETES 15": "Medium",
+  "THE ASSEMBLED 10": "Big",
+  "THE VERTEBRA 01": "Big",
+  "THE VERTEBRA 04": "Big",
+  "THE CUT EDGE 01": "Big",
+  "THE ATHLETES 12": "Big",
+  "THE SNORKEL 03": "Big",
+  "THE ATHLETES 14": "Big",
+  "THE ATHLETES 07": "Big",
+} as const;
+
+type FrameMaterialName =
+  (typeof FRAME_MATERIAL_BY_NAME)[keyof typeof FRAME_MATERIAL_BY_NAME];
+type FrameSizeName =
+  (typeof FRAME_SIZE_BY_NAME)[keyof typeof FRAME_SIZE_BY_NAME];
 
 const assignGenderBySplit = <
   T extends { slug: string; specifications: { gender: string } },
@@ -63,6 +125,38 @@ type NormalizedVariant = {
   stock: number;
 };
 
+type GroupedProduct = {
+  name: string;
+  slug: string;
+  brand: string;
+  availability: string;
+  type: string;
+  description: string;
+  specifications: {
+    gender: string;
+    frameType: {
+      material: FrameMaterialName;
+      size: {
+        label: FrameSizeName;
+        image: string;
+      };
+    };
+  };
+  variants: NormalizedVariant[];
+  rating: {
+    avg: number;
+    count: number;
+  };
+  isActive: boolean;
+  collectionId: string;
+  salePercent: number;
+};
+
+type ExistingGroupedProduct = {
+  name: string;
+  collectionId?: string;
+};
+
 const toBaseName = (value: string) => {
   const trimmed = value.toUpperCase();
   const sunglassesIndex = trimmed.indexOf(" SUNGLASSES");
@@ -76,6 +170,40 @@ const getRandomSalePercent = () => Math.floor(Math.random() * 30) + 1;
 
 const normalizeColorFromName = (value: string) =>
   value.toLowerCase().replace(/\s*-/g, "-").replace(/\s+/g, "-");
+
+const toBaseSlug = (value: string) =>
+  value.toLowerCase().replace(/\s+/g, "-");
+
+const getFrameType = (baseName: string) => {
+  const material = FRAME_MATERIAL_BY_NAME[
+    baseName as keyof typeof FRAME_MATERIAL_BY_NAME
+  ];
+  const size = FRAME_SIZE_BY_NAME[baseName as keyof typeof FRAME_SIZE_BY_NAME];
+
+  if (material === undefined) {
+    throw new Error(`Missing frame material mapping for ${baseName}`);
+  }
+
+  if (size === undefined) {
+    throw new Error(`Missing frame size mapping for ${baseName}`);
+  }
+
+  return {
+    material,
+    size,
+  };
+};
+
+const pickRandomItem = <T,>(items: T[]): T => {
+  const index = Math.floor(Math.random() * items.length);
+  const item = items[index];
+
+  if (item === undefined) {
+    throw new Error("Cannot pick an item from an empty list");
+  }
+
+  return item;
+};
 
 const parseCloudinaryUrl = (value: string) => {
   const parsed = new URL(value);
@@ -109,6 +237,23 @@ const uploadFolderImages = async (folderPath: string, publicFolder: string) => {
   return uploaded;
 };
 
+const uploadSizeGuideImages = async () => {
+  const entries = await Promise.all(
+    (Object.entries(sizeGuideRoots) as Array<[FrameSizeName, string]>).map(
+      async ([sizeLabel, folderPath]) => {
+        const images = await uploadFolderImages(
+          folderPath,
+          `MyProject/size-guides/eyewear/${sizeLabel.toLowerCase()}`,
+        );
+
+        return [sizeLabel, images] as const;
+      },
+    ),
+  );
+
+  return Object.fromEntries(entries) as Record<FrameSizeName, string[]>;
+};
+
 const seedDatabase = async () => {
   const cloudinaryUrl = process.env.CLOUDINARY_URL;
   if (cloudinaryUrl === undefined || cloudinaryUrl === "") {
@@ -132,9 +277,18 @@ const seedDatabase = async () => {
   const source = JSON.parse(fs.readFileSync(inputPath, "utf-8")) as {
     products: SourceProduct[];
   };
+  const existingProducts = fs.existsSync(outputPath)
+    ? (JSON.parse(fs.readFileSync(outputPath, "utf-8")) as ExistingGroupedProduct[])
+    : [];
 
   const collectionByName = new Map(collectionsData.map((collection) => [collection.name.toLowerCase(), collection]));
   const collectionBySlug = new Map(collectionsData.map((collection) => [collection.slug, collection]));
+  const existingCollectionIdByName = new Map(
+    existingProducts
+      .filter((product) => typeof product.collectionId === "string" && product.collectionId !== "")
+      .map((product) => [product.name, product.collectionId as string]),
+  );
+  const sizeGuideImages = await uploadSizeGuideImages();
 
   const parsePrice = (product: SourceProduct) => {
     const formatted = product.price?.amount;
@@ -151,7 +305,7 @@ const seedDatabase = async () => {
     return 2400000;
   };
 
-  const normalizedProducts = [] as Array<Record<string, unknown>>;
+  const groupedProducts: Record<string, GroupedProduct> = {};
 
   for (const product of source.products) {
     const baseName = toBaseName(product.name);
@@ -160,8 +314,9 @@ const seedDatabase = async () => {
     const matchingCollection =
       collectionByName.get((product.collection ?? "").toLowerCase()) ??
       collectionBySlug.get(collectionKey);
+    const fallbackCollectionId = existingCollectionIdByName.get(baseName);
 
-    if (matchingCollection === undefined) {
+    if (matchingCollection === undefined && fallbackCollectionId === undefined) {
       throw new Error(`Missing collection mapping for product: ${product.name}`);
     }
 
@@ -185,30 +340,53 @@ const seedDatabase = async () => {
       },
     ];
 
-    normalizedProducts.push({
-      name: baseName,
-      slug: slugBase,
-      brand: product.vendor ?? "SEESONvn",
-      availability: product.availability ?? "in_stock",
-      type: product.type ?? "Sunglasses",
-      description: product.description ?? "",
-      specifications: {
-        gender: "Unisex",
-      },
-      variants,
-      rating: {
-        avg: 0,
-        count: 0,
-      },
-      isActive: true,
-      collectionId: matchingCollection._id,
-      salePercent: product.sale === true ? getRandomSalePercent() : 0,
-    });
+    if (groupedProducts[baseName] === undefined) {
+      groupedProducts[baseName] = {
+        name: baseName,
+        slug: toBaseSlug(baseName),
+        brand: product.vendor ?? "SEESONvn",
+        availability: product.availability ?? "in_stock",
+        type: product.type ?? "Sunglasses",
+        description: product.description ?? "",
+        specifications: {
+          gender: "Unisex",
+          frameType: {
+            material: getFrameType(baseName).material,
+            size: {
+              label: getFrameType(baseName).size,
+              image: pickRandomItem(sizeGuideImages[getFrameType(baseName).size]),
+            },
+          },
+        },
+        variants: [],
+        rating: {
+          avg: 0,
+          count: 0,
+        },
+        isActive: true,
+        collectionId: matchingCollection?._id ?? fallbackCollectionId ?? "",
+        salePercent: product.sale === true ? getRandomSalePercent() : 0,
+      };
+    }
+
+    groupedProducts[baseName].variants.push(...variants);
   }
 
-  assignGenderBySplit(
-    normalizedProducts as Array<{ slug: string; specifications: { gender: string } }>,
-  );
+  const normalizedProducts = Object.values(groupedProducts).map((product) => {
+    const sortedVariants = [...product.variants].sort((left, right) =>
+      left.sku.localeCompare(right.sku),
+    );
+
+    return {
+      ...product,
+      variants: sortedVariants.map((variant, index) => ({
+        ...variant,
+        isDefault: index === 0,
+      })),
+    };
+  });
+
+  assignGenderBySplit(normalizedProducts);
 
   fs.writeFileSync(outputPath, JSON.stringify(normalizedProducts, null, 2));
   console.log(`✅ Normalized sunglasses saved to ${outputPath}`);

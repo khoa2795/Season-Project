@@ -1,8 +1,7 @@
 import {
   type FrameMaterial,
   type FrameSize,
-  type IEyeglassesSpecifications,
-} from "../models/Eyeglasses.js";
+} from "../models/Product.js";
 import type { Types } from "mongoose";
 
 export const PRODUCT_AVAILABILITIES = [
@@ -15,6 +14,7 @@ export const PRODUCT_GENDERS = ["Male", "Female", "Unisex"] as const;
 
 export type ProductAvailability = (typeof PRODUCT_AVAILABILITIES)[number];
 export type ProductGender = (typeof PRODUCT_GENDERS)[number];
+export type ProductType = "Eyeglasses" | "Sunglasses";
 
 export type ProductSort =
   | "title-asc"
@@ -45,7 +45,19 @@ export interface IProductRating {
   count: number;
 }
 
-export interface IBaseSpecifications {
+export interface IFrameSize {
+  label: FrameSize;
+  image: string;
+}
+
+export interface IFrameType {
+  frameType: {
+    material: FrameMaterial;
+    size: IFrameSize;
+  };
+}
+
+export interface IBaseSpecifications extends IFrameType {
   gender: ProductGender;
 }
 
@@ -67,16 +79,10 @@ export interface BaseQueryParams {
   limit?: number | string;
 }
 
-export interface EyeglassesQueryParams extends BaseQueryParams {
+export interface ProductQueryParams extends BaseQueryParams {
+  type?: string;
   frameType?: string;
   frameSize?: string;
-  collectionSlug?: string;
-  gender?: string;
-  sale?: string;
-  sort?: string;
-}
-
-export interface SunglassesQueryParams extends BaseQueryParams {
   collectionSlug?: string;
   gender?: string;
   sale?: string;
@@ -87,17 +93,10 @@ export interface SortableQuery {
   sort: ProductSort;
 }
 
-export interface ValidatedEyeglassesQuery extends SortableQuery {
+export interface ValidatedProductQuery extends SortableQuery {
+  type: ProductType | null;
   frameType: FrameMaterial | null;
   frameSize: FrameSize | null;
-  collectionSlug: string | null;
-  gender: ProductGender | null;
-  sale: boolean;
-  offset: number;
-  limit: number;
-}
-
-export interface ValidatedSunglassesQuery extends SortableQuery {
   collectionSlug: string | null;
   gender: ProductGender | null;
   sale: boolean;
@@ -117,6 +116,8 @@ export interface CollectionFiltersResponseData {
 }
 
 export interface CollectionProductsQueryParams extends BaseQueryParams {
+  frameType?: string;
+  frameSize?: string;
   sort?: string;
 }
 
@@ -124,7 +125,7 @@ export interface BaseProductResponse {
   id: string;
   name: string;
   slug: string;
-  type: string;
+  type: ProductType;
   brand: string;
   collectionId: string;
   salePercent: number;
@@ -135,38 +136,21 @@ export interface BaseProductResponse {
   isActive: boolean;
 }
 
-export interface EyeglassesProductResponse extends BaseProductResponse {
-  specifications: IEyeglassesSpecifications;
-}
-
-export interface SunglassesProductResponse extends BaseProductResponse {
+export interface ProductResponse extends BaseProductResponse {
   specifications: IBaseSpecifications;
 }
 
-export interface EyeglassesResponseData {
-  records: EyeglassesProductResponse[];
+export interface ProductsResponseData {
+  records: ProductResponse[];
   total: number;
 }
-
-export interface SunglassesResponseData {
-  records: SunglassesProductResponse[];
-  total: number;
-}
-
-export type CollectionProductResponse =
-  | EyeglassesProductResponse
-  | SunglassesProductResponse;
-
-export interface CollectionProductsResponseData {
-  records: CollectionProductResponse[];
-  total: number;
-}
-
 export interface ErrorResponse {
   error?: string;
 }
 
 export interface ValidatedCollectionProductsQuery extends SortableQuery {
+  frameType: FrameMaterial | null;
+  frameSize: FrameSize | null;
   offset: number;
   limit: number;
 }
@@ -186,10 +170,7 @@ export interface BaseDatabaseProduct {
   isActive: boolean;
 }
 
-export interface DatabaseEyeglassesProduct extends BaseDatabaseProduct {
-  specifications: IEyeglassesSpecifications;
-}
-
-export interface DatabaseSunglassesProduct extends BaseDatabaseProduct {
+export interface DatabaseProduct extends BaseDatabaseProduct {
+  type: ProductType;
   specifications: IBaseSpecifications;
 }

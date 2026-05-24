@@ -5,49 +5,92 @@ import type {
   ProductAvailability,
   ProductGender,
 } from "../type";
-import { getAvailabilityOrDefault, ProductVariant, Rating } from "../shared";
+import {
+  getAvailabilityOrDefault,
+  getGenderOrDefault,
+  ProductVariant,
+  Rating,
+} from "../shared";
 
-export interface EyeglassesSpecificationsArgs {
-  gender: ProductGender;
-  frameType: FrameType;
+export interface FrameSizeDetailsArgs {
+  label: FrameSize;
+  image: string;
 }
 
-export class FrameType {
-  material: FrameMaterial;
-  size: FrameSize;
+export class FrameSizeDetails {
+  label: FrameSize;
+  image: string;
 
-  constructor(args: { material: FrameMaterial; size: FrameSize }) {
-    this.material = args.material;
-    this.size = args.size;
+  constructor(args: FrameSizeDetailsArgs) {
+    this.label = args.label;
+    this.image = args.image;
   }
 
-  static deser(data: any): FrameType {
-    return new FrameType({
-      material: data?.material ?? FrameMaterialEnum.Acetate,
-      size: data?.size ?? FrameSizeEnum.Medium,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  static deser(data: any): FrameSizeDetails {
+    return new FrameSizeDetails({
+      label:
+        data?.label === FrameSizeEnum.Small ||
+        data?.label === FrameSizeEnum.Medium ||
+        data?.label === FrameSizeEnum.Big
+          ? data.label
+          : FrameSizeEnum.Medium,
+      image: data?.image ?? "",
     });
   }
 }
 
-export class EyeglassesSpecifications {
+export interface FrameTypeArgs {
+  material: FrameMaterial;
+  size: FrameSizeDetails;
+}
+
+export class FrameType {
+  material: FrameMaterial;
+  size: FrameSizeDetails;
+
+  constructor(args: FrameTypeArgs) {
+    this.material = args.material;
+    this.size = args.size;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  static deser(data: any): FrameType {
+    return new FrameType({
+      material:
+        data?.material === FrameMaterialEnum.Metal
+          ? FrameMaterialEnum.Metal
+          : FrameMaterialEnum.Acetate,
+      size: FrameSizeDetails.deser(data?.size),
+    });
+  }
+}
+
+export interface ProductSpecificationsArgs {
+  gender: ProductGender;
+  frameType: FrameType;
+}
+
+export class ProductSpecifications {
   gender: ProductGender;
   frameType: FrameType;
 
-  constructor(args: EyeglassesSpecificationsArgs) {
+  constructor(args: ProductSpecificationsArgs) {
     this.gender = args.gender;
     this.frameType = args.frameType;
   }
 
-  static deser(data: any): EyeglassesSpecifications {
-    return new EyeglassesSpecifications({
-      gender: data?.gender,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  static deser(data: any): ProductSpecifications {
+    return new ProductSpecifications({
+      gender: getGenderOrDefault(data?.gender),
       frameType: FrameType.deser(data?.frameType),
     });
   }
 }
 
-export interface EyeglassesProductArgs {
-  type: ProductTypeEnum.eyeglasses;
+export interface ProductArgs {
+  type: ProductTypeEnum;
   id: string;
   name: string;
   slug: string;
@@ -59,14 +102,14 @@ export interface EyeglassesProductArgs {
   variants: ProductVariant[];
   rating: Rating;
   isActive: boolean;
-  specifications: EyeglassesSpecifications;
+  specifications: ProductSpecifications;
 }
 
-export class EyeglassesProduct {
+export class Product {
   id: string;
   name: string;
   slug: string;
-  type: ProductTypeEnum.eyeglasses;
+  type: ProductTypeEnum;
   collectionId: string;
   brand: string;
   salePercent: number;
@@ -75,9 +118,9 @@ export class EyeglassesProduct {
   variants: ProductVariant[];
   rating: Rating;
   isActive: boolean;
-  specifications: EyeglassesSpecifications;
+  specifications: ProductSpecifications;
 
-  constructor(args: EyeglassesProductArgs) {
+  constructor(args: ProductArgs) {
     this.id = args.id;
     this.name = args.name;
     this.slug = args.slug;
@@ -93,19 +136,29 @@ export class EyeglassesProduct {
     this.specifications = args.specifications;
   }
 
-  // Converts the raw backend DTO into a frontend model instance.
-  static deser(data: any): EyeglassesProduct {
-    return new EyeglassesProduct({
+  static normalizeType(value: unknown): ProductTypeEnum {
+    const normalized = String(value ?? "")
+      .trim()
+      .toLowerCase();
+
+    return normalized === ProductTypeEnum.sunglasses
+      ? ProductTypeEnum.sunglasses
+      : ProductTypeEnum.eyeglasses;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  static deser(data: any): Product {
+    return new Product({
       id: data.id,
       name: data.name,
       slug: data.slug,
-      type: data.type ?? ProductTypeEnum.eyeglasses,
+      type: Product.normalizeType(data.type),
       collectionId: data.collectionId,
       brand: data.brand,
       salePercent: data.salePercent ?? 0,
       availability: getAvailabilityOrDefault(data.availability),
       description: data.description,
-      specifications: EyeglassesSpecifications.deser(data.specifications),
+      specifications: ProductSpecifications.deser(data.specifications),
       variants: (data.variants ?? []).map((variant: any) =>
         ProductVariant.deser(variant),
       ),
@@ -154,6 +207,10 @@ export class EyeglassesProduct {
   }
 
   get frameSize(): FrameSize {
-    return this.specifications.frameType.size;
+    return this.specifications.frameType.size.label;
+  }
+
+  get sizeGuideImage(): string {
+    return this.specifications.frameType.size.image;
   }
 }
