@@ -120,7 +120,7 @@ export function ProductDetailView({
     getVariantStartIndex(hydratedProduct),
   );
   const [openSection, setOpenSection] = useState<AccordionSection | null>(
-    "info",
+    "description",
   );
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
   const [activeSlide, setActiveSlide] = useState(0);
@@ -130,9 +130,15 @@ export function ProductDetailView({
     hydratedProduct.variants[selectedVariantIndex] ??
     hydratedProduct.defaultVariant ??
     hydratedProduct.variants[0];
-  const variantImages = selectedVariant?.images ?? [];
+  const variantImages = (selectedVariant?.images ?? []).filter(
+    (image) => image !== "",
+  );
+  const fallbackImages = hydratedProduct.variants
+    .flatMap((variant) => variant.images)
+    .filter((image) => image !== "");
   const sizeImage = hydratedProduct.sizeGuideImage ?? "";
-  const galleryImages = variantImages;
+  const galleryImages =
+    variantImages.length > 0 ? variantImages : fallbackImages;
   const selectedColor = humanizeLabel(selectedVariant?.color);
   const productFacts = buildProductFacts(hydratedProduct);
   const descriptionParagraphs = splitDescription(hydratedProduct.description);
@@ -278,102 +284,159 @@ export function ProductDetailView({
   );
 
   const renderAccordionContent = (section: AccordionSection) => {
-    if (section === "info") {
+    if (section === "description") {
       return (
-        <div className="space-y-5 font-afacad text-[16px] font-normal leading-[1.4] tracking-[0.55px] text-black">
+        <div className="space-y-5 font-afacad text-[15px] leading-[1.65] text-black/70">
           {descriptionParagraphs.map((paragraph, index) => (
             <p key={`${hydratedProduct.id}-description-${index}`}>
               {paragraph}
             </p>
           ))}
+        </div>
+      );
+    }
 
-          <div className="space-y-1 pt-1">
-            {productFacts.map((fact) => (
-              <p key={fact}>{fact}</p>
-            ))}
-          </div>
+    if (section === "details") {
+      return (
+        <div className="space-y-5 font-afacad text-[14px] leading-[1.55] text-black/68">
+          <dl className="grid grid-cols-[7.5rem_minmax(0,1fr)] gap-x-5 gap-y-3">
+            <dt className="text-black/42">Brand</dt>
+            <dd>{hydratedProduct.brand}</dd>
+            <dt className="text-black/42">Color</dt>
+            <dd>{selectedColor}</dd>
+            <dt className="text-black/42">Frame</dt>
+            <dd>{productFacts.join(" / ")}</dd>
+            {selectedSku !== "" ? (
+              <>
+                <dt className="text-black/42">SKU</dt>
+                <dd>{selectedSku}</dd>
+              </>
+            ) : null}
+          </dl>
+
+          {sizeImage !== "" ? (
+            <div className="overflow-hidden bg-white/60">
+              <Image
+                src={sizeImage}
+                alt={`${hydratedProduct.name} size guide`}
+                width={1200}
+                height={900}
+                className="h-auto w-full"
+                sizes="(max-width: 767px) calc(100vw - 40px), 420px"
+              />
+            </div>
+          ) : null}
         </div>
       );
     }
 
     return (
-      <div className="space-y-5 font-afacad text-[12px] uppercase tracking-[0.18em] text-black/56">
-        {sizeImage !== "" ? (
-          <div className="overflow-hidden bg-white/70">
-            <Image
-              src={sizeImage}
-              alt={`${hydratedProduct.name} size guide`}
-              width={1200}
-              height={900}
-              className="h-auto w-full"
-              sizes="(max-width: 767px) calc(100vw - 32px), 300px"
-            />
-          </div>
-        ) : (
-          <div className="flex aspect-4/3 items-center justify-center bg-white/40 px-6 text-center text-[11px] tracking-[0.22em] text-black/40">
-            No size image available
-          </div>
-        )}
+      <div className="space-y-4 font-afacad text-[15px] leading-[1.65] text-black/70">
+        <p>
+          Đơn hàng được xử lý theo chính sách vận chuyển hiện tại của cửa hàng.
+          Thời gian giao hàng phụ thuộc vào địa chỉ nhận hàng và tình trạng sản
+          phẩm.
+        </p>
+        <p>
+          Sản phẩm có thể được hỗ trợ đổi trả theo điều kiện sử dụng thực tế và
+          quy định bảo hành tại thời điểm mua hàng.
+        </p>
       </div>
     );
   };
 
   return (
-    <main className="min-h-screen bg-[#f0f0f0] px-4 pb-16 pt-6 text-[#1d1b18] md:px-8 md:pb-24 md:pt-10">
-      <div className="mx-auto max-w-420">
-        <div className="space-y-10 md:hidden">
-          <section className="space-y-4">
-            {galleryImages.length > 0 ? (
-              <>
-                <Carousel
-                  key={selectedVariant?.sku ?? hydratedProduct.id}
-                  setApi={setCarouselApi}
-                  opts={{ loop: false }}
-                  className="w-full"
-                >
-                  <CarouselContent className="ml-0">
-                    {galleryImages.map((image, imageIndex) => (
-                      <CarouselItem
-                        key={`${selectedVariant?.sku ?? hydratedProduct.id}-${imageIndex}`}
-                        className="pl-0"
-                      >
-                        <div className="relative aspect-4/5 overflow-hidden bg-[#f0f0f0]">
-                          <Image
-                            src={image}
-                            alt={`${hydratedProduct.name} ${imageIndex + 1}`}
-                            fill
-                            priority={imageIndex === 0}
-                            className="object-contain"
-                            sizes="calc(100vw - 32px)"
-                          />
-                        </div>
-                      </CarouselItem>
-                    ))}
-                  </CarouselContent>
-                </Carousel>
+    <main className="min-h-screen bg-[#f1f1f1] pb-16 text-[#1d1b18] md:pb-24">
+      <div className="mx-auto grid max-w-[1680px] gap-10 px-4 pt-6 sm:px-6 md:grid-cols-[minmax(0,1fr)_minmax(320px,430px)] md:gap-10 md:px-8 md:pt-10 lg:px-12 xl:px-16">
+        <section className="grid gap-2 md:grid-cols-2 md:gap-3">
+          {galleryImages.length > 0 ? (
+            galleryImages.map((image, imageIndex) => (
+              <div
+                key={`${selectedVariant?.sku ?? hydratedProduct.id}-${imageIndex}`}
+                className={cn(
+                  "relative aspect-[4/5] overflow-hidden bg-[#ededed]",
+                  galleryImages.length === 1 ? "md:col-span-2" : "",
+                )}
+              >
+                <Image
+                  src={image}
+                  alt={`${hydratedProduct.name} ${imageIndex + 1}`}
+                  fill
+                  priority={imageIndex === 0}
+                  className="object-contain"
+                  sizes="(max-width: 767px) calc(100vw - 32px), (max-width: 1279px) 34vw, 520px"
+                />
+              </div>
+            ))
+          ) : (
+            <div className="flex aspect-[4/5] items-center justify-center bg-white/45 font-afacad text-sm text-black/45 md:col-span-2">
+              No gallery images available
+            </div>
+          )}
+        </section>
 
-                {galleryImages.length > 1 ? (
-                  <div className="flex items-center justify-center gap-3 pt-1">
-                    {galleryImages.map((_, index) => (
+        <aside className="md:sticky md:top-24 md:h-fit">
+          <div className="space-y-8 font-afacad">
+            <div className="space-y-4">
+              <h1 className="whitespace-pre-line font-seesans text-[26px] font-normal uppercase leading-[0.96] tracking-[0.02em] text-black md:text-[32px]">
+                {displayName}
+              </h1>
+
+              <div className="space-y-1.5">
+                {hydratedProduct.isOnSale === true ? (
+                  <p className="text-[13px] uppercase tracking-[0.16em] text-black/35 line-through">
+                    {hydratedProduct.originalPrice.toLocaleString("vi-VN")} VND
+                  </p>
+                ) : null}
+                <p className="text-[18px] font-semibold uppercase tracking-[0.04em] text-black">
+                  {displayPrice.toLocaleString("vi-VN")} VND
+                </p>
+              </div>
+            </div>
+
+            {hydratedProduct.variants.length > 0 ? (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between gap-4">
+                  <p className="text-[14px] uppercase tracking-[0.12em] text-black/52">
+                    Color
+                  </p>
+                  <p className="text-[14px] text-black/68">{selectedColor}</p>
+                </div>
+
+                <div className="flex flex-wrap gap-2.5">
+                  {hydratedProduct.variants.map((variant, index) => {
+                    const variantLabel = humanizeLabel(variant.color);
+                    const isActive = index === selectedVariantIndex;
+
+                    return (
                       <button
-                        key={`${selectedVariant?.sku ?? hydratedProduct.id}-dot-${index}`}
+                        key={`${variant.sku}-${index}`}
                         type="button"
-                        aria-label={`Go to image ${index + 1}`}
+                        aria-pressed={isActive}
+                        aria-label={`Select ${variantLabel}`}
                         className={cn(
-                          "size-2 rounded-full transition-colors",
-                          activeSlide === index ? "bg-black" : "bg-black/25",
+                          "flex size-8 items-center justify-center rounded-full border p-1 transition-colors duration-200",
+                          isActive === true
+                            ? "border-black"
+                            : "border-black/12 hover:border-black/38",
                         )}
                         onClick={() => {
-                          carouselApi?.scrollTo(index);
+                          setSelectedVariantIndex(index);
                         }}
-                      />
-                    ))}
-                  </div>
-                ) : null}
-              </>
-            ) : (
-              <div className="flex aspect-4/5 items-center justify-center bg-white/40 text-sm text-black/45">
-                No gallery images available
+                      >
+                        <span
+                          className="block size-full rounded-full border border-black/10"
+                          style={{
+                            backgroundColor: inferColorSwatch(
+                              variantLabel,
+                              index,
+                            ),
+                          }}
+                        />
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             )}
           </section>
@@ -403,69 +466,28 @@ export function ProductDetailView({
           </div>
         </div>
 
-        <div className="hidden md:grid md:grid-cols-[1fr_2.08fr_0.98fr] md:gap-7.75">
-          <aside className="md:sticky md:top-[25vh] md:[align-self:start]">
-            <div className="max-w-75 space-y-2">
               <ProductAccordion
                 title="PRODUCTS INFORMATION"
                 isOpen={openSection === "info"}
                 onToggle={() => {
-                  toggleSection("info");
+                  toggleSection("details");
                 }}
-                className="pt-0"
               >
-                {renderAccordionContent("info")}
+                {renderAccordionContent("details")}
               </ProductAccordion>
 
               <ProductAccordion
                 title="SIZE CHART"
                 isOpen={openSection === "size"}
                 onToggle={() => {
-                  toggleSection("size");
+                  toggleSection("shipping");
                 }}
               >
-                {renderAccordionContent("size")}
+                {renderAccordionContent("shipping")}
               </ProductAccordion>
             </div>
-          </aside>
-
-          <section className="space-y-2">
-            {galleryImages.length > 0 ? (
-              galleryImages.map((image, imageIndex) => (
-                <div
-                  key={`${selectedVariant?.sku ?? hydratedProduct.id}-${imageIndex}`}
-                  className="relative aspect-4/5 overflow-hidden bg-[#f0f0f0]"
-                >
-                  <Image
-                    src={image}
-                    alt={`${hydratedProduct.name} ${imageIndex + 1}`}
-                    fill
-                    priority={imageIndex === 0}
-                    className="object-contain"
-                    sizes="(max-width: 767px) 100vw, 624px"
-                  />
-                </div>
-              ))
-            ) : (
-              <div className="flex aspect-4/5 items-center justify-center bg-white/40 text-sm text-black/45">
-                No gallery images available
-              </div>
-            )}
-          </section>
-
-          <aside className="md:sticky md:top-[25vh] md:[align-self:start]">
-            {renderSummary("max-w-full")}
-
-            <div className="pt-4 text-center">
-              <button
-                type="button"
-                className="border-b border-transparent pb-1 font-afacad text-[11px] font-normal uppercase tracking-[0.22em] text-black/45 transition-colors hover:border-black/20 hover:text-black/72"
-              >
-                View Shipping & Returns
-              </button>
-            </div>
-          </aside>
-        </div>
+          </div>
+        </aside>
       </div>
       <RelatedProductGrid
         products={relatedProducts}

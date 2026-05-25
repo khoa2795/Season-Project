@@ -1,7 +1,7 @@
 import { ProductAvailabilityEnum, ProductTypeEnum } from "@/lib/enums";
 import type { ProductModel } from "../utils";
 
-export type AccordionSection = "info" | "size";
+export type AccordionSection = "description" | "details" | "shipping";
 
 export const availabilityLabels: Record<ProductAvailabilityEnum, string> = {
   [ProductAvailabilityEnum.InStock]: "In Stock",
