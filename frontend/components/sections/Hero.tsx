@@ -1,9 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import { heroImage, heroImage2, heroImage3 } from "@/images/landing-page";
 import {
   Carousel,
   CarouselContent,
@@ -28,6 +26,12 @@ export function Hero() {
     api?.scrollNext();
     api?.plugins().autoplay.reset();
   };
+  const heroImage =
+    "https://res.cloudinary.com/du2zsbi0i/image/upload/v1779740983/hero_image_fxyoev.jpg";
+  const heroImage2 =
+    "https://res.cloudinary.com/du2zsbi0i/image/upload/v1779740986/hero_image_2_zqp8gl.jpg";
+  const heroImage3 =
+    "https://res.cloudinary.com/du2zsbi0i/image/upload/v1779740983/hero_image_3_kg5tek.jpg";
   const heroImages = [heroImage, heroImage2, heroImage3];
   return (
     <section className="relative w-full h-[70vh] md:h-[95vh] bg-white border-b border-season-gray overflow-hidden group">

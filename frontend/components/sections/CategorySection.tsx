@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { kinhCan, kinhRam } from "@/images/landing-page";
 
 export function CategoryGrid() {
   return (
@@ -12,7 +11,7 @@ export function CategoryGrid() {
           className="group relative relativeblock h-[60vh] md:h-[85vh]  w-full overflow-hidden"
         >
           <Image
-            src={kinhRam}
+            src="https://res.cloudinary.com/du2zsbi0i/image/upload/v1779740990/kinh-ram_lkj3p4.jpg"
             alt="Kinh-ram"
             fill
             className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
@@ -34,7 +33,7 @@ export function CategoryGrid() {
           className="group relative relativeblock h-[60vh] md:h-[85vh]  w-full overflow-hidden"
         >
           <Image
-            src={kinhCan}
+            src="https://res.cloudinary.com/du2zsbi0i/image/upload/v1779740982/kinh-can_yylwm7.jpg"
             alt="Kinh-can"
             fill
             className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"

@@ -1,6 +1,7 @@
 import { toPlainObject } from "@/lib/model/misc";
 import { notFound } from "next/navigation";
 import { ProductDetailView } from "@/components/products/view-product-detail/product-detail";
+import { StoreFlagshipSection } from "@/components/sections/StoreFlagshipSection";
 import {
   fetchCollectionFilters,
   fetchProductById,
@@ -44,10 +45,13 @@ export default async function ProductsPage({ params }: ProductPageProps) {
   }
 
   return (
-    <ProductDetailView
-      product={toPlainObject(product)}
-      relatedProducts={toPlainObject(relatedProducts)}
-      collectionSlug={collectionSlug}
-    />
+    <>
+      <ProductDetailView
+        product={toPlainObject(product)}
+        relatedProducts={toPlainObject(relatedProducts)}
+        collectionSlug={collectionSlug}
+      />
+      <StoreFlagshipSection className="mt-16 md:mt-24" />
+    </>
   );
 }

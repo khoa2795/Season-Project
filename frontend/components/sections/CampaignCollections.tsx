@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { theSoap, theOffice } from "@/images/landing-page";
 import Link from "next/dist/client/link";
 
 // Collection data, this can be fetched from an API
@@ -11,7 +10,8 @@ const collections = [
     slug: "the-soap",
     description:
       "Inspired by the soft, inflated surface of a bar of soap, with its signature rounded contours, The Soap 25 presents a distinctive fusion of sharp, flat lenses and a full, rounded frame front - a striking intersection that echoes the subtle distortion of a soap bar upon sudden impact. The Soap 25 collection introduces a refined new design, featuring a carefully curated earth-tone palette. Thoughtfully developed to complement Asian skin tones, these warm and neutral hues offer a timeless aesthetic, delivering enduring value and effortless sophistication.",
-    image: theSoap,
+    image:
+      "https://res.cloudinary.com/du2zsbi0i/image/upload/v1779740990/the-soap_ohjbgl.jpg",
   },
   {
     id: 2,
@@ -19,7 +19,8 @@ const collections = [
     slug: "the-office",
     description:
       "Drawing inspiration from everyday office tools - rulers, set squares, paper clips, and utility knives - The Office reimagines the ordinary beyond function, transforming these familiar elements into defining structural forms within eyewear design. Distinct from previous collections, The Office introduces a bold exploration of concept, structure, and silhouette. Elevated by the striking presence of metal, each piece is meticulously crafted to embody precision, refinement, and modern sophistication - culminating in a line of optical frames that seamlessly blends high aesthetics with contemporary elegance.",
-    image: theOffice,
+    image:
+      "https://res.cloudinary.com/du2zsbi0i/image/upload/v1779740992/the-office_bsft4q.jpg",
   },
 ];
 
