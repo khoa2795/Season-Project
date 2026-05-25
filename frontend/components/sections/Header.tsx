@@ -2,11 +2,10 @@
 import Link from "next/link";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Search, Heart, User, ShoppingBag } from "lucide-react";
+import { Search, Heart, User, ShoppingBag, X } from "lucide-react";
 import { MegaMenu } from "../menu/MegaMenu";
 import { CartDrawer } from "../cart/cart-drawer";
 import { Input } from "../ui/input";
-import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 
 export function Header() {
@@ -17,6 +16,7 @@ export function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [query, setQuery] = useState(currentSearchQuery);
   const inputRef = useRef<HTMLInputElement>(null);
+  const searchFormRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     if (isSearchOpen) {
@@ -40,9 +40,7 @@ export function Header() {
   };
 
   return (
-    <header
-      className="sticky top-0 z-40 border-b border-season-gray bg-white/95 backdrop-blur-sm"
-    >
+    <header className="sticky top-0 z-40 border-b border-season-gray bg-white/95 backdrop-blur-sm">
       <nav className="flex items-center justify-between px-6 py-4">
         {/* Left: Menu */}
         <div className="flex-1">
@@ -97,37 +95,61 @@ export function Header() {
 
       <div
         className={cn(
-          "overflow-hidden border-t border-season-gray bg-[#fbfaf7] transition-[max-height,opacity] duration-300",
-          isSearchOpen ? "max-h-40 opacity-100" : "max-h-0 opacity-0",
+          "overflow-hidden border-t border-[#ddd8d1] bg-[#f5f5f7] transition-[max-height,opacity] duration-300",
+          isSearchOpen ? "max-h-32 opacity-100" : "max-h-0 opacity-0",
         )}
       >
         <form
+          ref={searchFormRef}
           onSubmit={handleSearchSubmit}
-          className="mx-auto grid w-full max-w-5xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-6 py-5"
+          onBlur={(event) => {
+            const nextFocusedElement = event.relatedTarget as Node | null;
+
+            if (
+              nextFocusedElement !== null &&
+              searchFormRef.current?.contains(nextFocusedElement)
+            ) {
+              return;
+            }
+
+            setIsSearchOpen(false);
+          }}
+          className="mx-auto flex w-full max-w-[52rem] items-center justify-center gap-4 px-6 py-5 md:px-8"
         >
-          <div className="flex h-14 w-full items-center border border-[#1f1f1f] bg-white px-4">
-            <Search className="mr-3 h-4 w-4 shrink-0 stroke-[1.5] text-neutral-500" />
+          <div className="flex h-12 min-w-0 w-full max-w-[38rem] items-center border-b border-[#cfc8bf] bg-transparent">
             <Input
               ref={inputRef}
-              type="search"
+              type="text"
               value={query}
               onChange={(event) => {
                 setQuery(event.target.value);
               }}
-              placeholder="Search frames, brands, collections..."
-              className="h-full min-w-0 border-0 bg-transparent px-0 text-sm tracking-[0.08em] shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
+              placeholder="Search products..."
+              aria-label="Search products"
+              className="h-full min-w-0 border-0 bg-transparent px-0 text-[20px] font-light tracking-[0.02em] text-neutral-800 shadow-none placeholder:text-[#7b746b] focus-visible:ring-0 focus-visible:ring-offset-0 md:text-[22px]"
             />
+            <button
+              type="submit"
+              aria-label="Search"
+              className="ml-3 inline-flex size-8 shrink-0 items-center justify-center text-neutral-700 transition-colors hover:text-black"
+            >
+              <Search className="h-4.5 w-4.5 stroke-[1.5]" />
+            </button>
           </div>
-          <Button
-            type="submit"
-            variant="ghost"
-            className="h-14 rounded-none border border-black px-6 uppercase tracking-[0.18em]"
+          <button
+            type="button"
+            aria-label="Clear search"
+            className="inline-flex size-9 shrink-0 items-center justify-center text-neutral-800 transition-colors hover:text-black"
+            onClick={() => {
+              setQuery("");
+              inputRef.current?.focus();
+            }}
           >
-            Search
-          </Button>
+            <X className="h-6 w-6 stroke-[1.5]" />
+          </button>
         </form>
         {pathname === "/search" && currentSearchQuery.trim().length < 2 ? (
-          <p className="px-6 pb-4 text-center text-xs uppercase tracking-[0.18em] text-neutral-500">
+          <p className="px-4 pb-4 text-center text-xs uppercase tracking-[0.18em] text-neutral-500 md:px-8">
             Enter at least 2 characters to search products.
           </p>
         ) : null}
