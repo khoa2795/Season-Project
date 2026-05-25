@@ -32,13 +32,3 @@ export async function fetchCollectionProductsBatch(
   });
 }
 
-export async function getCollectionPageData(
-  collectionSlug: string,
-  queryState: ProductsQueryState = {
-    sort: DEFAULT_PRODUCT_SORT,
-    frameType: null,
-    frameSize: null,
-  },
-): Promise<ListResponse<Product>> {
-  return fetchCollectionProductsBatch(collectionSlug, 0, PAGE_SIZE, queryState);
-}

@@ -4,21 +4,20 @@ import { ProductDetailView } from "@/components/products/view-product-detail/pro
 import {
   fetchCollectionFilters,
   fetchProductById,
-  getCollectionPageData,
+  fetchCollectionProductsBatch,
 } from "@/lib/model";
+import type { Product } from "@/lib/model";
 
 type ProductPageProps = {
   params: Promise<{ productId: string }>;
 };
 
-export default async function ProductsPage({
-  params,
-}: ProductPageProps) {
+export default async function ProductsPage({ params }: ProductPageProps) {
   const { productId } = await params;
 
-  let product;
-  let relatedProducts = [] as Awaited<ReturnType<typeof getCollectionPageData>>["records"];
+  let relatedProducts: Product[] = [];
   let collectionSlug: string | undefined;
+  let product: Product;
 
   try {
     product = await fetchProductById(productId);
@@ -31,10 +30,13 @@ export default async function ProductsPage({
     if (matchedCollection !== undefined) {
       collectionSlug = matchedCollection.slug;
 
-      const relatedCollectionData = await getCollectionPageData(collectionSlug);
-      relatedProducts = relatedCollectionData.records
-        .filter((relatedProduct) => relatedProduct.id !== product.id)
-        .slice(0, 8);
+      const relatedCollectionData = await fetchCollectionProductsBatch(
+        collectionSlug,
+        0,
+        8,
+        undefined,
+      );
+      relatedProducts = relatedCollectionData.records;
     }
   } catch {
     console.error(`Failed to fetch product with id ${productId}`);

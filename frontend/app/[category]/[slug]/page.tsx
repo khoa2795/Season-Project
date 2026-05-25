@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { ProductTypeEnum } from "@/lib/enums";
-import { getProductsPageData } from "@/lib/model";
+import { fetchProductsBatchByCategory } from "@/lib/model";
 import {
   isEyeglassesSlug,
   isSunglassesSlug,
@@ -41,7 +41,13 @@ export default async function CategoryPage({
       notFound();
     }
 
-    const data = await getProductsPageData(category, slug, queryState);
+    const data = await fetchProductsBatchByCategory(
+      category,
+      slug,
+      0,
+      12,
+      queryState,
+    );
 
     return (
       <CategoryListShell
@@ -57,7 +63,13 @@ export default async function CategoryPage({
       notFound();
     }
 
-    const data = await getProductsPageData(category, slug, queryState);
+    const data = await fetchProductsBatchByCategory(
+      category,
+      slug,
+      0,
+      12,
+      queryState,
+    );
 
     return (
       <CategoryListShell

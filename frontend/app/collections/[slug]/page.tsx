@@ -1,10 +1,10 @@
 import { notFound } from "next/navigation";
-import { getCollectionPageData, fetchCollectionFilters } from "@/lib/model";
-import { CollectionListShell } from "@/components/products/view-by-collection/collection-list-shell";
 import {
-  parseProductsQueryState,
-  toPlainObject,
-} from "@/lib/model/misc";
+  fetchCollectionProductsBatch,
+  fetchCollectionFilters,
+} from "@/lib/model";
+import { CollectionListShell } from "@/components/products/view-by-collection/collection-list-shell";
+import { parseProductsQueryState, toPlainObject } from "@/lib/model/misc";
 import { getSingleSearchParam } from "@/app/utils/search-params";
 
 type CollectionPageProps = {
@@ -27,14 +27,21 @@ export default async function CollectionPage({
   });
 
   const collections = await fetchCollectionFilters();
-  const matchedCollection = collections.find((collection) => collection.slug === slug);
+  const matchedCollection = collections.find(
+    (collection) => collection.slug === slug,
+  );
 
   if (matchedCollection === undefined) {
     notFound();
   }
 
-  const collectionProducts = await getCollectionPageData(slug, queryState);
-  
+  const collectionProducts = await fetchCollectionProductsBatch(
+    slug,
+    0,
+    12,
+    queryState,
+  );
+
   return (
     <CollectionListShell
       collectionSlug={slug}

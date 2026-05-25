@@ -77,17 +77,6 @@ export async function fetchProductsBatchByCategory(
   );
 }
 
-export async function getProductsPageData(
-  category: ProductTypeEnum,
-  view: ProductRouteView,
-  queryState: ProductsQueryState = {
-    sort: DEFAULT_PRODUCT_SORT,
-    frameType: null,
-    frameSize: null,
-  },
-): Promise<ListResponse<Product>> {
-  return fetchProductsBatchByCategory(category, view, 0, PAGE_SIZE, queryState);
-}
 
 export async function fetchProductById(id: string): Promise<Product> {
   return fetchOne(`/products/${id}`, Product);
