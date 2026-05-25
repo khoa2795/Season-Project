@@ -86,6 +86,27 @@ function isDuplicateCartItemError(message: string, status?: number): boolean {
   return status === 409 && message.trim() === "Product already added to cart";
 }
 
+function readApiErrorMessage(error: unknown): string {
+  if (isAxiosError(error)) {
+    const responseData = error.response?.data as
+      | {
+          message?: string;
+          error?: {
+            message?: string;
+          };
+        }
+      | undefined;
+
+    return (
+      responseData?.error?.message ??
+      responseData?.message ??
+      "Could not add item to cart"
+    );
+  }
+
+  return error instanceof Error ? error.message : "Could not add item to cart";
+}
+
 export function ProductDetailView({
   product,
   relatedProducts = [],
@@ -160,12 +181,7 @@ export function ProductDetailView({
       notifyCartUpdated();
     } catch (error) {
       const status = isAxiosError(error) ? error.response?.status : undefined;
-      const message = isAxiosError(error)
-        ? ((error.response?.data as { message?: string } | undefined)
-            ?.message ?? "Could not add item to cart")
-        : error instanceof Error
-          ? error.message
-          : "Could not add item to cart";
+      const message = readApiErrorMessage(error);
 
       if (isDuplicateCartItemError(message, status)) {
         toast.error("Product already added to cart");
