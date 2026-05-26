@@ -50,6 +50,9 @@ function getOrderStatusTone(status: string, paymentStatus: string): string {
   return "border-amber-200 bg-amber-50 text-amber-700";
 }
 
+const ADMIN_ORDER_STATUSES = ["pending", "confirmed", "shipped", "delivered", "cancelled"] as const;
+const ADMIN_PAYMENT_STATUSES = ["unpaid", "paid", "failed", "refunded"] as const;
+
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState<OrderRecord[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -141,7 +144,7 @@ export default function AdminOrdersPage() {
                   className="h-11 rounded-2xl border border-black/10 bg-white px-4 text-sm"
                 >
                   <option value="">All statuses</option>
-                  {["pending", "confirmed", "processing", "shipped", "delivered", "cancelled"].map((status) => (
+                  {ADMIN_ORDER_STATUSES.map((status) => (
                     <option key={status} value={status}>
                       {status}
                     </option>
@@ -199,7 +202,7 @@ export default function AdminOrdersPage() {
                         }}
                         className="h-11 rounded-2xl border border-black/10 bg-white px-4 text-sm"
                       >
-                        {["pending", "confirmed", "processing", "shipped", "delivered", "cancelled"].map((status) => (
+                        {ADMIN_ORDER_STATUSES.map((status) => (
                           <option key={status} value={status}>
                             {status}
                           </option>
@@ -213,7 +216,7 @@ export default function AdminOrdersPage() {
                         }}
                         className="h-11 rounded-2xl border border-black/10 bg-white px-4 text-sm"
                       >
-                        {["unpaid", "paid", "failed", "refunded"].map((status) => (
+                        {ADMIN_PAYMENT_STATUSES.map((status) => (
                           <option key={status} value={status}>
                             {status}
                           </option>

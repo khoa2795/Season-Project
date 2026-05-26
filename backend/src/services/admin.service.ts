@@ -23,7 +23,6 @@ import type {
   AdminProductResponse,
   AdminProductsQuery,
 } from "../types/admin.types.js";
-import { isOrderStatusTransitionAllowed } from "./order.service.js";
 
 type TimestampedProduct = IProduct & { createdAt: Date; updatedAt: Date };
 type TimestampedOrder = IOrder & { createdAt: Date; updatedAt: Date };
@@ -234,7 +233,7 @@ export async function getAdminDashboard(): Promise<AdminDashboardResponse> {
     await Promise.all([
       Order.countDocuments(),
       User.countDocuments({ role: "customer", status: "active", isActive: true }),
-      Order.countDocuments({ status: { $in: ["pending", "confirmed", "processing", "shipped"] } }),
+      Order.countDocuments({ status: { $in: ["pending", "confirmed", "shipped"] } }),
       Order.find({ status: { $ne: "cancelled" } }).select(
         "userId customerEmail shippingAddress items totalAmount status paymentStatus placedAt createdAt cancelledAt deliveredAt",
       ),
@@ -598,20 +597,6 @@ export async function updateAdminOrder(
       }
 
       const previousStatus = order.status;
-
-      if (input.status !== undefined) {
-        const isValidTransition =
-          input.status === "cancelled" ||
-          order.status === "cancelled" ||
-          isOrderStatusTransitionAllowed(order.status, input.status);
-
-        if (isValidTransition === false) {
-          throw AppError.badRequest(
-            `Order status cannot change from ${order.status} to ${input.status}`,
-            "VALIDATION_ERROR",
-          );
-        }
-      }
 
       if (input.status !== undefined && previousStatus !== input.status) {
         if (previousStatus === "cancelled" && input.status !== "cancelled") {
