@@ -11,6 +11,18 @@ export interface CheckoutCompleteValidatedRequest extends Request {
   validatedBody?: CheckoutCompleteInput;
 }
 
+const VIETNAM_LANDLINE_REGEX =
+  /^(?:\+84|0)(2[2-9]\d{7}|2(?:0[3-9]|1[0-689]|2[0-25-9]|3[2-9]|5[1-25-9]|6[0-39]|7[0-7]|9[0-46-79])[2-9]\d{6})$/;
+
+const VIETNAM_MOBILE_REGEX = /^(?:\+84|0)(?:3|5|7|8|9)\d{8}$/;
+
+function isValidVietnamPhoneNumber(value: string): boolean {
+  return (
+    VIETNAM_MOBILE_REGEX.test(value) ||
+    VIETNAM_LANDLINE_REGEX.test(value)
+  );
+}
+
 const optionalTrimmedString = z
   .string()
   .trim()
@@ -21,7 +33,11 @@ const checkoutCompleteSchema = z.object({
   customerEmail: z.string().trim().email().toLowerCase(),
   shippingAddress: z.object({
     recipientName: z.string().trim().min(1),
-    phone: z.string().trim().min(1),
+    phone: z
+      .string()
+      .trim()
+      .min(1)
+      .refine(isValidVietnamPhoneNumber, "phone is invalid"),
     line1: z.string().trim().min(1),
     line2: optionalTrimmedString,
     ward: optionalTrimmedString,

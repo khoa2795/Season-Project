@@ -67,7 +67,7 @@ function CheckoutProductRow({ item }: { item: CheckoutSessionItem }) {
 
 function CheckoutSummary({ session }: { session: PendingCheckoutSession }) {
   return (
-    <aside className="flex min-h-0 flex-col border-l border-[#ded9d2] bg-[#f1f0ee] lg:h-full">
+    <aside className="order-1 flex min-h-0 flex-col border-b border-[#ded9d2] bg-[#f1f0ee] lg:order-2 lg:h-full lg:border-b-0 lg:border-l">
       <div className="min-h-0 flex-1 overflow-y-auto px-6 py-7 md:px-8">
         <div className="space-y-4">
           {session.items.map((item) => (
@@ -222,7 +222,7 @@ export function CheckoutPage({ token }: CheckoutPageProps) {
   return (
     <main className="bg-[#f5f5f7] text-black lg:h-[calc(100vh-4rem)] lg:overflow-hidden">
       <div className="mx-auto grid min-h-full w-full max-w-304 grid-cols-1 bg-[#f5f5f7] lg:h-full lg:grid-cols-[minmax(0,1fr)_minmax(25rem,28rem)]">
-        <section className="min-h-0 overflow-y-auto bg-[#f8f6f1]">
+        <section className="order-2 min-h-0 overflow-y-auto bg-[#f8f6f1] lg:order-1">
           <CheckoutForm
             isSubmitting={isSubmitting}
             onSubmit={(payload) => {

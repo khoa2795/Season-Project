@@ -27,6 +27,7 @@ type CheckoutFormValues = {
 
 type CheckoutFormField = keyof CheckoutFormValues;
 type CheckoutFormErrors = Partial<Record<CheckoutFormField, string>>;
+type CheckoutFormTouched = Partial<Record<CheckoutFormField, boolean>>;
 
 const COD_PAYMENT_METHOD = "cash_on_delivery" as const;
 
@@ -95,6 +96,13 @@ function validateCheckoutForm(
   ) as CheckoutFormErrors;
 }
 
+function validateCheckoutField(
+  field: CheckoutFormField,
+  values: CheckoutFormValues,
+): string | undefined {
+  return validateCheckoutForm(values)[field];
+}
+
 function serializeCheckoutOrderPayload(
   values: CheckoutFormValues,
 ): CheckoutOrderPayload {
@@ -122,11 +130,29 @@ function serializeCheckoutOrderPayload(
   };
 }
 
+function validateAndSerializeCheckoutOrderPayload(
+  values: CheckoutFormValues,
+):
+  | { errors: CheckoutFormErrors; payload?: undefined }
+  | { errors: CheckoutFormErrors; payload: CheckoutOrderPayload } {
+  const errors = validateCheckoutForm(values);
+
+  if (Object.keys(errors).length > 0) {
+    return { errors };
+  }
+
+  return {
+    errors: {},
+    payload: serializeCheckoutOrderPayload(values),
+  };
+}
+
 type CheckoutTextInputProps = {
   field: CheckoutFormField;
   label: string;
   value: string;
   onChange: (field: CheckoutFormField, value: string) => void;
+  onBlur?: (field: CheckoutFormField) => void;
   errorMessage?: string;
   type?: string;
   className?: string;
@@ -137,6 +163,7 @@ function CheckoutTextInput({
   label,
   value,
   onChange,
+  onBlur,
   errorMessage,
   type = "text",
   className,
@@ -151,6 +178,9 @@ function CheckoutTextInput({
         aria-invalid={errorMessage !== undefined}
         onChange={(event) => {
           onChange(field, event.target.value);
+        }}
+        onBlur={() => {
+          onBlur?.(field);
         }}
         className={cn(
           "h-12 rounded-md border-[#d8d3cc] bg-white px-4 font-afacad text-[15px] text-black shadow-none placeholder:text-black/45 focus-visible:ring-1 focus-visible:ring-black focus-visible:ring-offset-0",
@@ -208,6 +238,7 @@ export function CheckoutForm({
 }: CheckoutFormProps) {
   const [values, setValues] = useState<CheckoutFormValues>(initialFormValues);
   const [errors, setErrors] = useState<CheckoutFormErrors>({});
+  const [touched, setTouched] = useState<CheckoutFormTouched>({});
 
   const handleFieldChange = (field: CheckoutFormField, value: string) => {
     setValues((current) => ({
@@ -216,25 +247,64 @@ export function CheckoutForm({
     }));
 
     setErrors((current) => {
-      if (current[field] === undefined) {
+      if (current[field] === undefined || touched[field] !== true) {
         return current;
       }
 
+      const nextFieldError = validateCheckoutField(field, {
+        ...values,
+        [field]: value,
+      });
+
       const nextErrors = { ...current };
-      delete nextErrors[field];
+      if (nextFieldError === undefined) {
+        delete nextErrors[field];
+      } else {
+        nextErrors[field] = nextFieldError;
+      }
+      return nextErrors;
+    });
+  };
+
+  const handleFieldBlur = (field: CheckoutFormField) => {
+    setTouched((current) => ({
+      ...current,
+      [field]: true,
+    }));
+
+    setErrors((current) => {
+      const nextFieldError = validateCheckoutField(field, values);
+      const nextErrors = { ...current };
+
+      if (nextFieldError === undefined) {
+        delete nextErrors[field];
+      } else {
+        nextErrors[field] = nextFieldError;
+      }
+
       return nextErrors;
     });
   };
 
   const handleSubmit = () => {
-    const nextErrors = validateCheckoutForm(values);
-    setErrors(nextErrors);
+    const result = validateAndSerializeCheckoutOrderPayload(values);
+    setErrors(result.errors);
+    setTouched({
+      email: true,
+      firstName: true,
+      lastName: true,
+      addressLine1: true,
+      addressLine2: true,
+      provinceOrCity: true,
+      postalCode: true,
+      phone: true,
+    });
 
-    if (Object.keys(nextErrors).length > 0) {
+    if (result.payload === undefined) {
       return;
     }
 
-    onSubmit(serializeCheckoutOrderPayload(values));
+    onSubmit(result.payload);
   };
 
   return (
@@ -250,6 +320,7 @@ export function CheckoutForm({
           value={values.email}
           errorMessage={errors.email}
           onChange={handleFieldChange}
+          onBlur={handleFieldBlur}
           className="mt-3"
         />
       </section>
@@ -278,6 +349,7 @@ export function CheckoutForm({
             value={values.firstName}
             errorMessage={errors.firstName}
             onChange={handleFieldChange}
+            onBlur={handleFieldBlur}
           />
           <CheckoutTextInput
             field="lastName"
@@ -285,6 +357,7 @@ export function CheckoutForm({
             value={values.lastName}
             errorMessage={errors.lastName}
             onChange={handleFieldChange}
+            onBlur={handleFieldBlur}
           />
         </div>
 
@@ -295,6 +368,7 @@ export function CheckoutForm({
             value={values.addressLine1}
             errorMessage={errors.addressLine1}
             onChange={handleFieldChange}
+            onBlur={handleFieldBlur}
           />
           <CheckoutTextInput
             field="addressLine2"
@@ -302,6 +376,7 @@ export function CheckoutForm({
             value={values.addressLine2}
             errorMessage={errors.addressLine2}
             onChange={handleFieldChange}
+            onBlur={handleFieldBlur}
           />
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <label className="relative block">
@@ -311,6 +386,9 @@ export function CheckoutForm({
                 aria-invalid={errors.provinceOrCity !== undefined}
                 onChange={(event) => {
                   handleFieldChange("provinceOrCity", event.target.value);
+                }}
+                onBlur={() => {
+                  handleFieldBlur("provinceOrCity");
                 }}
                 className={cn(
                   "h-12 w-full appearance-none rounded-md border border-[#d8d3cc] bg-white px-4 pr-10 font-afacad text-[15px] focus:outline-none focus:ring-1 focus:ring-black",
@@ -342,6 +420,7 @@ export function CheckoutForm({
               value={values.postalCode}
               errorMessage={errors.postalCode}
               onChange={handleFieldChange}
+              onBlur={handleFieldBlur}
             />
           </div>
           <CheckoutTextInput
@@ -351,6 +430,7 @@ export function CheckoutForm({
             value={values.phone}
             errorMessage={errors.phone}
             onChange={handleFieldChange}
+            onBlur={handleFieldBlur}
           />
         </div>
       </section>

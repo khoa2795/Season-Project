@@ -159,6 +159,29 @@ async function decrementVariantStock(
       409,
     );
   }
+
+  await recalculateProductAvailability(product._id, session);
+}
+
+async function recalculateProductAvailability(
+  productId: Types.ObjectId,
+  session: ClientSession,
+): Promise<void> {
+  const product = await Product.findById(productId)
+    .select("availability variants")
+    .session(session);
+
+  if (product === null) {
+    throw new OrderServiceError("A cart product no longer exists", 409);
+  }
+
+  const totalStock = product.variants.reduce(
+    (sum, variant) => sum + variant.stock,
+    0,
+  );
+
+  product.availability = totalStock > 0 ? "in_stock" : "out_of_stock";
+  await product.save({ session });
 }
 
 async function restoreOrderItemStock(

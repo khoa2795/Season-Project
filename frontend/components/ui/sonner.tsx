@@ -136,7 +136,7 @@ export function Toaster() {
     <div
       aria-live="polite"
       aria-relevant="additions text"
-      className="fixed right-4 top-4 z-50 flex w-[min(100vw-2rem,30rem)] flex-col gap-3"
+      className="fixed right-3 top-3 z-50 flex w-[min(100vw-1.5rem,30rem)] flex-col gap-3 sm:right-4 sm:top-4 sm:w-[min(100vw-2rem,30rem)]"
     >
       {currentToasts.map((item) => {
         const isError = item.variant === "error";
@@ -154,7 +154,7 @@ export function Toaster() {
             className={cn(
               "overflow-hidden border bg-background shadow-[0_18px_48px_rgba(0,0,0,0.14)] backdrop-blur",
               hasProductPreview
-                ? "rounded-none border-[#b8b3ad] p-7"
+                ? "rounded-none border-[#b8b3ad] p-4 sm:p-7"
                 : "rounded-2xl p-4",
               isError && !hasProductPreview && "border-red-200",
               isSuccess && "border-emerald-200",
@@ -164,26 +164,26 @@ export function Toaster() {
             <div className="flex items-start justify-between gap-4">
               {hasProductPreview ? (
                 <div className="min-w-0 flex-1">
-                  <p className="font-afacad text-[1rem] font-semibold uppercase tracking-[0.06em] text-black">
+                  <p className="font-afacad text-[0.8rem] font-semibold uppercase tracking-[0.06em] text-black sm:text-[1rem]">
                     {item.eyebrow}
                   </p>
 
-                  <div className="mt-7 grid grid-cols-[8.5rem_minmax(0,1fr)] items-center gap-6">
+                  <div className="mt-4 grid grid-cols-[5.5rem_minmax(0,1fr)] items-center gap-3 sm:mt-7 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:gap-6">
                     <div className="relative aspect-1.5/1 overflow-hidden bg-[#f2efea]">
                       <Image
                         src={previewImageSrc}
                         alt={item.title}
                         fill
                         className="scale-[2] object-contain object-center"
-                        sizes="136px"
+                        sizes="(max-width: 640px) 88px, 136px"
                       />
                     </div>
 
                     <div className="min-w-0">
-                      <p className="font-seesans text-[1.25rem] uppercase leading-[1.05] tracking-[0.02em] text-black">
+                      <p className="font-seesans text-[0.95rem] uppercase leading-[1.05] tracking-[0.02em] text-black sm:text-[1.25rem]">
                         {item.title}
                       </p>
-                      <p className="mt-3 font-afacad text-[1rem] text-black">
+                      <p className="mt-2 font-afacad text-[0.85rem] text-black sm:mt-3 sm:text-[1rem]">
                         {item.caption}
                       </p>
                     </div>

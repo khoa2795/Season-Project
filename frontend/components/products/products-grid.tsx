@@ -404,6 +404,11 @@ export function ProductGrid({
   imageFrameClassName,
   imageOverlayClassName,
 }: ProductsPageViewProps) {
+  const visibleProducts = useMemo(
+    () => products.filter((product) => product.hasAvailableStock === true),
+    [products],
+  );
+
   return (
     <div
       className={cn(
@@ -411,7 +416,7 @@ export function ProductGrid({
         gridClassName,
       )}
     >
-      {products.map((product, index) => (
+      {visibleProducts.map((product, index) => (
         <ProductImageCard
           key={product.slug}
           product={product}

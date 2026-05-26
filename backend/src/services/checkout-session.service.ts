@@ -24,17 +24,12 @@ import type {
 import { sendOrderConfirmationEmail } from "./order-email.service.js";
 
 interface CheckoutOwnerInput {
-  userId?: string;
   guestId?: string;
 }
 
-type CheckoutCartQuery =
-  | { userId: Types.ObjectId; guestId?: never }
-  | { guestId: string; userId?: never };
-
-type CheckoutOwnerQuery =
-  | { userId: Types.ObjectId; guestId?: never }
-  | { guestId: string; userId?: never };
+interface CheckoutGuestQuery {
+  guestId: string;
+}
 
 interface CheckoutProduct {
   _id: Types.ObjectId;
@@ -83,30 +78,18 @@ function requireGuestId(guestId: string | undefined): string {
 
 function resolveCheckoutCartQuery(
   owner: CheckoutOwnerInput,
-): CheckoutCartQuery {
-  if (owner.userId !== undefined && owner.userId.trim() !== "") {
-    return { userId: new Types.ObjectId(owner.userId) };
-  }
-
-  if (owner.guestId !== undefined) {
-    return { guestId: requireGuestId(owner.guestId) };
-  }
-
-  throw new CheckoutSessionServiceError(EMPTY_CART_MESSAGE, 400);
+): CheckoutGuestQuery {
+  return { guestId: requireGuestId(owner.guestId) };
 }
 
 function resolveCheckoutOwnerQuery(
   owner: CheckoutOwnerInput,
-): CheckoutOwnerQuery | null {
-  if (owner.userId !== undefined && owner.userId.trim() !== "") {
-    return { userId: new Types.ObjectId(owner.userId) };
+): CheckoutGuestQuery | null {
+  if (owner.guestId === undefined || owner.guestId.trim() === "") {
+    return null;
   }
 
-  if (owner.guestId !== undefined && owner.guestId.trim() !== "") {
-    return { guestId: owner.guestId.trim() };
-  }
-
-  return null;
+  return { guestId: owner.guestId.trim() };
 }
 
 function productKey(productId: Types.ObjectId): string {
@@ -361,7 +344,30 @@ async function decrementSnapshotStock(
         409,
       );
     }
+
+    await recalculateProductAvailability(product._id, session);
   }
+}
+
+async function recalculateProductAvailability(
+  productId: Types.ObjectId,
+  session: ClientSession,
+): Promise<void> {
+  const product = await Product.findById(productId)
+    .select("availability variants")
+    .session(session);
+
+  if (product === null) {
+    throw new CheckoutSessionServiceError(UNAVAILABLE_CART_MESSAGE, 409);
+  }
+
+  const totalStock = product.variants.reduce(
+    (sum, variant) => sum + variant.stock,
+    0,
+  );
+
+  product.availability = totalStock > 0 ? "in_stock" : "out_of_stock";
+  await product.save({ session });
 }
 
 function toOrderItems(
@@ -371,6 +377,7 @@ function toOrderItems(
     productId: new Types.ObjectId(item.productId),
     productName: item.productName,
     variantSku: item.variantSku,
+    imageUrl: item.imageUrl,
     quantity: item.quantity,
     unitPrice: item.unitPrice,
     lineTotal: item.lineTotal,
@@ -436,9 +443,7 @@ export async function createCheckoutSession(
   const totalAmount = subtotalAmount + SHIPPING_FEE;
   const checkoutSessionPayload = {
     token: createCheckoutToken(),
-    ...(cartQuery.userId === undefined
-      ? { guestId: cartQuery.guestId }
-      : { userId: cartQuery.userId }),
+    guestId: cartQuery.guestId,
     status: "pending",
     itemsSnapshot,
     subtotalAmount,

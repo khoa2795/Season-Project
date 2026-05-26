@@ -15,9 +15,8 @@ export const JWT_ACCESS_SECRET = process.env.JWT_ACCESS_SECRET;
 export const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET;
 export const CLOUDINARY_URL = process.env.CLOUDINARY_URL;
 export const ADMIN_REGISTRATION_SECRET = process.env.ADMIN_REGISTRATION_SECRET;
-export const RESEND_API_KEY = process.env.RESEND_API_KEY;
-export const RESEND_FROM_EMAIL =
-  process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
+export const GMAIL_USER = process.env.GMAIL_USER?.trim();
+export const GMAIL_APP_PASSWORD = process.env.GMAIL_APP_PASSWORD?.trim();
 export const JWT_ISSUER = process.env.JWT_ISSUER ?? "season-backend";
 export const JWT_AUDIENCE = process.env.JWT_AUDIENCE ?? "season-api";
 

@@ -17,7 +17,12 @@ export function RelatedProductGrid({
   products,
   collectionSlug,
 }: RelatedProductGridProps) {
-  if (products.length === 0) {
+  const relatedProductCards = toProductCards(hydrateProducts(products));
+  const visibleRelatedProductCards = relatedProductCards.filter(
+    (product) => product.hasAvailableStock === true,
+  );
+
+  if (visibleRelatedProductCards.length === 0) {
     return null;
   }
 
@@ -29,7 +34,7 @@ export function RelatedProductGrid({
         </h2>
 
         <ProductGrid
-          products={toProductCards(hydrateProducts(products))}
+          products={visibleRelatedProductCards}
           gridClassName="grid-cols-2 gap-y-8 md:grid-cols-4 md:gap-x-4 md:gap-y-12 xl:grid-cols-4"
           cardClassName="bg-[#f0f0f0]"
           imageFrameClassName="bg-[#f0f0f0]"

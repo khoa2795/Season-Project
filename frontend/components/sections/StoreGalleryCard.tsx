@@ -51,7 +51,7 @@ export function StoreGalleryCard({
   };
 
   return (
-    <article className="group relative min-h-[440px] overflow-hidden bg-black md:min-h-[680px]">
+    <article className="group relative min-h-110 overflow-hidden bg-black md:min-h-170">
       {activeImage !== "" ? (
         <Image
           key={activeImage}
@@ -66,13 +66,13 @@ export function StoreGalleryCard({
         <div className="absolute inset-0 bg-[#d8d8d8]" />
       )}
 
-      <div className="absolute inset-0 bg-gradient-to-b from-black/44 via-black/10 to-black/24" />
+      <div className="absolute inset-0 bg-linear-to-b from-black/44 via-black/10 to-black/24" />
 
       <div className="absolute left-5 top-5 max-w-[84%] font-afacad text-white md:left-8 md:top-8">
         <p className="mb-4 text-[12px] font-semibold uppercase tracking-[0.22em] text-white/62">
           Flagship Store
         </p>
-        <h2 className="text-[24px] font-semibold uppercase leading-[1] tracking-[0.08em] md:text-[32px]">
+        <h2 className="text-[24px] font-semibold uppercase leading-none tracking-[0.08em] md:text-[32px]">
           {name}
         </h2>
         <div className="mt-5 space-y-1.5 text-[14px] leading-[1.45] text-white/88 md:text-[16px]">

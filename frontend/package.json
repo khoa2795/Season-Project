@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:cart": "TMPDIR=/tmp ../backend/node_modules/.bin/tsx --test components/cart/cart-drawer.helpers.test.ts"
+    "test:cart": "node --import ../backend/node_modules/tsx/dist/loader.mjs --test tests/cart/cart-drawer.helpers.test.ts"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",

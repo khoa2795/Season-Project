@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema, Types } from "mongoose";
+import mongoose, { Document, Schema } from "mongoose";
 
 export type CheckoutSessionStatus = "pending" | "completed";
 
@@ -16,7 +16,6 @@ export interface ICheckoutSessionItemSnapshot {
 export interface ICheckoutSession extends Document {
   token: string;
   guestId?: string;
-  userId?: Types.ObjectId;
   status: CheckoutSessionStatus;
   itemsSnapshot: ICheckoutSessionItemSnapshot[];
   subtotalAmount: number;
@@ -45,7 +44,6 @@ const CheckoutSessionSchema = new Schema<ICheckoutSession>(
   {
     token: { type: String, required: true, unique: true, trim: true },
     guestId: { type: String, trim: true, index: true },
-    userId: { type: Schema.Types.ObjectId, ref: "User", index: true },
     status: {
       type: String,
       enum: ["pending", "completed"],

@@ -4,18 +4,18 @@ import type { AddressInfo } from "node:net";
 import test from "node:test";
 import express from "express";
 import { Router } from "express";
-import { AppError } from "../errors/app-error.js";
-import { globalErrorHandler } from "./error-handler.js";
+import { AppError } from "../../src/errors/app-error.js";
+import { globalErrorHandler } from "../../src/middleware/error-handler.js";
 import {
   validateAddCartSkuBody,
   validateCartSkuParam,
-} from "./cart.validation.js";
-import { validateRegisterBody } from "./auth.validation.js";
-import { validateCheckoutCompleteBody } from "./checkout.validation.js";
+} from "../../src/middleware/cart.validation.js";
+import { validateRegisterBody } from "../../src/middleware/auth.validation.js";
+import { validateCheckoutCompleteBody } from "../../src/middleware/checkout.validation.js";
 import {
   validateCheckoutBody,
   validateOrderIdParam,
-} from "./order.validation.js";
+} from "../../src/middleware/order.validation.js";
 
 interface ErrorJson {
   success: false;
@@ -114,6 +114,24 @@ test("validation middleware returns normalized 400 for malformed cart and order 
         }),
       },
     );
+    const badCheckoutPhone = await fetch(
+      `${app.baseUrl}/checkout/token/complete`,
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          customerEmail: "person@example.com",
+          shippingAddress: {
+            recipientName: "Valid Person",
+            phone: "032",
+            line1: "1 Test Street",
+            city: "Ho Chi Minh",
+            country: "Vietnam",
+          },
+          paymentMethod: "cash_on_delivery",
+        }),
+      },
+    );
 
     assert.equal(badCartBody.status, 400);
     assert.equal((await readErrorJson(badCartBody)).error.message, "sku is required");
@@ -126,6 +144,11 @@ test("validation middleware returns normalized 400 for malformed cart and order 
     assert.equal(badCheckoutCompleteBody.status, 400);
     assert.equal(
       (await readErrorJson(badCheckoutCompleteBody)).error.message,
+      "Invalid checkout payload",
+    );
+    assert.equal(badCheckoutPhone.status, 400);
+    assert.equal(
+      (await readErrorJson(badCheckoutPhone)).error.message,
       "Invalid checkout payload",
     );
   } finally {

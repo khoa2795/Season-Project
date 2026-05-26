@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { once } from "node:events";
 import type { AddressInfo } from "node:net";
 import test from "node:test";
-import app from "../app.js";
+import app from "../../src/app.js";
 
 test("auth login is rate limited and API responses set security headers", async () => {
   const server = app.listen(0);
