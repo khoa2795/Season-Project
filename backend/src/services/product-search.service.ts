@@ -72,6 +72,7 @@ function buildPostSearchMatch(
 ): PipelineStage.Match["$match"] {
   const filter: Record<string, unknown> = {
     isActive: true,
+    availability: "in_stock",
   };
 
   if (query.type !== null) {

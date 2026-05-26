@@ -325,7 +325,6 @@ const seedDatabase = async () => {
 
   for (const product of source.products) {
     const baseName = toBaseName(product.name);
-    const slugBase = product.slug;
     const normalizedCollectionName = normalizeCollectionName(product.collection);
     const collectionKey = normalizedCollectionName.replace(/\s+/g, "-");
     const matchingCollection =

@@ -18,7 +18,7 @@ type OrderSuccessPageProps = {
 };
 
 function formatVnd(amount: number): string {
-  return `${amount.toLocaleString("vi-VN")} đ`;
+  return `${amount.toLocaleString("vi-VN")} VND`;
 }
 
 function formatAddress(
@@ -65,9 +65,9 @@ export function OrderSuccessPage({ token }: OrderSuccessPageProps) {
         }
 
         if (isAxiosError(error) && error.response?.status === 404) {
-          toast.error("Phiên thanh toán đã hết hạn");
+          toast.error("Checkout session has expired");
         } else {
-          toast.error("Không thể tải đơn hàng");
+          toast.error("Unable to load order");
         }
 
         router.replace("/");
@@ -91,7 +91,7 @@ export function OrderSuccessPage({ token }: OrderSuccessPageProps) {
         <div className="flex flex-col items-center gap-4 text-center">
           <Spinner className="size-6" />
           <p className="font-afacad text-[13px] uppercase tracking-[0.18em] text-black/50">
-            Đang tải đơn hàng
+            Loading order
           </p>
         </div>
       </main>
@@ -111,10 +111,10 @@ export function OrderSuccessPage({ token }: OrderSuccessPageProps) {
                 Order Success
               </p>
               <h1 className="mt-3 font-seesans text-[30px] uppercase leading-[1.08] text-black md:text-[38px]">
-                Cảm ơn bạn đã đặt hàng
+                Thank you for your order
               </h1>
               <p className="mt-4 font-afacad text-[17px] text-black/68">
-                Mã đơn hàng của bạn là{" "}
+                Your order number is{" "}
                 <span className="font-semibold text-black">{order.orderId}</span>.
               </p>
             </div>
@@ -123,7 +123,7 @@ export function OrderSuccessPage({ token }: OrderSuccessPageProps) {
           <div className="mt-8 grid gap-5 border-t border-[#e4dfd8] pt-6 md:grid-cols-2">
             <div>
               <h2 className="font-afacad text-[15px] font-semibold uppercase tracking-[0.08em]">
-                Thông tin liên hệ
+                Contact information
               </h2>
               <p className="mt-3 font-afacad text-[15px] text-black/66">
                 {order.customerEmail}
@@ -135,7 +135,7 @@ export function OrderSuccessPage({ token }: OrderSuccessPageProps) {
 
             <div>
               <h2 className="font-afacad text-[15px] font-semibold uppercase tracking-[0.08em]">
-                Giao hàng
+                Delivery
               </h2>
               <p className="mt-3 font-afacad text-[15px] text-black/66">
                 {order.shippingAddress.recipientName}
@@ -148,11 +148,11 @@ export function OrderSuccessPage({ token }: OrderSuccessPageProps) {
 
           <div className="mt-8 border-t border-[#e4dfd8] pt-6">
             <h2 className="font-afacad text-[15px] font-semibold uppercase tracking-[0.08em]">
-              Thanh toán
+              Payment
             </h2>
             <p className="mt-3 font-afacad text-[15px] text-black/66">
-              Thanh toán khi nhận hàng (COD). Chúng tôi sẽ liên hệ để xác nhận
-              trước khi giao.
+              Cash on delivery (COD). We will contact you to confirm before
+              delivery.
             </p>
           </div>
 
@@ -160,13 +160,13 @@ export function OrderSuccessPage({ token }: OrderSuccessPageProps) {
             href="/"
             className="mt-8 inline-flex min-h-12 items-center justify-center bg-black px-6 font-afacad text-[15px] font-semibold uppercase tracking-[0.08em] text-white transition-colors hover:bg-black/90"
           >
-            Tiếp tục mua sắm
+            Continue shopping
           </Link>
         </section>
 
         <aside className="border border-[#d8d3cc] bg-[#f1f0ee] px-5 py-6">
           <h2 className="font-afacad text-[16px] font-semibold uppercase tracking-[0.08em]">
-            Tóm tắt đơn hàng
+            Order summary
           </h2>
 
           <div className="mt-5 space-y-4">
@@ -191,7 +191,7 @@ export function OrderSuccessPage({ token }: OrderSuccessPageProps) {
                     {item.productName}
                   </h3>
                   <p className="mt-1 font-afacad text-[12px] text-black/56">
-                    {item.variantSku} · SL {item.quantity}
+                    {item.variantSku} · Qty {item.quantity}
                   </p>
                 </div>
                 <p className="font-afacad text-[13px] font-semibold">
@@ -203,15 +203,15 @@ export function OrderSuccessPage({ token }: OrderSuccessPageProps) {
 
           <div className="mt-6 space-y-2 border-t border-[#d8d3cc] pt-5 font-afacad text-[14px]">
             <div className="flex justify-between gap-4">
-              <span>Tạm tính</span>
+              <span>Subtotal</span>
               <span>{formatVnd(order.subtotalAmount)}</span>
             </div>
             <div className="flex justify-between gap-4">
-              <span>Vận chuyển</span>
+              <span>Shipping</span>
               <span>{formatVnd(order.shippingFee)}</span>
             </div>
             <div className="flex justify-between gap-4 pt-3 text-[20px] font-semibold">
-              <span>Tổng</span>
+              <span>Total</span>
               <span>{formatVnd(order.totalAmount)}</span>
             </div>
           </div>

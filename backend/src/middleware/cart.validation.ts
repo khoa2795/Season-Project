@@ -33,7 +33,7 @@ export interface CartSkuValidatedRequest extends Request {
 
 export function validateAddCartItemBody(
   req: AddCartItemValidatedRequest & JsonBodyRequest,
-  res: Response,
+  _res: Response,
   next: NextFunction,
 ): void {
   if (typeof req.body !== "object" || req.body === null) {
@@ -74,7 +74,7 @@ export function validateAddCartItemBody(
 
 export function validateCartProductParam(
   req: CartProductParamValidatedRequest,
-  res: Response,
+  _res: Response,
   next: NextFunction,
 ): void {
   const productId = readObjectId(req.params.productId);
@@ -97,7 +97,7 @@ export function validateUpdateCartItemBody(
   req: UpdateCartItemValidatedRequest &
     CartProductParamValidatedRequest &
     JsonBodyRequest,
-  res: Response,
+  _res: Response,
   next: NextFunction,
 ): void {
   if (typeof req.body !== "object" || req.body === null) {
@@ -142,7 +142,7 @@ function readSku(value: unknown): string | null {
 
 export function validateAddCartSkuBody(
   req: CartSkuValidatedRequest & JsonBodyRequest,
-  res: Response,
+  _res: Response,
   next: NextFunction,
 ): void {
   if (typeof req.body !== "object" || req.body === null) {
@@ -178,7 +178,7 @@ export function validateAddCartSkuBody(
 
 export function validateCartSkuParam(
   req: CartSkuValidatedRequest,
-  res: Response,
+  _res: Response,
   next: NextFunction,
 ): void {
   const sku = readSku(req.params.sku);
@@ -194,7 +194,7 @@ export function validateCartSkuParam(
 
 export function validateUpdateCartSkuBody(
   req: CartSkuValidatedRequest & JsonBodyRequest,
-  res: Response,
+  _res: Response,
   next: NextFunction,
 ): void {
   if (typeof req.body !== "object" || req.body === null) {

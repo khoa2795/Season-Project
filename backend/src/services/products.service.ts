@@ -14,6 +14,7 @@ const PRODUCT_SELECT_FIELDS =
 function buildFilter(query: ValidatedProductQuery): Record<string, unknown> {
   const filter: Record<string, unknown> = {
     isActive: true,
+    availability: "in_stock",
   };
 
   if (query.type !== null) {
@@ -106,6 +107,7 @@ export async function getProductById(
     const product = await Product.findOne({
       _id: id,
       isActive: true,
+      availability: "in_stock",
     })
       .select(PRODUCT_SELECT_FIELDS)
       .lean<DatabaseProduct | null>();

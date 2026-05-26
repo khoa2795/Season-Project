@@ -56,7 +56,7 @@ export function CartDrawer({ children }: CartDrawerProps) {
       <DrawerTrigger asChild>{children}</DrawerTrigger>
 
       <DrawerContent className="inset-y-0 right-0 left-auto mt-0 flex h-full w-[min(100vw,31rem)] max-w-none flex-col rounded-none border-l border-t-0 border-[#dcd7cf] bg-[#f8f6f1] p-0 [&>div:first-child]:hidden">
-        <DrawerTitle className="sr-only">Giỏ hàng</DrawerTitle>
+        <DrawerTitle className="sr-only">Cart</DrawerTitle>
         <DrawerDescription className="sr-only">
           Drawer hiển thị trạng thái giỏ hàng
         </DrawerDescription>
@@ -64,8 +64,8 @@ export function CartDrawer({ children }: CartDrawerProps) {
         <div className="flex h-full min-h-0 flex-col">
           <header className="shrink-0 border-b border-[#e4dfd8] px-8 pb-6 pt-8">
             <div className="flex items-start justify-between gap-4">
-              <h2 className="font-afacad text-[20px] font-semibold uppercase tracking-[0.02em] text-black md:text-[32px]">
-                GIỎ HÀNG ({itemCount})
+              <h2 className="font-afacad text-[20px] font-semibold uppercase tracking-[0.02em] text-black md:text-[25px]">
+                CART ({itemCount})
               </h2>
 
               <DrawerClose asChild>
@@ -84,7 +84,7 @@ export function CartDrawer({ children }: CartDrawerProps) {
             <div className="flex flex-1 flex-col items-center justify-center px-8 pb-16 text-center">
               <Spinner className="size-6 text-black/55" />
               <p className="mt-4 font-afacad text-[1rem] uppercase tracking-[0.12em] text-black/45">
-                Đang tải giỏ hàng
+                Loading cart...
               </p>
             </div>
           ) : isEmpty ? (

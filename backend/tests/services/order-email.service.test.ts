@@ -70,9 +70,9 @@ test("sendOrderConfirmationEmail sends the expected Gmail payload", async () => 
     sentMessages[0]?.from,
     "Season <seasonproject.notify@gmail.com>",
   );
-  assert.match(String(sentMessages[0]?.subject), /^Xác nhận đơn hàng /);
-  assert.match(String(sentMessages[0]?.html), /Cảm ơn bạn đã đặt hàng/);
-  assert.match(String(sentMessages[0]?.html), /Tóm tắt đơn hàng/);
+  assert.match(String(sentMessages[0]?.subject), /^Order confirmation /);
+  assert.match(String(sentMessages[0]?.html), /Thank you for your order/);
+  assert.match(String(sentMessages[0]?.html), /Order summary/);
   assert.match(
     String(sentMessages[0]?.html),
     /https:\/\/example\.com\/product-a\.jpg/,

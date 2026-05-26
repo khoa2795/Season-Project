@@ -16,6 +16,7 @@ import { useRef, useState } from "react";
 export function Hero() {
   const plugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: false }));
   const [api, setApi] = useState<CarouselApi>();
+  const [isHeroReady, setIsHeroReady] = useState(false);
 
   const handlePrevious = () => {
     api?.scrollPrev();
@@ -33,12 +34,22 @@ export function Hero() {
   const heroImage3 =
     "https://res.cloudinary.com/du2zsbi0i/image/upload/v1779740983/hero_image_3_kg5tek.jpg";
   const heroImages = [heroImage, heroImage2, heroImage3];
+
   return (
     <section className="relative w-full h-[70vh] md:h-[95vh] bg-white border-b border-season-gray overflow-hidden group">
+      <div
+        aria-hidden={isHeroReady}
+        className={`absolute inset-0 z-20 bg-white transition-opacity duration-500 ${
+          isHeroReady ? "pointer-events-none opacity-0" : "opacity-100"
+        }`}
+      />
+
       <Carousel
         setApi={setApi}
         plugins={[plugin.current]}
-        className="w-full h-full"
+        className={`h-full w-full transition-opacity duration-500 ${
+          isHeroReady ? "opacity-100" : "opacity-0"
+        }`}
         opts={{
           loop: true,
           duration: 60,
@@ -58,6 +69,14 @@ export function Hero() {
                   sizes="100vw"
                   className="object-cover md:object-center select-none"
                   priority={index === 0}
+                  loading={index === 0 ? "eager" : "lazy"}
+                  onLoad={
+                    index === 0
+                      ? () => {
+                          setIsHeroReady(true);
+                        }
+                      : undefined
+                  }
                 />
                 <div className="absolute inset-0 bg-black/20" />
               </div>

@@ -63,7 +63,7 @@ function readOptionalStringField(
 
 export function validateProfileUpdateBody(
   req: UserProfileUpdateValidatedRequest & JsonBodyRequest,
-  res: Response,
+  _res: Response,
   next: NextFunction,
 ): void {
   if (typeof req.body !== "object" || req.body === null) {
@@ -101,7 +101,7 @@ export function validateProfileUpdateBody(
 
 export function validateChangePasswordBody(
   req: ChangePasswordValidatedRequest & JsonBodyRequest,
-  res: Response,
+  _res: Response,
   next: NextFunction,
 ): void {
   if (typeof req.body !== "object" || req.body === null) {
@@ -139,7 +139,7 @@ export function validateChangePasswordBody(
 
 export function validateAddressIdParam(
   req: UserAddressValidatedRequest,
-  res: Response,
+  _res: Response,
   next: NextFunction,
 ): void {
   const addressId = readObjectId(req.params.addressId);
@@ -155,7 +155,7 @@ export function validateAddressIdParam(
 
 export function validateUserIdParam(
   req: UserIdValidatedRequest,
-  res: Response,
+  _res: Response,
   next: NextFunction,
 ): void {
   const userId = readObjectId(req.params.userId);
@@ -171,7 +171,7 @@ export function validateUserIdParam(
 
 export function validateCreateAddressBody(
   req: UserAddressValidatedRequest & JsonBodyRequest,
-  res: Response,
+  _res: Response,
   next: NextFunction,
 ): void {
   if (typeof req.body !== "object" || req.body === null) {
@@ -204,7 +204,7 @@ export function validateCreateAddressBody(
 
 export function validateUpdateAddressBody(
   req: UserAddressValidatedRequest & JsonBodyRequest,
-  res: Response,
+  _res: Response,
   next: NextFunction,
 ): void {
   if (typeof req.body !== "object" || req.body === null) {

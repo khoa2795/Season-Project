@@ -21,7 +21,7 @@ type OrderConfirmationEmailProps = {
 };
 
 function formatVnd(amount: number): string {
-  return `${amount.toLocaleString("vi-VN")} đ`;
+  return `${amount.toLocaleString("vi-VN")} VND`;
 }
 
 function formatAddress(order: IOrder): string {
@@ -45,10 +45,10 @@ function formatAddress(order: IOrder): string {
 export function OrderConfirmationEmail({
   order,
 }: OrderConfirmationEmailProps): React.JSX.Element {
-  const previewText = `Đơn hàng ${order._id.toString()} đã được xác nhận`;
+  const previewText = `Order ${order._id.toString()} has been confirmed`;
 
   return (
-    <Html lang="vi">
+    <Html lang="en">
       <Head />
       <Preview>{previewText}</Preview>
       <Tailwind>
@@ -58,11 +58,11 @@ export function OrderConfirmationEmail({
               <Text className="m-0 text-[13px] font-semibold uppercase tracking-[0.18em] text-black/45">
                 Order Success
               </Text>
-              <Heading className="m-0 mt-4 text-[34px] uppercase leading-[1.08] text-[#111111] font-[Arial_Black,Helvetica_Neue,Arial,sans-serif]">
-                Cảm ơn bạn đã đặt hàng
+              <Heading className="m-0 mt-4 font-[Afacad,Arial_Narrow,Helvetica_Neue,Arial,sans-serif] text-[34px] font-bold uppercase leading-[1.08] text-[#111111]">
+                Thank you for your order
               </Heading>
               <Text className="m-0 mt-4 text-[17px] leading-[1.6] text-black/70">
-                Mã đơn hàng của bạn là <strong>{order._id.toString()}</strong>.
+                Your order number is <strong>{order._id.toString()}</strong>.
               </Text>
 
               <Hr className="my-6 border-[#e4dfd8]" />
@@ -70,7 +70,7 @@ export function OrderConfirmationEmail({
               <Row>
                 <Column className="w-1/2 pr-3 align-top">
                   <Text className="m-0 text-[15px] font-bold uppercase tracking-[0.08em] text-[#111111]">
-                    Thông tin liên hệ
+                    Contact information
                   </Text>
                   <Text className="m-0 mt-3 text-[15px] leading-[1.6] text-black/65">
                     {order.customerEmail ?? ""}
@@ -82,7 +82,7 @@ export function OrderConfirmationEmail({
 
                 <Column className="w-1/2 pl-3 align-top">
                   <Text className="m-0 text-[15px] font-bold uppercase tracking-[0.08em] text-[#111111]">
-                    Giao hàng
+                    Delivery
                   </Text>
                   <Text className="m-0 mt-3 text-[15px] leading-[1.6] text-black/65">
                     {order.shippingAddress.recipientName}
@@ -97,11 +97,11 @@ export function OrderConfirmationEmail({
 
               <Section>
                 <Text className="m-0 text-[15px] font-bold uppercase tracking-[0.08em] text-[#111111]">
-                  Thanh toán
+                  Payment
                 </Text>
                 <Text className="m-0 mt-3 text-[15px] leading-[1.6] text-black/65">
-                  Thanh toán khi nhận hàng (COD). Chúng tôi sẽ liên hệ để xác
-                  nhận trước khi giao.
+                  Cash on delivery (COD). We will contact you to confirm before
+                  delivery.
                 </Text>
               </Section>
             </Section>
@@ -110,7 +110,7 @@ export function OrderConfirmationEmail({
 
             <Section className="border border-[#d8d3cc] bg-[#f1f0ee] px-5 py-6">
               <Text className="m-0 mb-5 text-[16px] font-bold uppercase tracking-[0.08em] text-[#111111]">
-                Tóm tắt đơn hàng
+                Order summary
               </Text>
 
               {order.items.map((item, index) => (
@@ -144,7 +144,7 @@ export function OrderConfirmationEmail({
                         {item.productName}
                       </Text>
                       <Text className="m-0 mt-1.5 text-[12px] leading-normal text-black/55">
-                        {item.variantSku} · SL {item.quantity}
+                        {item.variantSku} · Qty {item.quantity}
                       </Text>
                     </Column>
 
@@ -163,7 +163,7 @@ export function OrderConfirmationEmail({
               <Row>
                 <Column>
                   <Text className="m-0 text-[14px] text-[#111111]">
-                    Tạm tính
+                    Subtotal
                   </Text>
                 </Column>
                 <Column>
@@ -176,7 +176,7 @@ export function OrderConfirmationEmail({
               <Row>
                 <Column>
                   <Text className="m-0 mt-2 text-[14px] text-[#111111]">
-                    Vận chuyển
+                    Shipping
                   </Text>
                 </Column>
                 <Column>
@@ -191,7 +191,7 @@ export function OrderConfirmationEmail({
               <Row>
                 <Column>
                   <Text className="m-0 text-[20px] font-bold text-[#111111]">
-                    Tổng
+                    Total
                   </Text>
                 </Column>
                 <Column>

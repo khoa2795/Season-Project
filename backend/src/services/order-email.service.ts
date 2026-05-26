@@ -57,7 +57,7 @@ export async function sendOrderConfirmationEmail(
     await mailTransporter.sendMail({
       from: `Season <${GMAIL_USER}>`,
       to: order.customerEmail.trim(),
-      subject: `Xác nhận đơn hàng ${order._id.toString()}`,
+      subject: `Order confirmation ${order._id.toString()}`,
       html,
     });
   } catch (error) {

@@ -85,6 +85,7 @@ export async function getCollectionProductsBySlug(
 
   const match = {
     isActive: true,
+    availability: "in_stock",
     collectionId: collection._id,
   } as Record<string, unknown>;
 

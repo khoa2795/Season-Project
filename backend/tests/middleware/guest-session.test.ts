@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import type { CookieOptions, Request, Response } from "express";
+import type { CookieOptions, Response } from "express";
 import test from "node:test";
 import {
   clearGuestSessionCookie,

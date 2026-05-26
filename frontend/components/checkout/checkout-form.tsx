@@ -32,9 +32,9 @@ type CheckoutFormTouched = Partial<Record<CheckoutFormField, boolean>>;
 const COD_PAYMENT_METHOD = "cash_on_delivery" as const;
 
 const VALIDATION_MESSAGES: Record<string, string> = {
-  "validator.required": "Vui lòng điền trường này.",
-  "validator.email": "Email không hợp lệ.",
-  "validator.phone_number": "Số điện thoại không hợp lệ.",
+  "validator.required": "Please fill out this field.",
+  "validator.email": "Please enter a valid email address.",
+  "validator.phone_number": "Please enter a valid phone number.",
 };
 
 const initialFormValues: CheckoutFormValues = {
@@ -311,7 +311,7 @@ export function CheckoutForm({
     <div className="mx-auto w-full max-w-140 px-6 py-8 md:px-10 lg:py-9">
       <section>
         <h1 className="font-afacad text-[20px] font-semibold text-black">
-          Liên hệ
+          Contact
         </h1>
         <CheckoutTextInput
           field="email"
@@ -327,17 +327,17 @@ export function CheckoutForm({
 
       <section className="mt-8">
         <h2 className="font-afacad text-[20px] font-semibold text-black">
-          Giao hàng
+          Delivery
         </h2>
 
         <label className="relative mt-3 block">
-          <span className="sr-only">Quốc gia/Vùng</span>
+          <span className="sr-only">Country/Region</span>
           <select
             disabled
             className="h-12 w-full appearance-none rounded-md border border-[#d8d3cc] bg-white px-4 pr-10 font-afacad text-[15px] text-black opacity-100 focus:outline-none focus:ring-1 focus:ring-black disabled:cursor-default disabled:text-black"
-            defaultValue="Việt Nam"
+            defaultValue="Vietnam"
           >
-            <option>Việt Nam</option>
+            <option>Vietnam</option>
           </select>
           <ChevronDown className="pointer-events-none absolute right-4 top-1/2 size-4 -translate-y-1/2 text-black/52" />
         </label>
@@ -345,7 +345,7 @@ export function CheckoutForm({
         <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
           <CheckoutTextInput
             field="firstName"
-            label="Tên"
+            label="First name"
             value={values.firstName}
             errorMessage={errors.firstName}
             onChange={handleFieldChange}
@@ -353,7 +353,7 @@ export function CheckoutForm({
           />
           <CheckoutTextInput
             field="lastName"
-            label="Họ"
+            label="Last name"
             value={values.lastName}
             errorMessage={errors.lastName}
             onChange={handleFieldChange}
@@ -364,7 +364,7 @@ export function CheckoutForm({
         <div className="mt-3 space-y-3">
           <CheckoutTextInput
             field="addressLine1"
-            label="Địa chỉ"
+            label="Address"
             value={values.addressLine1}
             errorMessage={errors.addressLine1}
             onChange={handleFieldChange}
@@ -372,7 +372,7 @@ export function CheckoutForm({
           />
           <CheckoutTextInput
             field="addressLine2"
-            label="Căn hộ, phòng, v.v. (không bắt buộc)"
+            label="Apartment, suite, etc. (optional)"
             value={values.addressLine2}
             errorMessage={errors.addressLine2}
             onChange={handleFieldChange}
@@ -380,7 +380,7 @@ export function CheckoutForm({
           />
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <label className="relative block">
-              <span className="sr-only">Tinh/Thanh pho</span>
+              <span className="sr-only">Province/City</span>
               <select
                 value={values.provinceOrCity}
                 aria-invalid={errors.provinceOrCity !== undefined}
@@ -398,7 +398,7 @@ export function CheckoutForm({
                 )}
               >
                 <option value="" disabled>
-                  Tinh/Thanh pho
+                  Province/City
                 </option>
                 {VIETNAM_PROVINCES.map((province) => (
                   <option key={province.id} value={province.name}>
@@ -416,7 +416,7 @@ export function CheckoutForm({
 
             <CheckoutTextInput
               field="postalCode"
-              label="Mã bưu chính (không bắt buộc)"
+              label="Postal code (optional)"
               value={values.postalCode}
               errorMessage={errors.postalCode}
               onChange={handleFieldChange}
@@ -425,7 +425,7 @@ export function CheckoutForm({
           </div>
           <CheckoutTextInput
             field="phone"
-            label="Điện thoại"
+            label="Phone"
             type="tel"
             value={values.phone}
             errorMessage={errors.phone}
@@ -437,27 +437,27 @@ export function CheckoutForm({
 
       <section className="mt-8">
         <h2 className="font-afacad text-[17px] font-semibold text-black">
-          Phương thức vận chuyển
+          Shipping method
         </h2>
         <div className="mt-3 overflow-hidden rounded-md border border-black">
-          <CheckoutRadioRow label="Standard" detail="MIỄN PHÍ" checked />
+          <CheckoutRadioRow label="Standard" detail="FREE" checked />
         </div>
       </section>
 
       <section className="mt-8">
         <h2 className="font-afacad text-[20px] font-semibold text-black">
-          Thanh toán
+          Payment
         </h2>
         <p className="mt-1 font-afacad text-[13px] text-black/56">
-          Tất cả các giao dịch được bảo mật và mã hóa.
+          All transactions are secure and encrypted.
         </p>
 
         <div className="mt-3 overflow-hidden rounded-md border border-[#d8d3cc] bg-white">
           <div className="border-b border-[#d8d3cc]">
-            <CheckoutRadioRow label="Thanh toán khi nhận hàng (COD)" checked />
+            <CheckoutRadioRow label="Cash on delivery (COD)" checked />
           </div>
           <div className="bg-[#f7f5f2] px-4 py-4 text-center font-afacad text-[13px] leading-5 text-black/65">
-            Bạn sẽ thanh toán trực tiếp khi nhận được đơn hàng.
+            You will pay directly when your order arrives.
           </div>
         </div>
       </section>
@@ -468,15 +468,15 @@ export function CheckoutForm({
         className="mt-6 h-12 w-full rounded-md bg-black font-afacad text-[15px] font-semibold uppercase tracking-[0.08em] text-white hover:bg-black/90"
         onClick={handleSubmit}
       >
-        {isSubmitting ? "Đang đặt hàng" : "Đặt hàng"}
+        {isSubmitting ? "Placing order" : "Place order"}
       </Button>
 
       <footer className="mt-10 border-t border-[#d8d3cc] pt-5">
         <div className="flex flex-wrap gap-x-5 gap-y-2 font-afacad text-[13px] text-black underline underline-offset-2">
-          <a href="#">Chính sách hoàn tiền</a>
-          <a href="#">Vận chuyển</a>
-          <a href="#">Chính sách quyền riêng tư</a>
-          <a href="#">Điều khoản dịch vụ</a>
+          <a href="#">Refund policy</a>
+          <a href="#">Shipping</a>
+          <a href="#">Privacy policy</a>
+          <a href="#">Terms of service</a>
         </div>
       </footer>
     </div>

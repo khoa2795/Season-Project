@@ -51,7 +51,7 @@ export function StoreGalleryCard({
   };
 
   return (
-    <article className="group relative min-h-110 overflow-hidden bg-black md:min-h-170">
+    <article className="relative min-h-110 overflow-hidden bg-black md:min-h-170">
       {activeImage !== "" ? (
         <Image
           key={activeImage}
@@ -60,7 +60,7 @@ export function StoreGalleryCard({
           fill
           priority={priority}
           sizes="(max-width: 767px) calc(100vw - 40px), 50vw"
-          className="object-cover transition duration-700 ease-out group-hover:scale-[1.02]"
+          className="object-cover"
         />
       ) : (
         <div className="absolute inset-0 bg-[#d8d8d8]" />
@@ -87,7 +87,7 @@ export function StoreGalleryCard({
           <button
             type="button"
             aria-label={`Previous ${name} image`}
-            className="absolute left-3 top-1/2 z-20 flex size-10 -translate-y-1/2 items-center justify-center bg-black/10 text-white opacity-80 backdrop-blur-[1px] transition hover:bg-black/20 hover:opacity-100"
+            className="absolute left-3 top-1/2 z-20 flex size-10 -translate-y-1/2 items-center justify-center bg-black/10 text-white opacity-80 backdrop-blur-[1px]"
             onClick={goToPreviousImage}
           >
             <ChevronLeft className="size-5 stroke-[1.6]" />
@@ -96,7 +96,7 @@ export function StoreGalleryCard({
           <button
             type="button"
             aria-label={`Next ${name} image`}
-            className="absolute right-3 top-1/2 z-20 flex size-10 -translate-y-1/2 items-center justify-center bg-black/10 text-white opacity-80 backdrop-blur-[1px] transition hover:bg-black/20 hover:opacity-100"
+            className="absolute right-3 top-1/2 z-20 flex size-10 -translate-y-1/2 items-center justify-center bg-black/10 text-white opacity-80 backdrop-blur-[1px]"
             onClick={goToNextImage}
           >
             <ChevronRight className="size-5 stroke-[1.6]" />
@@ -112,7 +112,7 @@ export function StoreGalleryCard({
                   "h-2 rounded-full transition-all duration-300",
                   activeIndex === index
                     ? "w-8 bg-white"
-                    : "w-2 bg-white/50 hover:bg-white/75",
+                    : "w-2 bg-white/50",
                 )}
                 onClick={() => {
                   setActiveIndex(index);

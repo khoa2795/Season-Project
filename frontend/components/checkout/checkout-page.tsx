@@ -21,44 +21,44 @@ type CheckoutPageProps = {
 };
 
 function formatVnd(amount: number): string {
-  return `${amount.toLocaleString("vi-VN")} đ`;
+  return `${amount.toLocaleString("vi-VN")} VND`;
 }
 
 function CheckoutProductRow({ item }: { item: CheckoutSessionItem }) {
   return (
-    <article className="grid grid-cols-[4.5rem_minmax(0,1fr)_auto] items-start gap-3">
-      <div className="relative aspect-square overflow-visible rounded-md border border-[#ded9d2] bg-white">
-        <div className="absolute inset-0 overflow-hidden rounded-md">
+    <article className="grid grid-cols-[4.75rem_minmax(0,1fr)] gap-3 rounded-lg border border-[#ded9d2] bg-white/62 p-2.5 shadow-[0_12px_28px_rgba(0,0,0,0.04)] sm:grid-cols-[5.25rem_minmax(0,1fr)_auto] md:grid-cols-[5.75rem_minmax(0,1fr)_auto] md:gap-4 md:p-3">
+      <div className="relative aspect-square overflow-visible rounded-lg border border-[#ded9d2] bg-white">
+        <div className="absolute inset-0 overflow-hidden rounded-lg">
           {item.imageUrl !== "" ? (
             <Image
               src={item.imageUrl}
               alt={item.productName}
               fill
-              className="scale-[1.55] object-contain object-center"
-              sizes="80px"
+              className="scale-[1.48] object-contain object-center"
+              sizes="92px"
             />
           ) : null}
         </div>
-        <span className="absolute -right-1.5 -top-1.5 z-10 flex size-6 items-center justify-center rounded-md bg-black font-afacad text-[12px] font-semibold leading-none text-white">
+        <span className="absolute -right-1.5 -top-1.5 z-10 flex size-7 items-center justify-center rounded-md bg-black font-afacad text-[13px] font-semibold leading-none text-white">
           {item.quantity}
         </span>
       </div>
 
-      <div className="min-w-0 pt-1">
-        <h3 className="truncate font-afacad text-[13px] font-semibold uppercase tracking-[0.04em] text-black">
+      <div className="min-w-0 self-center">
+        <h3 className="line-clamp-2 font-afacad text-[15px] font-semibold uppercase leading-tight tracking-[0.04em] text-black md:text-[16px]">
           {item.productName}
         </h3>
-        <p className="mt-1 truncate font-afacad text-[12px] text-black/56">
+        <p className="mt-1.5 truncate font-afacad text-[13px] text-black/56 md:text-[14px]">
           SKU {item.variantSku}
         </p>
         {item.variantColor !== undefined ? (
-          <p className="mt-0.5 truncate font-afacad text-[12px] text-black/56">
+          <p className="mt-1 truncate font-afacad text-[13px] text-black/56 md:text-[14px]">
             {item.variantColor}
           </p>
         ) : null}
       </div>
 
-      <p className="pt-1 text-right font-afacad text-[13px] font-semibold text-black">
+      <p className="col-span-2 text-right font-afacad text-[15px] font-semibold text-black sm:col-span-1 sm:self-center md:text-[16px]">
         {formatVnd(item.lineTotal)}
       </p>
     </article>
@@ -68,8 +68,8 @@ function CheckoutProductRow({ item }: { item: CheckoutSessionItem }) {
 function CheckoutSummary({ session }: { session: PendingCheckoutSession }) {
   return (
     <aside className="order-1 flex min-h-0 flex-col border-b border-[#ded9d2] bg-[#f1f0ee] lg:order-2 lg:h-full lg:border-b-0 lg:border-l">
-      <div className="min-h-0 flex-1 overflow-y-auto px-6 py-7 md:px-8">
-        <div className="space-y-4">
+      <div className="min-h-0 flex-1 overflow-y-auto px-5 py-5 md:px-7 md:py-7">
+        <div className="space-y-4.5">
           {session.items.map((item) => (
             <CheckoutProductRow
               key={`${item.productId}-${item.variantSku}`}
@@ -79,30 +79,30 @@ function CheckoutSummary({ session }: { session: PendingCheckoutSession }) {
         </div>
       </div>
 
-      <div className="shrink-0 border-t border-[#d8d3cc] px-6 py-5 md:px-8">
-        <div className="space-y-2 font-afacad text-[14px] text-black">
+      <div className="shrink-0 border-t border-[#d8d3cc] px-5 py-5 md:px-7">
+        <div className="space-y-3 font-afacad text-[15px] text-black md:text-[16px]">
           <div className="flex items-center justify-between gap-4">
-            <span>Tạm tính · {session.itemCount} sản phẩm</span>
+            <span>Subtotal · {session.itemCount} items</span>
             <span>{formatVnd(session.subtotalAmount)}</span>
           </div>
           <div className="flex items-center justify-between gap-4">
             <span className="inline-flex items-center gap-1.5">
-              Vận chuyển
+              Shipping
               <CircleHelp className="size-3.5 text-black/45" />
             </span>
-            <span className="uppercase">MIỄN PHÍ</span>
+            <span className="uppercase">FREE</span>
           </div>
         </div>
 
         <div className="mt-5 flex items-end justify-between gap-4">
-          <span className="font-afacad text-[22px] font-semibold text-black">
-            Tổng
+          <span className="font-afacad text-[24px] font-semibold text-black md:text-[26px]">
+            Total
           </span>
           <div className="text-right">
-            <span className="mr-2 font-afacad text-[12px] uppercase text-black/45">
+            <span className="mr-2 font-afacad text-[12px] uppercase text-black/45 md:text-[13px]">
               {session.currency}
             </span>
-            <span className="font-afacad text-[22px] font-semibold text-black">
+            <span className="font-afacad text-[24px] font-semibold text-black md:text-[26px]">
               {formatVnd(session.totalAmount)}
             </span>
           </div>
@@ -143,12 +143,12 @@ export function CheckoutPage({ token }: CheckoutPageProps) {
         }
 
         if (isAxiosError(error) && error.response?.status === 404) {
-          toast.error("Phiên thanh toán đã hết hạn");
+          toast.error("Checkout session has expired");
           router.replace("/");
           return;
         }
 
-        toast.error("Không thể tải phiên thanh toán");
+        toast.error("Unable to load checkout session");
         router.replace("/");
       } finally {
         if (isCancelled === false) {
@@ -183,7 +183,7 @@ export function CheckoutPage({ token }: CheckoutPageProps) {
             : undefined;
 
         if (status === 404) {
-          toast.error("Phiên thanh toán đã hết hạn");
+          toast.error("Checkout session has expired");
           router.push("/");
           return;
         }
@@ -194,13 +194,13 @@ export function CheckoutPage({ token }: CheckoutPageProps) {
         }
 
         if (status === 409) {
-          toast.error(message ?? "Một số sản phẩm không đủ hàng");
+          toast.error(message ?? "Some products do not have enough stock");
           router.push("/");
           return;
         }
       }
 
-      toast.error("Không thể đặt hàng");
+      toast.error("Unable to place order");
     } finally {
       setIsSubmitting(false);
     }
@@ -212,7 +212,7 @@ export function CheckoutPage({ token }: CheckoutPageProps) {
         <div className="flex flex-col items-center gap-4 text-center">
           <Spinner className="size-6" />
           <p className="font-afacad text-[13px] uppercase tracking-[0.18em] text-black/50">
-            Đang tải thanh toán
+            Loading checkout
           </p>
         </div>
       </main>
@@ -221,7 +221,7 @@ export function CheckoutPage({ token }: CheckoutPageProps) {
 
   return (
     <main className="bg-[#f5f5f7] text-black lg:h-[calc(100vh-4rem)] lg:overflow-hidden">
-      <div className="mx-auto grid min-h-full w-full max-w-304 grid-cols-1 bg-[#f5f5f7] lg:h-full lg:grid-cols-[minmax(0,1fr)_minmax(25rem,28rem)]">
+      <div className="mx-auto grid min-h-full w-full max-w-312 grid-cols-1 bg-[#f5f5f7] lg:h-full lg:grid-cols-[minmax(0,1fr)_minmax(27rem,30rem)]">
         <section className="order-2 min-h-0 overflow-y-auto bg-[#f8f6f1] lg:order-1">
           <CheckoutForm
             isSubmitting={isSubmitting}

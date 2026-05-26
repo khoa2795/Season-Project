@@ -1,7 +1,6 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import mongoose from "mongoose";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -24,11 +23,6 @@ const mediumSizePath = path.resolve(
 const smallSizePath = path.resolve(
   __dirname,
   "../../season_data/small-size.json",
-);
-
-const metalFramePath = path.resolve(
-  __dirname,
-  "../../season_data/metal.json",
 );
 
 const collectionsPath = path.resolve(
