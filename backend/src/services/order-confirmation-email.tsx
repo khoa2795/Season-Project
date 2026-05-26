@@ -58,7 +58,7 @@ export function OrderConfirmationEmail({
               <Text className="m-0 text-[13px] font-semibold uppercase tracking-[0.18em] text-black/45">
                 Order Success
               </Text>
-              <Heading className="m-0 mt-4 text-[34px] uppercase leading-[1.08] text-[#111111] [font-family:Arial_Black,Helvetica_Neue,Arial,sans-serif]">
+              <Heading className="m-0 mt-4 text-[34px] uppercase leading-[1.08] text-[#111111] font-[Arial_Black,Helvetica_Neue,Arial,sans-serif]">
                 Cảm ơn bạn đã đặt hàng
               </Heading>
               <Text className="m-0 mt-4 text-[17px] leading-[1.6] text-black/70">
@@ -118,7 +118,7 @@ export function OrderConfirmationEmail({
                   key={`${item.productId?.toString?.() ?? item.variantSku}-${index}`}
                 >
                   <Row>
-                    <Column className="w-[76px] align-top">
+                    <Column className="w-19 align-top">
                       {item.imageUrl !== undefined &&
                       item.imageUrl.trim() !== "" ? (
                         <Section className="h-16 w-16 border border-[#ded9d2] bg-white">
@@ -132,7 +132,7 @@ export function OrderConfirmationEmail({
                         </Section>
                       ) : (
                         <Section className="h-16 w-16 border border-[#ded9d2] bg-[#f3f0eb] text-center">
-                          <Text className="m-0 pt-[25px] text-[10px] font-bold uppercase tracking-[0.16em] text-black/40">
+                          <Text className="m-0 pt-6.25 text-[10px] font-bold uppercase tracking-[0.16em] text-black/40">
                             Season
                           </Text>
                         </Section>
@@ -143,12 +143,12 @@ export function OrderConfirmationEmail({
                       <Text className="m-0 text-[13px] font-bold uppercase leading-[1.3] tracking-[0.04em] text-[#111111]">
                         {item.productName}
                       </Text>
-                      <Text className="m-0 mt-1.5 text-[12px] leading-[1.5] text-black/55">
+                      <Text className="m-0 mt-1.5 text-[12px] leading-normal text-black/55">
                         {item.variantSku} · SL {item.quantity}
                       </Text>
                     </Column>
 
-                    <Column className="w-[110px] align-top">
+                    <Column className="w-27.5 align-top">
                       <Text className="m-0 text-right text-[13px] font-bold text-[#111111]">
                         {formatVnd(item.lineTotal)}
                       </Text>
@@ -158,7 +158,7 @@ export function OrderConfirmationEmail({
                 </Section>
               ))}
 
-              <Hr className="mb-[18px] mt-2 border-[#e4dfd8]" />
+              <Hr className="mb-4.5 mt-2 border-[#e4dfd8]" />
 
               <Row>
                 <Column>
@@ -186,7 +186,7 @@ export function OrderConfirmationEmail({
                 </Column>
               </Row>
 
-              <Hr className="mb-[14px] mt-4 border-[#e4dfd8]" />
+              <Hr className="mb-3.5 mt-4 border-[#e4dfd8]" />
 
               <Row>
                 <Column>
