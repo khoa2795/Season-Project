@@ -43,6 +43,7 @@ export default function AdminAuthPage() {
   const [mode, setMode] = useState<AuthMode>("login");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showAdminSecret, setShowAdminSecret] = useState(false);
   const [formData, setFormData] = useState({
@@ -87,6 +88,7 @@ export default function AdminAuthPage() {
                 onClick={() => {
                   setMode(item);
                   setErrorMessage(null);
+                  setSuccessMessage(null);
                 }}
               >
                 {item}
@@ -100,6 +102,7 @@ export default function AdminAuthPage() {
               event.preventDefault();
               setIsSubmitting(true);
               setErrorMessage(null);
+              setSuccessMessage(null);
 
               const action =
                 mode === "login"
@@ -116,7 +119,18 @@ export default function AdminAuthPage() {
 
               void action
                 .then(() => {
-                  router.replace(next);
+                  if (mode === "login") {
+                    router.replace(next);
+                    return;
+                  }
+
+                  setMode("login");
+                  setSuccessMessage("Admin account created. Please sign in.");
+                  setFormData((current) => ({
+                    ...current,
+                    password: "",
+                    adminSecret: "",
+                  }));
                 })
                 .catch((error: unknown) => {
                   setErrorMessage(readErrorMessage(error));
@@ -220,6 +234,12 @@ export default function AdminAuthPage() {
             {errorMessage !== null ? (
               <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
                 {errorMessage}
+              </div>
+            ) : null}
+
+            {successMessage !== null ? (
+              <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+                {successMessage}
               </div>
             ) : null}
 

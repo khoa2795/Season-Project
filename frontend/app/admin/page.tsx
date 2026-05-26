@@ -8,6 +8,7 @@ import { adminRequest } from "@/lib/admin/auth";
 type DashboardResponse = {
   summary: {
     totalOrders: number;
+    completedOrders: number;
     activeCustomers: number;
     pendingOrders: number;
     grossRevenue: number;
@@ -16,7 +17,7 @@ type DashboardResponse = {
     lowStockProducts: number;
   };
   revenueTrend: Array<{
-    month: string;
+    day: string;
     revenue: number;
     orders: number;
   }>;
@@ -43,6 +44,90 @@ function formatCurrency(value: number): string {
     currency: "VND",
     maximumFractionDigits: 0,
   }).format(value);
+}
+
+function getDisplayOrderStatus(status: string, paymentStatus: string): string {
+  return status === "delivered" && paymentStatus === "paid" ? "completed" : status;
+}
+
+function getOrderStatusTone(status: string, paymentStatus: string): string {
+  const displayStatus = getDisplayOrderStatus(status, paymentStatus);
+
+  if (displayStatus === "completed") {
+    return "border-emerald-200 bg-emerald-50 text-emerald-700";
+  }
+
+  if (displayStatus === "cancelled") {
+    return "border-rose-200 bg-rose-50 text-rose-700";
+  }
+
+  return "border-amber-200 bg-amber-50 text-amber-700";
+}
+
+type ChartPoint = {
+  x: number;
+  y: number;
+  label: string;
+  revenue: number;
+  orders: number;
+};
+
+function buildChart(points: DashboardResponse["revenueTrend"]): {
+  linePath: string;
+  areaPath: string;
+  chartPoints: ChartPoint[];
+  maxRevenue: number;
+} {
+  const width = 720;
+  const height = 220;
+  const paddingLeft = 24;
+  const paddingRight = 24;
+  const paddingTop = 20;
+  const paddingBottom = 34;
+  const innerWidth = width - paddingLeft - paddingRight;
+  const innerHeight = height - paddingTop - paddingBottom;
+  const maxRevenue = Math.max(...points.map((point) => point.revenue), 1);
+  const step = points.length > 1 ? innerWidth / (points.length - 1) : 0;
+
+  const chartPoints = points.map((point, index) => {
+    const x = paddingLeft + step * index;
+    const y = paddingTop + (1 - point.revenue / maxRevenue) * innerHeight;
+
+    return {
+      x,
+      y,
+      label: point.day,
+      revenue: point.revenue,
+      orders: point.orders,
+    };
+  });
+
+  if (chartPoints.length === 0) {
+    return {
+      linePath: "",
+      areaPath: "",
+      chartPoints,
+      maxRevenue,
+    };
+  }
+
+  const baseline = height - paddingBottom;
+  const linePath = chartPoints
+    .map((point, index) => `${index === 0 ? "M" : "L"} ${point.x} ${point.y}`)
+    .join(" ");
+  const areaPath = [
+    `M ${chartPoints[0].x} ${baseline}`,
+    ...chartPoints.map((point) => `L ${point.x} ${point.y}`),
+    `L ${chartPoints[chartPoints.length - 1].x} ${baseline}`,
+    "Z",
+  ].join(" ");
+
+  return {
+    linePath,
+    areaPath,
+    chartPoints,
+    maxRevenue,
+  };
 }
 
 export default function AdminDashboardPage() {
@@ -77,18 +162,23 @@ export default function AdminDashboardPage() {
     };
   }, []);
 
+  const topProducts = (data?.topProducts ?? []).slice(0, 3);
+  const chart = buildChart(data?.revenueTrend ?? []);
+
   return (
     <AdminGuard>
       {(user) => (
         <AdminShell user={user}>
           <div className="space-y-8">
-            <div className="max-w-2xl space-y-3">
+            <div className="w-full max-w-none space-y-3">
               <p className="font-afacad text-sm uppercase tracking-[0.3em] text-black/45">
                 Dashboard
               </p>
-              <h1 className="font-serif text-4xl">Business snapshot</h1>
-              <p className="max-w-xl text-sm leading-6 text-black/55">
-                Live overview of orders, revenue recognition, sales volume and stock risk from the current MongoDB data.
+              <h1 className="w-full max-w-none whitespace-nowrap font-serif text-4xl leading-tight tracking-[-0.03em]">
+                Studio overview
+              </h1>
+              <p className="max-w-3xl whitespace-nowrap text-sm leading-7 text-black/55">
+                Live view of orders, revenue, and stock status from MongoDB.
               </p>
             </div>
 
@@ -105,8 +195,8 @@ export default function AdminDashboardPage() {
                   value: formatCurrency(data?.summary.grossRevenue ?? 0),
                 },
                 {
-                  label: "Delivered Revenue",
-                  value: formatCurrency(data?.summary.deliveredRevenue ?? 0),
+                  label: "Completed Orders",
+                  value: String(data?.summary.completedOrders ?? 0),
                 },
                 {
                   label: "Total Orders",
@@ -148,31 +238,85 @@ export default function AdminDashboardPage() {
                     <p className="font-afacad text-xs uppercase tracking-[0.25em] text-black/45">
                       Revenue Trend
                     </p>
-                    <h2 className="mt-2 font-serif text-2xl">Last months</h2>
+                    <h2 className="mt-2 font-serif text-2xl">Last 7 days</h2>
                   </div>
                 </div>
-                <div className="mt-6 space-y-4">
-                  {(data?.revenueTrend ?? []).map((point) => {
-                    const maxRevenue = Math.max(
-                      ...(data?.revenueTrend.map((item) => item.revenue) ?? [1]),
-                    );
-                    const width = maxRevenue === 0 ? 0 : (point.revenue / maxRevenue) * 100;
+                <div className="mt-6">
+                  {chart.chartPoints.length > 0 ? (
+                    <div className="overflow-hidden rounded-[1.5rem] border border-black/6 bg-[#fcfbf8] p-4">
+                      <svg
+                        viewBox="0 0 720 220"
+                        className="h-[240px] w-full overflow-visible"
+                        role="img"
+                        aria-label="Weekly revenue line chart"
+                      >
+                        <defs>
+                          <linearGradient id="revenue-line" x1="0%" x2="0%" y1="0%" y2="100%">
+                            <stop offset="0%" stopColor="#d7b58b" stopOpacity="0.36" />
+                            <stop offset="100%" stopColor="#d7b58b" stopOpacity="0.02" />
+                          </linearGradient>
+                        </defs>
 
-                    return (
-                      <div key={point.month}>
-                        <div className="mb-2 flex items-center justify-between gap-4 text-sm text-black/60">
-                          <span>{point.month}</span>
-                          <span>{formatCurrency(point.revenue)}</span>
-                        </div>
-                        <div className="h-3 overflow-hidden rounded-full bg-[#ece6dc]">
-                          <div
-                            className="h-full rounded-full bg-[#d7b58b]"
-                            style={{ width: `${width}%` }}
-                          />
-                        </div>
+                        {[0, 1, 2, 3].map((index) => {
+                          const y = 20 + (200 / 3) * index;
+
+                          return (
+                            <line
+                              key={y}
+                              x1="24"
+                              x2="696"
+                              y1={y}
+                              y2={y}
+                              stroke="rgba(0,0,0,0.06)"
+                              strokeDasharray="4 6"
+                            />
+                          );
+                        })}
+
+                        <path d={chart.areaPath} fill="url(#revenue-line)" />
+                        <path
+                          d={chart.linePath}
+                          fill="none"
+                          stroke="#111111"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+
+                        {chart.chartPoints.map((point) => (
+                          <g key={point.label}>
+                            <circle cx={point.x} cy={point.y} r="8" fill="rgba(17,17,17,0.08)" />
+                            <circle cx={point.x} cy={point.y} r="4.5" fill="#111111" />
+                            <text
+                              x={point.x}
+                              y="206"
+                              textAnchor="middle"
+                              className="fill-black/55 font-afacad text-[12px] uppercase tracking-[0.14em]"
+                            >
+                              {point.label}
+                            </text>
+                            <text
+                              x={point.x}
+                              y={Math.max(point.y - 12, 18)}
+                              textAnchor="middle"
+                              className="fill-black/45 font-afacad text-[11px] uppercase tracking-[0.12em]"
+                            >
+                              {point.orders}
+                            </text>
+                          </g>
+                        ))}
+                      </svg>
+
+                      <div className="mt-4 flex items-center justify-between gap-4 text-sm text-black/55">
+                        <span>7-day revenue trend</span>
+                        <span>Peak {formatCurrency(chart.maxRevenue)}</span>
                       </div>
-                    );
-                  })}
+                    </div>
+                  ) : (
+                    <div className="rounded-[1.5rem] border border-dashed border-black/10 bg-[#fcfbf8] p-8 text-sm text-black/45">
+                      No revenue data for the last 7 days.
+                    </div>
+                  )}
                 </div>
               </section>
 
@@ -182,7 +326,7 @@ export default function AdminDashboardPage() {
                 </p>
                 <h2 className="mt-2 font-serif text-2xl">Best sellers</h2>
                 <div className="mt-6 space-y-4">
-                  {(data?.topProducts ?? []).map((product) => (
+                  {topProducts.map((product) => (
                     <div
                       key={product.productId}
                       className="rounded-[1.5rem] border border-white/10 bg-white/5 p-4"
@@ -213,7 +357,7 @@ export default function AdminDashboardPage() {
                 <table className="min-w-full text-left text-sm">
                   <thead className="text-black/45">
                     <tr>
-                      <th className="pb-3 font-afacad uppercase tracking-[0.16em]">Customer</th>
+                      <th className="pb-3 font-afacad uppercase tracking-[0.16em]">Order / Customer</th>
                       <th className="pb-3 font-afacad uppercase tracking-[0.16em]">Total</th>
                       <th className="pb-3 font-afacad uppercase tracking-[0.16em]">Status</th>
                       <th className="pb-3 font-afacad uppercase tracking-[0.16em]">Payment</th>
@@ -223,11 +367,20 @@ export default function AdminDashboardPage() {
                     {(data?.recentOrders ?? []).map((order) => (
                       <tr key={order.id} className="border-t border-black/6">
                         <td className="py-4">
-                          <p className="font-medium">{order.customerName}</p>
+                          <p className="font-afacad text-xs uppercase tracking-[0.22em] text-black/40">
+                            Order #{order.id.slice(-6)}
+                          </p>
+                          <p className="mt-1 font-medium">{order.customerName}</p>
                           <p className="text-black/45">{order.customerEmail}</p>
                         </td>
                         <td className="py-4">{formatCurrency(order.totalAmount)}</td>
-                        <td className="py-4 uppercase text-black/65">{order.status}</td>
+                        <td className="py-4">
+                          <span
+                            className={`inline-flex rounded-full border px-3 py-1 font-afacad text-[11px] uppercase tracking-[0.16em] ${getOrderStatusTone(order.status, order.paymentStatus)}`}
+                          >
+                            {getDisplayOrderStatus(order.status, order.paymentStatus)}
+                          </span>
+                        </td>
                         <td className="py-4 uppercase text-black/65">{order.paymentStatus}</td>
                       </tr>
                     ))}

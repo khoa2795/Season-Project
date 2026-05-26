@@ -32,6 +32,24 @@ function formatCurrency(value: number): string {
   }).format(value);
 }
 
+function getDisplayOrderStatus(status: string, paymentStatus: string): string {
+  return status === "delivered" && paymentStatus === "paid" ? "completed" : status;
+}
+
+function getOrderStatusTone(status: string, paymentStatus: string): string {
+  const displayStatus = getDisplayOrderStatus(status, paymentStatus);
+
+  if (displayStatus === "completed") {
+    return "border-emerald-200 bg-emerald-50 text-emerald-700";
+  }
+
+  if (displayStatus === "cancelled") {
+    return "border-rose-200 bg-rose-50 text-rose-700";
+  }
+
+  return "border-amber-200 bg-amber-50 text-amber-700";
+}
+
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState<OrderRecord[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -51,6 +69,23 @@ export default function AdminOrdersPage() {
     });
 
     setOrders(response.records);
+  };
+
+  const updateOrder = async (
+    orderId: string,
+    payload: { status?: string; paymentStatus?: string },
+  ): Promise<void> => {
+    try {
+      await adminRequest({
+        url: `/admin/orders/${orderId}`,
+        method: "PATCH",
+        data: payload,
+      });
+      await loadOrders();
+      setErrorMessage(null);
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : "Failed to update order");
+    }
   };
 
   useEffect(() => {
@@ -149,21 +184,18 @@ export default function AdminOrdersPage() {
                       </p>
                       <h2 className="mt-2 font-serif text-2xl">{order.customerName}</h2>
                       <p className="mt-2 text-sm text-black/55">{order.customerEmail}</p>
+                      <p
+                        className={`mt-2 inline-flex rounded-full border px-3 py-1 font-afacad text-[11px] uppercase tracking-[0.16em] ${getOrderStatusTone(order.status, order.paymentStatus)}`}
+                      >
+                        {getDisplayOrderStatus(order.status, order.paymentStatus)}
+                      </p>
                     </div>
 
                     <div className="grid gap-3 md:grid-cols-2 lg:min-w-[360px]">
                       <select
                         value={order.status}
                         onChange={(event) => {
-                          void adminRequest({
-                            url: `/admin/orders/${order.id}`,
-                            method: "PATCH",
-                            data: {
-                              status: event.target.value,
-                            },
-                          }).then(() => {
-                            void loadOrders();
-                          });
+                          void updateOrder(order.id, { status: event.target.value });
                         }}
                         className="h-11 rounded-2xl border border-black/10 bg-white px-4 text-sm"
                       >
@@ -177,15 +209,7 @@ export default function AdminOrdersPage() {
                       <select
                         value={order.paymentStatus}
                         onChange={(event) => {
-                          void adminRequest({
-                            url: `/admin/orders/${order.id}`,
-                            method: "PATCH",
-                            data: {
-                              paymentStatus: event.target.value,
-                            },
-                          }).then(() => {
-                            void loadOrders();
-                          });
+                          void updateOrder(order.id, { paymentStatus: event.target.value });
                         }}
                         className="h-11 rounded-2xl border border-black/10 bg-white px-4 text-sm"
                       >

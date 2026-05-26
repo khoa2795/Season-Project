@@ -70,6 +70,33 @@ function ensureSingleDefaultVariant(input: AdminProductInput): AdminProductInput
   };
 }
 
+function toWeekdayLabel(date: Date): string {
+  return new Intl.DateTimeFormat("en-US", { weekday: "short" }).format(date);
+}
+
+function getLastSevenDays(): Array<{ key: string; label: string }> {
+  const days: Array<{ key: string; label: string }> = [];
+  const now = new Date();
+
+  for (let offset = 6; offset >= 0; offset -= 1) {
+    const day = new Date(now);
+    day.setHours(0, 0, 0, 0);
+    day.setDate(day.getDate() - offset);
+    const key = `${day.getFullYear()}-${String(day.getMonth() + 1).padStart(2, "0")}-${String(day.getDate()).padStart(2, "0")}`;
+
+    days.push({
+      key,
+      label: `${toWeekdayLabel(day)} ${String(day.getDate()).padStart(2, "0")}/${String(day.getMonth() + 1).padStart(2, "0")}`,
+    });
+  }
+
+  return days;
+}
+
+function isCompletedOrder(order: Pick<IOrder, "status" | "paymentStatus">): boolean {
+  return order.status === "delivered" && order.paymentStatus === "paid";
+}
+
 async function refreshCollectionInStockCounts(collectionIds: string[]): Promise<void> {
   const uniqueIds = [...new Set(collectionIds.filter((id) => Types.ObjectId.isValid(id)))];
 
@@ -139,8 +166,14 @@ async function buildCollectionNameMap(collectionIds: string[]): Promise<Map<stri
 }
 
 async function buildUserMap(userIds: string[]): Promise<Map<string, { name: string; email: string }>> {
+  const validUserIds = userIds.filter((id) => Types.ObjectId.isValid(id));
+
+  if (validUserIds.length === 0) {
+    return new Map();
+  }
+
   const users = await User.find({
-    _id: { $in: userIds.map((id) => new Types.ObjectId(id)) },
+    _id: { $in: validUserIds.map((id) => new Types.ObjectId(id)) },
   })
     .select("name email")
     .lean<Array<{ _id: Types.ObjectId; name: string; email: string }>>();
@@ -154,13 +187,17 @@ function toAdminOrderResponse(
   order: TimestampedOrder,
   userMap: Map<string, { name: string; email: string }>,
 ): AdminOrderResponse {
-  const customer = userMap.get(order.userId.toString());
+  const customer =
+    order.userId === undefined ? undefined : userMap.get(order.userId.toString());
+  const customerName =
+    customer?.name ?? order.shippingAddress.recipientName ?? order.customerEmail ?? "Guest customer";
+  const customerEmail = customer?.email ?? order.customerEmail ?? "";
 
   return {
     id: order._id.toString(),
-    userId: order.userId.toString(),
-    customerName: customer?.name ?? "Unknown",
-    customerEmail: customer?.email ?? "",
+    ...(order.userId === undefined ? {} : { userId: order.userId.toString() }),
+    customerName,
+    customerEmail,
     items: order.items.map((item) => ({
       productId: item.productId.toString(),
       productName: item.productName,
@@ -188,10 +225,10 @@ function toAdminOrderResponse(
 }
 
 export async function getAdminDashboard(): Promise<AdminDashboardResponse> {
-  const sixMonthsAgo = new Date();
-  sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 5);
-  sixMonthsAgo.setDate(1);
-  sixMonthsAgo.setHours(0, 0, 0, 0);
+  const lastSevenDays = getLastSevenDays();
+  const dailyRevenueMap = new Map<string, { revenue: number; orders: number }>(
+    lastSevenDays.map((day) => [day.key, { revenue: 0, orders: 0 }] as const),
+  );
 
   const [totalOrders, activeCustomers, pendingOrders, allOrdersRaw, recentOrders, lowStockProducts] =
     await Promise.all([
@@ -199,11 +236,12 @@ export async function getAdminDashboard(): Promise<AdminDashboardResponse> {
       User.countDocuments({ role: "customer", status: "active", isActive: true }),
       Order.countDocuments({ status: { $in: ["pending", "confirmed", "processing", "shipped"] } }),
       Order.find({ status: { $ne: "cancelled" } }).select(
-        "userId items totalAmount status paymentStatus placedAt createdAt cancelledAt deliveredAt",
+        "userId customerEmail shippingAddress items totalAmount status paymentStatus placedAt createdAt cancelledAt deliveredAt",
       ),
       Order.find()
         .sort({ createdAt: -1 })
-        .limit(5),
+        .limit(5)
+        .select("userId customerEmail shippingAddress items totalAmount status paymentStatus placedAt createdAt"),
       Product.find({
         isActive: true,
         availability: "in_stock",
@@ -215,31 +253,32 @@ export async function getAdminDashboard(): Promise<AdminDashboardResponse> {
     IOrder & { createdAt: Date; placedAt?: Date }
   >;
 
-  const recentUserMap = await buildUserMap(recentOrders.map((order) => order.userId.toString()));
+  const recentUserMap = await buildUserMap(
+    recentOrders.flatMap((order) =>
+      order.userId === undefined ? [] : [order.userId.toString()],
+    ),
+  );
 
-  const monthlyRevenueMap = new Map<string, { revenue: number; orders: number }>();
-  let grossRevenue = 0;
-  let deliveredRevenue = 0;
+  let completedOrders = 0;
+  let completedRevenue = 0;
   let unitsSold = 0;
   const topProductMap = new Map<string, { productId: string; productName: string; unitsSold: number; revenue: number }>();
 
   for (const order of allOrders) {
-    grossRevenue += order.totalAmount;
+    if (isCompletedOrder(order) === false) {
+      continue;
+    }
 
-    if (order.status === "delivered") {
-      deliveredRevenue += order.totalAmount;
+    completedOrders += 1;
+    completedRevenue += order.totalAmount;
 
-      const placedAtDate = order.placedAt ?? order.createdAt ?? new Date();
-      if (placedAtDate >= sixMonthsAgo) {
-        const year = placedAtDate.getFullYear();
-        const month = String(placedAtDate.getMonth() + 1).padStart(2, "0");
-        const key = `${year}-${month}`;
-        const current = monthlyRevenueMap.get(key) ?? { revenue: 0, orders: 0 };
+    const placedAtDate = order.placedAt ?? order.createdAt ?? new Date();
+    const dayKey = `${placedAtDate.getFullYear()}-${String(placedAtDate.getMonth() + 1).padStart(2, "0")}-${String(placedAtDate.getDate()).padStart(2, "0")}`;
+    const currentDaily = dailyRevenueMap.get(dayKey);
 
-        current.revenue += order.totalAmount;
-        current.orders += 1;
-        monthlyRevenueMap.set(key, current);
-      }
+    if (currentDaily !== undefined) {
+      currentDaily.revenue += order.totalAmount;
+      currentDaily.orders += 1;
     }
 
     for (const item of order.items) {
@@ -260,37 +299,42 @@ export async function getAdminDashboard(): Promise<AdminDashboardResponse> {
     }
   }
 
-  const revenueTrend = [...monthlyRevenueMap.entries()]
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map(([month, value]) => ({
-      month,
+  const revenueTrend = lastSevenDays.map((day) => {
+    const value = dailyRevenueMap.get(day.key) ?? { revenue: 0, orders: 0 };
+
+    return {
+      day: day.label,
       revenue: value.revenue,
       orders: value.orders,
-    }));
+    };
+  });
 
   const topProducts = [...topProductMap.values()]
     .sort((a, b) => b.unitsSold - a.unitsSold || b.revenue - a.revenue)
-    .slice(0, 5);
+    .slice(0, 3);
 
   return {
     summary: {
       totalOrders,
+      completedOrders,
       activeCustomers,
       pendingOrders,
-      grossRevenue,
-      deliveredRevenue,
+      grossRevenue: completedRevenue,
+      deliveredRevenue: completedRevenue,
       unitsSold,
       lowStockProducts: lowStockProducts.length,
     },
     revenueTrend,
     topProducts,
     recentOrders: recentOrders.map((order) => {
-      const customer = recentUserMap.get(order.userId.toString());
+      const customer =
+        order.userId === undefined ? undefined : recentUserMap.get(order.userId.toString());
 
       return {
         id: order._id.toString(),
-        customerName: customer?.name ?? "Unknown",
-        customerEmail: customer?.email ?? "",
+        customerName:
+          customer?.name ?? order.shippingAddress.recipientName ?? order.customerEmail ?? "Guest customer",
+        customerEmail: customer?.email ?? order.customerEmail ?? "",
         totalAmount: order.totalAmount,
         status: order.status,
         paymentStatus: order.paymentStatus,
@@ -479,12 +523,15 @@ export async function listAdminOrders(
     Order.find(filter)
       .sort({ createdAt: -1 })
       .skip((query.page - 1) * query.limit)
-      .limit(query.limit),
+      .limit(query.limit)
+      .select("userId customerEmail shippingAddress items totalAmount status paymentStatus paymentMethod placedAt createdAt updatedAt"),
   ]);
 
   const timestampedOrders = orders as unknown as TimestampedOrder[];
   const userMap = await buildUserMap(
-    timestampedOrders.map((order) => order.userId.toString()),
+    timestampedOrders.flatMap((order) =>
+      order.userId === undefined ? [] : [order.userId.toString()],
+    ),
   );
 
   return {
@@ -510,6 +557,30 @@ async function restoreOrderItemStocks(order: IOrder, session: mongoose.ClientSes
   }
 }
 
+async function reserveOrderItemStocks(order: IOrder, session: mongoose.ClientSession): Promise<void> {
+  for (const item of order.items) {
+    const update = await Product.updateOne(
+      {
+        _id: item.productId,
+        isActive: true,
+        availability: "in_stock",
+        variants: {
+          $elemMatch: {
+            sku: item.variantSku,
+            stock: { $gte: item.quantity },
+          },
+        },
+      },
+      { $inc: { "variants.$.stock": -item.quantity } },
+      { session },
+    );
+
+    if (update.modifiedCount !== 1) {
+      throw AppError.badRequest(`Unable to reserve stock for ${item.variantSku}`);
+    }
+  }
+}
+
 export async function updateAdminOrder(
   orderId: string,
   input: AdminOrderUpdateInput,
@@ -528,17 +599,26 @@ export async function updateAdminOrder(
 
       const previousStatus = order.status;
 
-      if (
-        input.status !== undefined &&
-        isOrderStatusTransitionAllowed(order.status, input.status) === false
-      ) {
-        throw AppError.badRequest(
-          `Order status cannot change from ${order.status} to ${input.status}`,
-          "VALIDATION_ERROR",
-        );
+      if (input.status !== undefined) {
+        const isValidTransition =
+          input.status === "cancelled" ||
+          order.status === "cancelled" ||
+          isOrderStatusTransitionAllowed(order.status, input.status);
+
+        if (isValidTransition === false) {
+          throw AppError.badRequest(
+            `Order status cannot change from ${order.status} to ${input.status}`,
+            "VALIDATION_ERROR",
+          );
+        }
       }
 
       if (input.status !== undefined && previousStatus !== input.status) {
+        if (previousStatus === "cancelled" && input.status !== "cancelled") {
+          await reserveOrderItemStocks(order, session);
+          delete order.cancelledAt;
+        }
+
         if (input.status === "cancelled") {
           await restoreOrderItemStocks(order, session);
           await refreshCollectionInStockCounts(
@@ -567,7 +647,9 @@ export async function updateAdminOrder(
     }
 
     const finalOrder = updatedOrder as TimestampedOrder;
-    const userMap = await buildUserMap([finalOrder.userId.toString()]);
+    const userMap = await buildUserMap(
+      finalOrder.userId === undefined ? [] : [finalOrder.userId.toString()],
+    );
     return toAdminOrderResponse(finalOrder, userMap);
   } finally {
     await session.endSession();

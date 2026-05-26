@@ -15,6 +15,7 @@ import type { IShippingAddress } from "../models/order.model.js";
 
 export interface AdminDashboardSummary {
   totalOrders: number;
+  completedOrders: number;
   activeCustomers: number;
   pendingOrders: number;
   grossRevenue: number;
@@ -24,7 +25,7 @@ export interface AdminDashboardSummary {
 }
 
 export interface AdminDashboardRevenuePoint {
-  month: string;
+  day: string;
   revenue: number;
   orders: number;
 }
@@ -158,7 +159,7 @@ export interface AdminOrderItemResponse {
 
 export interface AdminOrderResponse {
   id: string;
-  userId: string;
+  userId?: string;
   customerName: string;
   customerEmail: string;
   items: AdminOrderItemResponse[];

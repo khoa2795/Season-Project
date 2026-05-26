@@ -143,17 +143,10 @@ export async function loginAdmin(payload: LoginPayload): Promise<AdminSession> {
   return response.data;
 }
 
-export async function registerAdmin(payload: RegisterPayload): Promise<AdminSession> {
-  const registrationResponse = await api.post<{ user: AdminUser }>("/auth/admin/register", payload);
-  const loginResponse = await loginAdmin({
-    email: payload.email,
-    password: payload.password,
-  });
-
-  return {
-    ...loginResponse,
-    user: registrationResponse.data.user,
-  };
+export async function registerAdmin(payload: RegisterPayload): Promise<{ user: AdminUser }> {
+  const response = await api.post<{ user: AdminUser }>("/auth/admin/register", payload);
+  clearAdminSession();
+  return response.data;
 }
 
 export async function fetchCurrentAdmin(): Promise<AdminUser | null> {
