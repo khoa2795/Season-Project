@@ -204,7 +204,9 @@ function toPendingCheckoutResponse(
       productId: item.productId,
       productName: item.productName,
       variantSku: item.variantSku,
-      ...(item.variantColor === undefined ? {} : { variantColor: item.variantColor }),
+      ...(item.variantColor === undefined
+        ? {}
+        : { variantColor: item.variantColor }),
       imageUrl: item.imageUrl,
       unitPrice: item.unitPrice,
       quantity: item.quantity,
@@ -229,7 +231,9 @@ function toSessionItems(
     productId: item.productId,
     productName: item.productName,
     variantSku: item.variantSku,
-    ...(item.variantColor === undefined ? {} : { variantColor: item.variantColor }),
+    ...(item.variantColor === undefined
+      ? {}
+      : { variantColor: item.variantColor }),
     imageUrl: item.imageUrl,
     unitPrice: item.unitPrice,
     quantity: item.quantity,
@@ -282,10 +286,7 @@ function getVariantForSnapshotItem(
   }
 
   if (variant.stock < item.quantity) {
-    throw new CheckoutSessionServiceError(
-      `${product.name} không đủ hàng`,
-      409,
-    );
+    throw new CheckoutSessionServiceError(`${product.name} không đủ hàng`, 409);
   }
 
   return variant;
@@ -310,43 +311,62 @@ async function revalidateSnapshotStock(
   return productMap;
 }
 
+// FIX: Thay vì N lần updateOne + N lần recalculate (loop tuần tự),
+// dùng bulkWrite để gửi tất cả stock decrements trong 1 round trip,
+// sau đó recalculate availability song song với Promise.all.
 async function decrementSnapshotStock(
   items: ICheckoutSessionItemSnapshot[],
   productMap: Map<string, CheckoutProduct>,
   session: ClientSession,
 ): Promise<void> {
-  for (const item of items) {
+  // Build tất cả update operations
+  const bulkOps = items.map((item) => {
     const product = productMap.get(item.productId);
 
     if (product === undefined) {
       throw new CheckoutSessionServiceError(UNAVAILABLE_CART_MESSAGE, 409);
     }
 
-    const stockUpdate = await Product.updateOne(
-      {
-        _id: product._id,
-        isActive: true,
-        availability: "in_stock",
-        variants: {
-          $elemMatch: {
-            sku: item.variantSku,
-            stock: { $gte: item.quantity },
+    return {
+      updateOne: {
+        filter: {
+          _id: product._id,
+          isActive: true,
+          availability: "in_stock",
+          variants: {
+            $elemMatch: {
+              sku: item.variantSku,
+              stock: { $gte: item.quantity },
+            },
           },
         },
+        update: { $inc: { "variants.$.stock": -item.quantity } },
       },
-      { $inc: { "variants.$.stock": -item.quantity } },
-      { session },
-    );
+    };
+  });
 
-    if (stockUpdate.modifiedCount !== 1) {
-      throw new CheckoutSessionServiceError(
-        `${product.name} không đủ hàng`,
-        409,
-      );
-    }
+  // 1 round trip thay vì N round trips
+  const bulkResult = await Product.bulkWrite(bulkOps, { session });
 
-    await recalculateProductAvailability(product._id, session);
+  if (bulkResult.modifiedCount !== items.length) {
+    throw new CheckoutSessionServiceError("Một số sản phẩm không đủ hàng", 409);
   }
+
+  // Recalculate availability song song cho tất cả products
+  const uniqueProductIds = [
+    ...new Map(
+      items.map((item) => {
+        const product = productMap.get(item.productId)!;
+        return [product._id.toString(), product._id];
+      }),
+    ).values(),
+  ];
+
+  await Promise.all(
+    uniqueProductIds.map((productId) =>
+      recalculateProductAvailability(productId, session),
+    ),
+  );
 }
 
 async function recalculateProductAvailability(
@@ -370,9 +390,7 @@ async function recalculateProductAvailability(
   await product.save({ session });
 }
 
-function toOrderItems(
-  items: ICheckoutSessionItemSnapshot[],
-): IOrderItem[] {
+function toOrderItems(items: ICheckoutSessionItemSnapshot[]): IOrderItem[] {
   return items.map((item) => ({
     productId: new Types.ObjectId(item.productId),
     productName: item.productName,
@@ -384,9 +402,7 @@ function toOrderItems(
   }));
 }
 
-function normalizeShippingAddress(
-  address: IShippingAddress,
-): IShippingAddress {
+function normalizeShippingAddress(address: IShippingAddress): IShippingAddress {
   return {
     recipientName: address.recipientName,
     phone: address.phone,
@@ -396,7 +412,9 @@ function normalizeShippingAddress(
     ...(address.district === undefined ? {} : { district: address.district }),
     city: address.city,
     ...(address.province === undefined ? {} : { province: address.province }),
-    ...(address.postalCode === undefined ? {} : { postalCode: address.postalCode }),
+    ...(address.postalCode === undefined
+      ? {}
+      : { postalCode: address.postalCode }),
     country: address.country,
   };
 }
@@ -540,6 +558,8 @@ export async function completeCheckoutSession(
           checkoutSession.itemsSnapshot,
           transactionSession,
         );
+
+        // FIX: bulkWrite thay vì N lần updateOne tuần tự
         await decrementSnapshotStock(
           checkoutSession.itemsSnapshot,
           productMap,
@@ -602,11 +622,11 @@ export async function completeCheckoutSession(
     throw new CheckoutSessionServiceError("Failed to create order", 500);
   }
 
-  try {
-    await sendOrderConfirmationEmail(completedOrder);
-  } catch (error) {
+  // FIX: Fire-and-forget — không await email, trả response ngay lập tức.
+  // Email failure không nên block hay fail checkout.
+  sendOrderConfirmationEmail(completedOrder).catch((error) => {
     console.error("Failed to send order confirmation email:", error);
-  }
+  });
 
   return {
     orderId: completedOrder._id.toString(),
