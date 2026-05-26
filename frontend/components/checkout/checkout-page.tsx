@@ -183,7 +183,9 @@ export function CheckoutPage({ token }: CheckoutPageProps) {
         token: response.token,
         successPath,
       });
+      console.info("[checkout] BEFORE router.replace", { successPath });
       router.replace(successPath);
+      console.info("[checkout] AFTER router.replace", { successPath });
       return;
     } catch (error) {
       if (isAxiosError(error)) {
