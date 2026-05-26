@@ -1,15 +1,16 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { Types } from "mongoose";
-import { Cart } from "../models/cart.model.js";
-import { CheckoutSession } from "../models/checkout-session.model.js";
-import { Order } from "../models/order.model.js";
-import { Product } from "../models/product.model.js";
+import mongoose, { Types } from "mongoose";
+import { Cart } from "../../src/models/cart.model.js";
+import { CheckoutSession } from "../../src/models/checkout-session.model.js";
+import { Order } from "../../src/models/order.model.js";
+import { Product } from "../../src/models/product.model.js";
 import {
   CheckoutSessionServiceError,
+  completeCheckoutSession,
   createCheckoutSession,
   getCheckoutSessionByToken,
-} from "./checkout-session.service.js";
+} from "../../src/services/checkout-session.service.js";
 
 function withPatchedProperty<T extends object, K extends keyof T>(
   target: T,
@@ -88,6 +89,8 @@ test("createCheckoutSession snapshots variant display data", async () => {
               assert.equal(createdPayload?.shippingFee, 0);
               assert.equal(createdPayload?.subtotalAmount, 5400000);
               assert.equal(createdPayload?.totalAmount, 5400000);
+              assert.equal(createdPayload?.guestId, guestId);
+              assert.equal("userId" in (createdPayload ?? {}), false);
 
               const snapshot = createdPayload?.itemsSnapshot as
                 | Array<Record<string, unknown>>
@@ -173,66 +176,6 @@ test("createCheckoutSession rejects stale cart quantity over current stock with 
               );
 
               assert.equal(checkoutCreateCallCount, 0);
-            },
-          );
-        },
-      );
-    },
-  );
-});
-
-test("createCheckoutSession resolves authenticated carts by userId", async () => {
-  const userId = new Types.ObjectId();
-  const productId = new Types.ObjectId();
-  const sku = "USER-CART-SKU";
-  let receivedCartQuery: Record<string, unknown> | null = null;
-
-  await withPatchedProperty(
-    Cart,
-    "findOne",
-    ((async (query: Record<string, unknown>) => {
-      receivedCartQuery = query;
-      return {
-        userId,
-        items: [{ productId, variantSku: sku, quantity: 1 }],
-      };
-    }) as unknown) as typeof Cart.findOne,
-    async () => {
-      await withPatchedProperty(
-        Product,
-        "find",
-        ((() => ({
-          select: () => ({
-            lean: async () => [
-              {
-                _id: productId,
-                name: "Authenticated Checkout Product",
-                availability: "in_stock",
-                isActive: true,
-                variants: [
-                  {
-                    sku,
-                    price: 1800000,
-                    images: [],
-                    isDefault: true,
-                    stock: 2,
-                  },
-                ],
-              },
-            ],
-          }),
-        })) as unknown) as typeof Product.find,
-        async () => {
-          await withPatchedProperty(
-            CheckoutSession,
-            "create",
-            ((async (payload: Record<string, unknown>) => ({
-              token: String(payload.token),
-            })) as unknown) as typeof CheckoutSession.create,
-            async () => {
-              await createCheckoutSession({ userId: userId.toString() });
-
-              assert.deepEqual(receivedCartQuery, { userId });
             },
           );
         },
@@ -338,4 +281,194 @@ test("getCheckoutSessionByToken returns order details for completed sessions", a
       );
     },
   );
+});
+
+test("completeCheckoutSession keeps product in stock when another variant has stock", async () => {
+  const productId = new Types.ObjectId();
+  const guestId = "guest-keeps-stock";
+  const sku = "BLACK-S";
+  const transactionSession = {
+    async withTransaction(run: () => Promise<void>): Promise<void> {
+      await run();
+    },
+    async endSession(): Promise<void> {
+      return;
+    },
+  };
+  let savedAvailability: unknown;
+  let savedWithSession = false;
+
+  await withPatchedProperty(
+    mongoose,
+    "startSession",
+    (async () => transactionSession) as typeof mongoose.startSession,
+    async () => {
+      await withPatchedProperty(
+        CheckoutSession,
+        "findOne",
+        ((() => ({
+          session: async (receivedSession: unknown) => {
+            assert.equal(receivedSession, transactionSession);
+            return {
+              token: "keep-stock-token",
+              guestId,
+              status: "pending",
+              itemsSnapshot: [
+                {
+                  productId: productId.toString(),
+                  productName: "Multi Variant Product",
+                  variantSku: sku,
+                  imageUrl: "",
+                  unitPrice: 100000,
+                  quantity: 1,
+                  lineTotal: 100000,
+                },
+              ],
+              subtotalAmount: 100000,
+              shippingFee: 0,
+              totalAmount: 100000,
+              currency: "VND",
+              async save(options: { session?: unknown }) {
+                assert.equal(options.session, transactionSession);
+              },
+            };
+          },
+        })) as unknown) as typeof CheckoutSession.findOne,
+        async () => {
+          let productFindCallCount = 0;
+
+          await withPatchedProperty(
+            Product,
+            "find",
+            ((() => ({
+              select: () => ({
+                session: (receivedSession: unknown) => ({
+                  lean: async () => {
+                    assert.equal(receivedSession, transactionSession);
+                    return [
+                      {
+                        _id: productId,
+                        name: "Multi Variant Product",
+                        availability: "in_stock",
+                        isActive: true,
+                        variants: [
+                          {
+                            sku,
+                            price: 100000,
+                            images: [],
+                            isDefault: true,
+                            stock: 1,
+                          },
+                          {
+                            sku: "BLACK-L",
+                            price: 100000,
+                            images: [],
+                            isDefault: false,
+                            stock: 5,
+                          },
+                        ],
+                      },
+                    ];
+                  },
+                }),
+              }),
+            })) as unknown) as typeof Product.find,
+            async () => {
+              await withPatchedProperty(
+                Product,
+                "updateOne",
+                (async (_query, _update, options?: { session?: unknown }) => {
+                  assert.equal(options?.session, transactionSession);
+                  return { modifiedCount: 1 };
+                }) as typeof Product.updateOne,
+                async () => {
+                  await withPatchedProperty(
+                    Product,
+                    "findById",
+                    ((id: Types.ObjectId) => {
+                      assert.equal(id, productId);
+                      productFindCallCount += 1;
+                      return {
+                        select: () => ({
+                          session: (receivedSession: unknown) => {
+                            assert.equal(receivedSession, transactionSession);
+                            return {
+                              variants: [
+                                { stock: 0 },
+                                { stock: 5 },
+                              ],
+                              availability: "in_stock",
+                              async save(options: { session?: unknown }) {
+                                assert.equal(options.session, transactionSession);
+                                savedWithSession = true;
+                                savedAvailability = this.availability;
+                              },
+                            };
+                          },
+                        }),
+                      };
+                    }) as unknown as typeof Product.findById,
+                    async () => {
+                      await withPatchedProperty(
+                        Order,
+                        "create",
+                        ((async () => [
+                          {
+                            _id: new Types.ObjectId(),
+                            customerEmail: "person@example.com",
+                            shippingAddress: {
+                              recipientName: "Test Person",
+                              phone: "0900000000",
+                              line1: "1 Test Street",
+                              city: "Ho Chi Minh",
+                              country: "Vietnam",
+                            },
+                            items: [],
+                            subtotalAmount: 100000,
+                            shippingFee: 0,
+                            totalAmount: 100000,
+                          },
+                        ]) as unknown) as typeof Order.create,
+                        async () => {
+                          await withPatchedProperty(
+                            Cart,
+                            "updateOne",
+                            ((async () => ({
+                              modifiedCount: 1,
+                            })) as unknown) as typeof Cart.updateOne,
+                            async () => {
+                              await completeCheckoutSession(
+                                "keep-stock-token",
+                                { guestId },
+                                {
+                                  customerEmail: "person@example.com",
+                                  paymentMethod: "cash_on_delivery",
+                                  shippingAddress: {
+                                    recipientName: "Test Person",
+                                    phone: "0900000000",
+                                    line1: "1 Test Street",
+                                    city: "Ho Chi Minh",
+                                    country: "Vietnam",
+                                  },
+                                },
+                              );
+                            },
+                          );
+                        },
+                      );
+                    },
+                  );
+                },
+              );
+            },
+          );
+
+          assert.equal(productFindCallCount, 1);
+        },
+      );
+    },
+  );
+
+  assert.equal(savedWithSession, true);
+  assert.equal(savedAvailability, "in_stock");
 });

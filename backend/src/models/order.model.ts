@@ -50,6 +50,7 @@ export interface IOrderItem {
   productId: Types.ObjectId;
   productName: string;
   variantSku: string;
+  imageUrl?: string;
   quantity: number;
   unitPrice: number;
   lineTotal: number;
@@ -92,6 +93,11 @@ export const OrderItemSchema = new Schema<IOrderItem>(
       type: String,
       required: true,
       trim: true,
+    },
+    imageUrl: {
+      type: String,
+      trim: true,
+      default: "",
     },
     quantity: {
       type: Number,

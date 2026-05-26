@@ -33,15 +33,15 @@ export function StoreFlagshipSection({
         className,
       )}
     >
-      <div className="mx-auto max-w-[1680px]">
-        <div className="max-w-[760px] space-y-5 pb-10 md:pb-14">
+      <div className="mx-auto max-w-420">
+        <div className="max-w-190 space-y-5 pb-10 md:pb-14">
           <h2 className="font-afacad text-[34px] font-semibold uppercase leading-[0.95] tracking-[0.02em] text-black sm:text-[48px] md:text-[68px]">
             HỆ THỐNG CỬA HÀNG
           </h2>
           <p className="font-afacad text-[14px] font-semibold uppercase tracking-[0.18em] text-black/55">
             FLAGSHIP
           </p>
-          <p className="max-w-[620px] font-afacad text-[16px] leading-[1.55] text-black/68 md:text-[18px]">
+          <p className="max-w-155 font-afacad text-[16px] leading-[1.55] text-black/68 md:text-[18px]">
             Không gian trải nghiệm kính mắt được thiết kế tối giản, tập trung
             vào ánh sáng, chất liệu và cảm giác thử sản phẩm trực tiếp.
           </p>
@@ -51,7 +51,7 @@ export function StoreFlagshipSection({
           {flagshipStores.map((store, index) => (
             <article
               key={`${store.id}-${store.images[0]}`}
-              className="relative min-h-[420px] overflow-hidden bg-black md:min-h-[620px]"
+              className="relative min-h-105 overflow-hidden bg-black md:min-h-155"
             >
               <Image
                 src={store.images[0]}
@@ -61,7 +61,7 @@ export function StoreFlagshipSection({
                 sizes="(max-width: 767px) calc(100vw - 40px), 50vw"
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-black/38 via-black/8 to-black/12" />
+              <div className="absolute inset-0 bg-linear-to-b from-black/38 via-black/8 to-black/12" />
               <div className="absolute left-5 top-5 max-w-[82%] font-afacad text-white md:left-7 md:top-7">
                 <h3 className="text-[20px] font-semibold uppercase leading-tight tracking-[0.08em] md:text-[24px]">
                   {store.name}

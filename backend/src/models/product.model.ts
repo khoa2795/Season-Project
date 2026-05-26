@@ -44,7 +44,7 @@ const variantSchema = new Schema<IVariant>(
     price: { type: Number, required: true, min: 0 },
     images: [{ type: String }],
     isDefault: { type: Boolean, default: false },
-    stock: { type: Number, required: true, min: 1, max: 10 },
+    stock: { type: Number, required: true, min: 0, max: 10 },
   },
   { _id: false },
 );

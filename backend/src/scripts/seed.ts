@@ -90,12 +90,25 @@ const seedDatabase = async () => {
     }
 
     if (mongoose.connection.db) {
-      await mongoose.connection.db.dropDatabase();
+      const collectionsToDrop = (
+        await mongoose.connection.db.listCollections().toArray()
+      )
+        .map((collection) => collection.name)
+        .filter(
+          (collectionName) =>
+            collectionName !== "users" &&
+            collectionName.startsWith("system.") === false,
+        );
+
+      for (const collectionName of collectionsToDrop) {
+        await mongoose.connection.db.dropCollection(collectionName);
+      }
+
       console.log(
-        "Completely dropped the database (all schemas and data cleared)",
+        `Dropped ${collectionsToDrop.length} collections while preserving users`,
       );
     } else {
-      console.log("Could not drop database: connection.db is undefined");
+      console.log("Could not reset collections: connection.db is undefined");
     }
 
     await Collection.insertMany(collections);

@@ -12,6 +12,7 @@ export type ProductCard = {
   originalPrice: number;
   isOnSale: boolean;
   meta?: string;
+  hasAvailableStock: boolean;
 };
 
 export type ProductsPageData = {

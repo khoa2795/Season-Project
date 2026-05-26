@@ -3,7 +3,7 @@ import test from "node:test";
 import {
   getCartStockReconciliationActions,
   type CartDrawerItem,
-} from "./cart-drawer.helpers";
+} from "../../components/cart/cart-drawer.helpers";
 
 function cartItem(
   overrides: Partial<CartDrawerItem> & Pick<CartDrawerItem, "variantSku">,

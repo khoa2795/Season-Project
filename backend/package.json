@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "@react-email/components": "^1.0.12",
+    "@react-email/render": "^2.0.8",
     "@types/cors": "^2.8.19",
     "bcrypt": "^6.0.0",
     "cloudinary": "^2.10.0",
@@ -9,7 +11,10 @@
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.3.3",
-    "resend": "^6.4.2",
+    "nodemailer": "^8.0.8",
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
+    "react-email": "6.3.3",
     "uuid": "^11.1.0",
     "zod": "^4.4.3"
   },
@@ -23,13 +28,14 @@
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^25.5.0",
+    "@types/nodemailer": "^8.0.0",
     "tsx": "^4.21.0",
     "typescript": "^6.0.2"
   },
   "scripts": {
-    "test": "node --import tsx --test src/**/*.test.ts",
+    "test": "node --import tsx --test tests/**/*.test.ts",
     "dev": "tsx watch src/index.ts",
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json",
     "start": "node dist/index.js",
     "normalize": "tsx src/scripts/normalizeData.ts",
     "normalize:sunglasses": "tsx src/scripts/normalizeSunglasses.ts",

@@ -38,7 +38,7 @@ export function validateURL(value: string): ValidationResult {
 export function validatePhoneNumber(value: string): ValidationResult {
   const normalizedValue = String(value).trim();
   const isValid =
-    validator.isMobilePhone(normalizedValue, "any") ||
+    validator.isMobilePhone(normalizedValue, "vi-VN") ||
     isLandlinePhoneNumber(normalizedValue);
 
   return {

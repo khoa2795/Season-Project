@@ -1,13 +1,13 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { Types } from "mongoose";
-import { Cart } from "../models/cart.model.js";
-import { Product } from "../models/product.model.js";
+import { Cart } from "../../src/models/cart.model.js";
+import { Product } from "../../src/models/product.model.js";
 import {
   addItemToCart,
   addSkuItemToCart,
   CartServiceError,
-} from "./cart.service.js";
+} from "../../src/services/cart.service.js";
 
 function withPatchedProperty<T extends object, K extends keyof T>(
   target: T,

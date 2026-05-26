@@ -2,15 +2,15 @@ import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import test from "node:test";
 import mongoose, { Types } from "mongoose";
-import { Cart } from "../models/cart.model.js";
-import { FrameMaterial, FrameSize, Product } from "../models/product.model.js";
-import { Order } from "../models/order.model.js";
+import { Cart } from "../../src/models/cart.model.js";
+import { FrameMaterial, FrameSize, Product } from "../../src/models/product.model.js";
+import { Order } from "../../src/models/order.model.js";
 import {
   checkoutCart,
   isRetryableCheckoutConflict,
   OrderServiceError,
-} from "./order.service.js";
-import type { CheckoutInput } from "../types/order.types.js";
+} from "../../src/services/order.service.js";
+import type { CheckoutInput } from "../../src/types/order.types.js";
 
 const checkoutInput: CheckoutInput = {
   shippingAddress: {
@@ -178,6 +178,7 @@ test(
       );
 
       assert.equal(storedVariant?.stock, 0);
+      assert.equal(storedProduct?.availability, "out_of_stock");
       assert.equal(orderCount, 1);
       assert.equal(remainingCartItemCount, 1);
     } finally {

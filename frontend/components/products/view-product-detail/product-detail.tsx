@@ -21,7 +21,6 @@ import {
 import {
   buildProductFacts,
   formatDisplayName,
-  getVariantStartIndex,
   humanizeLabel,
   inferColorSwatch,
   splitDescription,
@@ -116,9 +115,11 @@ export function ProductDetailView({
     () => deserializeProductRecord(product),
     [product],
   );
-  const [selectedVariantIndex, setSelectedVariantIndex] = useState(() =>
-    getVariantStartIndex(hydratedProduct),
+  const availableVariants = useMemo(
+    () => hydratedProduct.variants.filter((variant) => variant.stock > 0),
+    [hydratedProduct],
   );
+  const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
   const [openSection, setOpenSection] = useState<AccordionSection | null>(
     "info",
   );
@@ -127,9 +128,8 @@ export function ProductDetailView({
   const [isAddingToCart, setIsAddingToCart] = useState(false);
 
   const selectedVariant =
-    hydratedProduct.variants[selectedVariantIndex] ??
-    hydratedProduct.defaultVariant ??
-    hydratedProduct.variants[0];
+    availableVariants[selectedVariantIndex] ??
+    availableVariants[0];
   const variantImages = selectedVariant?.images ?? [];
   const sizeImage = hydratedProduct.sizeGuideImage ?? "";
   const galleryImages = variantImages;
@@ -139,6 +139,27 @@ export function ProductDetailView({
   const displayName = formatDisplayName(hydratedProduct.name);
   const canAddToCart =
     selectedVariant !== undefined && isAddingToCart === false;
+
+  useEffect(() => {
+    if (availableVariants.length === 0) {
+      setSelectedVariantIndex(0);
+      return;
+    }
+
+    const defaultVariantSku = hydratedProduct.defaultVariant?.sku;
+    const nextIndex =
+      defaultVariantSku === undefined
+        ? 0
+        : availableVariants.findIndex((variant) => variant.sku === defaultVariantSku);
+
+    setSelectedVariantIndex((current) =>
+      current < availableVariants.length
+        ? current
+        : nextIndex >= 0
+          ? nextIndex
+          : 0,
+    );
+  }, [availableVariants, hydratedProduct]);
 
   useEffect(() => {
     if (!carouselApi) {
@@ -225,7 +246,7 @@ export function ProductDetailView({
           <div className="flex items-center justify-between gap-4">
             <p className="text-[11px] text-black/42">{selectedColor}</p>
             <div className="flex flex-wrap justify-end gap-2.5">
-              {hydratedProduct.variants.map((variant, index) => {
+              {availableVariants.map((variant, index) => {
                 const variantLabel = humanizeLabel(variant.color);
                 const isActive = index === selectedVariantIndex;
 

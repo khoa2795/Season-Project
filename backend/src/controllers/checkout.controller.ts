@@ -24,7 +24,6 @@ export async function initCheckout(
   res: Response<CheckoutInitResponse | ErrorResponse>,
 ): Promise<void> {
   const checkoutOwner = {
-    ...(req.authUserId === undefined ? {} : { userId: req.authUserId }),
     ...(req.guestId === undefined ? {} : { guestId: req.guestId }),
   };
 
@@ -39,7 +38,6 @@ export async function getCheckoutSession(
 ): Promise<void> {
   const token = req.params.token;
   const checkoutOwner = {
-    ...(req.authUserId === undefined ? {} : { userId: req.authUserId }),
     ...(req.guestId === undefined ? {} : { guestId: req.guestId }),
   };
 
@@ -64,7 +62,6 @@ export async function completeCheckout(
   }
 
   const checkoutOwner = {
-    ...(req.authUserId === undefined ? {} : { userId: req.authUserId }),
     ...(req.guestId === undefined ? {} : { guestId: req.guestId }),
   };
 

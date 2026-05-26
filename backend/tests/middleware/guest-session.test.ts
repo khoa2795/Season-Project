@@ -6,7 +6,7 @@ import {
   guestSession,
   guestSessionCookieOptions,
   type GuestSessionRequest,
-} from "./guest-session.js";
+} from "../../src/middleware/guest-session.js";
 
 interface MockResponse extends Partial<Response> {
   cookieCalls: Array<{

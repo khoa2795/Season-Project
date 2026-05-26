@@ -51,7 +51,7 @@ export default async function ProductsPage({ params }: ProductPageProps) {
         relatedProducts={toPlainObject(relatedProducts)}
         collectionSlug={collectionSlug}
       />
-      <StoreFlagshipSection className="mt-16 md:mt-24" />
+      <StoreFlagshipSection />
     </>
   );
 }
