@@ -42,6 +42,7 @@ export function StoreGalleryCard({
         <Image
           key={activeImage}
           src={activeImage}
+          loading="eager"
           alt={name}
           fill
           priority={priority}
@@ -96,9 +97,7 @@ export function StoreGalleryCard({
                 aria-label={`Go to ${name} image ${index + 1}`}
                 className={cn(
                   "h-2 rounded-full transition-all duration-300",
-                  activeIndex === index
-                    ? "w-8 bg-white"
-                    : "w-2 bg-white/50",
+                  activeIndex === index ? "w-8 bg-white" : "w-2 bg-white/50",
                 )}
                 onClick={() => {
                   setActiveIndex(index);

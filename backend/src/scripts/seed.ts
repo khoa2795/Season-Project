@@ -117,6 +117,26 @@ const seedDatabase = async () => {
     await Product.insertMany(uniqueProducts);
     console.log(`Successfully seeded ${uniqueProducts.length} products!`);
 
+    const existingSearchIndexes = await Product.listSearchIndexes();
+    const hasProductSearchIndex = existingSearchIndexes.some(
+      (index) => index.name === "products_search",
+    );
+
+    if (hasProductSearchIndex === false) {
+      await Product.createSearchIndex({
+        name: "products_search",
+        definition: {
+          mappings: {
+            dynamic: true,
+          },
+        },
+      });
+
+      console.log("✅ Created Atlas Search index: products_search");
+    } else {
+      console.log("✅ Atlas Search index already exists: products_search");
+    }
+
     process.exit(0);
   } catch (error) {
     console.error("❌ Error seeding database:", error);
