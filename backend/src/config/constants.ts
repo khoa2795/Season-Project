@@ -19,6 +19,9 @@ export const GMAIL_USER = process.env.GMAIL_USER?.trim();
 export const GMAIL_APP_PASSWORD = process.env.GMAIL_APP_PASSWORD?.trim();
 export const JWT_ISSUER = process.env.JWT_ISSUER ?? "season-backend";
 export const JWT_AUDIENCE = process.env.JWT_AUDIENCE ?? "season-api";
+export const GMAIL_CLIENT_ID = process.env.GMAIL_CLIENT_ID?.trim();
+export const GMAIL_CLIENT_SECRET = process.env.GMAIL_CLIENT_SECRET?.trim();
+export const GMAIL_REFRESH_TOKEN = process.env.GMAIL_REFRESH_TOKEN?.trim();
 
 function parseAllowedOrigins(value: string | undefined): string[] {
   if (value === undefined || value.trim() === "") {

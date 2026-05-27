@@ -1,6 +1,11 @@
 import nodemailer, { type Transporter } from "nodemailer";
 import { render } from "@react-email/render";
-import { GMAIL_APP_PASSWORD, GMAIL_USER } from "../config/constants.js";
+import {
+  GMAIL_USER,
+  GMAIL_CLIENT_ID,
+  GMAIL_CLIENT_SECRET,
+  GMAIL_REFRESH_TOKEN,
+} from "../config/constants.js";
 import type { IOrder } from "../models/order.model.js";
 import { OrderConfirmationEmail } from "./order-confirmation-email.js";
 
@@ -10,22 +15,26 @@ function getTransporter(): Transporter | null {
   if (
     GMAIL_USER === undefined ||
     GMAIL_USER === "" ||
-    GMAIL_APP_PASSWORD === undefined ||
-    GMAIL_APP_PASSWORD === ""
+    GMAIL_CLIENT_ID === undefined ||
+    GMAIL_CLIENT_ID === "" ||
+    GMAIL_CLIENT_SECRET === undefined ||
+    GMAIL_CLIENT_SECRET === "" ||
+    GMAIL_REFRESH_TOKEN === undefined ||
+    GMAIL_REFRESH_TOKEN === ""
   ) {
     return null;
   }
 
   transporter ??= nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    family: 4,
+    service: "gmail",
     auth: {
+      type: "OAuth2",
       user: GMAIL_USER,
-      pass: GMAIL_APP_PASSWORD,
+      clientId: GMAIL_CLIENT_ID,
+      clientSecret: GMAIL_CLIENT_SECRET,
+      refreshToken: GMAIL_REFRESH_TOKEN,
     },
-  } as nodemailer.TransportOptions);
+  });
 
   return transporter;
 }
@@ -36,7 +45,7 @@ export async function sendOrderConfirmationEmail(
 ): Promise<void> {
   if (mailTransporter === null) {
     console.warn(
-      "Skipping order confirmation email because Gmail mail config is not configured.",
+      "Skipping order confirmation email because Gmail OAuth2 config is not configured.",
     );
     return;
   }
@@ -46,16 +55,8 @@ export async function sendOrderConfirmationEmail(
     return;
   }
 
-  if (GMAIL_USER === undefined || GMAIL_USER === "") {
-    throw new Error(
-      `Failed to send order confirmation email for order ${order._id.toString()}: GMAIL_USER is not configured`,
-    );
-  }
-
   try {
-    const html = await render(
-      OrderConfirmationEmail({ order }),
-    );
+    const html = await render(OrderConfirmationEmail({ order }));
 
     await mailTransporter.sendMail({
       from: `Season <${GMAIL_USER}>`,
