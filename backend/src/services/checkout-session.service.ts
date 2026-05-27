@@ -108,6 +108,48 @@ function resolveCheckoutOwnerQuery(
   return { guestId: owner.guestId.trim() };
 }
 
+async function findCheckoutSessionForRecovery(
+  token: string,
+  ownerQuery: CheckoutGuestQuery | null,
+): Promise<ICheckoutSession | null> {
+  const expiresAt = { $gt: new Date() };
+
+  if (ownerQuery !== null) {
+    const ownerScopedSession = await CheckoutSession.findOne({
+      token,
+      ...ownerQuery,
+      expiresAt,
+    });
+
+    if (ownerScopedSession !== null) {
+      return ownerScopedSession;
+    }
+  }
+
+  return CheckoutSession.findOne({
+    token,
+    expiresAt,
+  });
+}
+
+async function findOrderForCheckoutRecovery(
+  filter: { checkoutToken: string } | { _id: string; checkoutToken: string },
+  ownerQuery: CheckoutGuestQuery | null,
+): Promise<IOrder | null> {
+  if (ownerQuery !== null) {
+    const ownerScopedOrder = await Order.findOne({
+      ...filter,
+      ...ownerQuery,
+    });
+
+    if (ownerScopedOrder !== null) {
+      return ownerScopedOrder;
+    }
+  }
+
+  return Order.findOne(filter);
+}
+
 function productKey(productId: Types.ObjectId): string {
   return productId.toString();
 }
@@ -742,26 +784,20 @@ export async function getCheckoutSessionByToken(
   }
 
   const ownerQuery = resolveCheckoutOwnerQuery(owner);
-
-  if (ownerQuery === null) {
-    throw new CheckoutSessionServiceError("Phiên thanh toán đã hết hạn", 404);
-  }
-
-  const checkoutSession = await CheckoutSession.findOne({
-    token: normalizedToken,
-    ...ownerQuery,
-    expiresAt: { $gt: new Date() },
-  });
+  const checkoutSession = await findCheckoutSessionForRecovery(
+    normalizedToken,
+    ownerQuery,
+  );
 
   if (checkoutSession === null) {
     throw new CheckoutSessionServiceError("Phiên thanh toán đã hết hạn", 404);
   }
 
   if (checkoutSession.status === "completed") {
-    const order = await Order.findOne({
-      checkoutToken: checkoutSession.token,
-      ...ownerQuery,
-    });
+    const order = await findOrderForCheckoutRecovery(
+      { checkoutToken: checkoutSession.token },
+      ownerQuery,
+    );
 
     if (order === null) {
       throw new CheckoutSessionServiceError("Đơn hàng không tồn tại", 404);
@@ -771,10 +807,10 @@ export async function getCheckoutSessionByToken(
   }
 
   if (checkoutSession.status === "payment_pending") {
-    const order = await Order.findOne({
-      checkoutToken: checkoutSession.token,
-      ...ownerQuery,
-    });
+    const order = await findOrderForCheckoutRecovery(
+      { checkoutToken: checkoutSession.token },
+      ownerQuery,
+    );
 
     if (order === null) {
       throw new CheckoutSessionServiceError("Đơn hàng không tồn tại", 404);
@@ -1085,23 +1121,23 @@ export async function getCheckoutPaymentStatus(
   const normalizedToken = token.trim();
   const ownerQuery = resolveCheckoutOwnerQuery(owner);
 
-  if (normalizedToken === "" || ownerQuery === null || orderId.trim() === "") {
+  if (normalizedToken === "" || orderId.trim() === "") {
     throw new CheckoutSessionServiceError("Phiên thanh toán đã hết hạn", 404);
   }
 
-  const checkoutSession = await CheckoutSession.findOne({
-    token: normalizedToken,
-    ...ownerQuery,
-  });
+  const checkoutSession = await findCheckoutSessionForRecovery(
+    normalizedToken,
+    ownerQuery,
+  );
 
   if (checkoutSession === null) {
     throw new CheckoutSessionServiceError("Phiên thanh toán đã hết hạn", 404);
   }
 
-  const order = await Order.findOne({
-    _id: orderId,
-    ...ownerQuery,
-  });
+  const order = await findOrderForCheckoutRecovery(
+    { _id: orderId, checkoutToken: normalizedToken },
+    ownerQuery,
+  );
 
   if (order === null) {
     throw new CheckoutSessionServiceError("Đơn hàng không tồn tại", 404);

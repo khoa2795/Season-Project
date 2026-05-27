@@ -204,6 +204,139 @@ test("getCheckoutSessionByToken returns 404 for missing sessions", async () => {
   );
 });
 
+test("getCheckoutSessionByToken succeeds without guest ownership when token is valid", async () => {
+  const expiresAt = new Date(Date.now() + 60_000);
+  let findOneCallCount = 0;
+
+  await withPatchedProperty(
+    CheckoutSession,
+    "findOne",
+    (async (filter: Record<string, unknown>) => {
+      findOneCallCount += 1;
+
+      assert.equal(filter.token, "token-only-session");
+
+      if (findOneCallCount === 1) {
+        assert.equal("guestId" in filter, false);
+      }
+
+      return {
+        token: "token-only-session",
+        status: "pending",
+        itemsSnapshot: [
+          {
+            productId: "64f000000000000000000040",
+            productName: "Token Only Product",
+            variantSku: "TOKEN-01",
+            imageUrl: "",
+            unitPrice: 150000,
+            quantity: 1,
+            lineTotal: 150000,
+          },
+        ],
+        subtotalAmount: 150000,
+        shippingFee: 0,
+        totalAmount: 150000,
+        currency: "VND",
+        expiresAt,
+      };
+    }) as unknown as typeof CheckoutSession.findOne,
+    async () => {
+      assert.deepEqual(await getCheckoutSessionByToken("token-only-session"), {
+        status: "pending",
+        token: "token-only-session",
+        items: [
+          {
+            productId: "64f000000000000000000040",
+            productName: "Token Only Product",
+            variantSku: "TOKEN-01",
+            imageUrl: "",
+            unitPrice: 150000,
+            quantity: 1,
+            lineTotal: 150000,
+          },
+        ],
+        itemCount: 1,
+        subtotalAmount: 150000,
+        shippingFee: 0,
+        totalAmount: 150000,
+        currency: "VND",
+        expiresAt: expiresAt.toISOString(),
+      });
+    },
+  );
+});
+
+test("getCheckoutSessionByToken falls back when guest ownership is replaced", async () => {
+  const expiresAt = new Date(Date.now() + 60_000);
+  let findOneCallCount = 0;
+
+  await withPatchedProperty(
+    CheckoutSession,
+    "findOne",
+    (async (filter: Record<string, unknown>) => {
+      findOneCallCount += 1;
+
+      if (findOneCallCount === 1) {
+        assert.equal(filter.guestId, "guest-replaced");
+        return null;
+      }
+
+      assert.equal(filter.token, "guest-recovery-token");
+      assert.equal("guestId" in filter, false);
+
+      return {
+        token: "guest-recovery-token",
+        status: "pending",
+        itemsSnapshot: [
+          {
+            productId: "64f000000000000000000041",
+            productName: "Recovered Product",
+            variantSku: "RECOVER-01",
+            imageUrl: "",
+            unitPrice: 120000,
+            quantity: 1,
+            lineTotal: 120000,
+          },
+        ],
+        subtotalAmount: 120000,
+        shippingFee: 0,
+        totalAmount: 120000,
+        currency: "VND",
+        expiresAt,
+      };
+    }) as unknown as typeof CheckoutSession.findOne,
+    async () => {
+      assert.deepEqual(
+        await getCheckoutSessionByToken("guest-recovery-token", {
+          guestId: "guest-replaced",
+        }),
+        {
+          status: "pending",
+          token: "guest-recovery-token",
+          items: [
+            {
+              productId: "64f000000000000000000041",
+              productName: "Recovered Product",
+              variantSku: "RECOVER-01",
+              imageUrl: "",
+              unitPrice: 120000,
+              quantity: 1,
+              lineTotal: 120000,
+            },
+          ],
+          itemCount: 1,
+          subtotalAmount: 120000,
+          shippingFee: 0,
+          totalAmount: 120000,
+          currency: "VND",
+          expiresAt: expiresAt.toISOString(),
+        },
+      );
+    },
+  );
+});
+
 test("getCheckoutSessionByToken returns order details for completed sessions", async () => {
   const productId = new Types.ObjectId();
 
@@ -766,6 +899,121 @@ test("getCheckoutPaymentStatus returns paid redirect without re-querying PayOS w
               orderId: "64f000000000000000000030",
               token: "paid-token",
               redirectTo: "/order/success/paid-token",
+            },
+          );
+        },
+      );
+    },
+  );
+});
+
+test("getCheckoutPaymentStatus succeeds without guest ownership when token and order match", async () => {
+  await withPatchedProperty(
+    CheckoutSession,
+    "findOne",
+    (async (filter: Record<string, unknown>) => {
+      assert.equal(filter.token, "payment-token-only");
+      assert.equal("guestId" in filter, false);
+
+      return {
+        _id: new Types.ObjectId(),
+        token: "payment-token-only",
+        status: "payment_pending",
+        expiresAt: new Date(Date.now() + 60_000),
+      };
+    }) as unknown as typeof CheckoutSession.findOne,
+    async () => {
+      await withPatchedProperty(
+        Order,
+        "findOne",
+        (async (filter: Record<string, unknown>) => {
+          assert.equal(filter._id, "64f000000000000000000031");
+          assert.equal(filter.checkoutToken, "payment-token-only");
+
+          return {
+            _id: new Types.ObjectId("64f000000000000000000031"),
+            checkoutToken: "payment-token-only",
+            paymentStatus: "paid",
+          };
+        }) as unknown as typeof Order.findOne,
+        async () => {
+          assert.deepEqual(
+            await getCheckoutPaymentStatus(
+              "payment-token-only",
+              "64f000000000000000000031",
+              {},
+            ),
+            {
+              status: "paid",
+              orderId: "64f000000000000000000031",
+              token: "payment-token-only",
+              redirectTo: "/order/success/payment-token-only",
+            },
+          );
+        },
+      );
+    },
+  );
+});
+
+test("getCheckoutPaymentStatus falls back when guest ownership is replaced", async () => {
+  let checkoutFindOneCallCount = 0;
+  let orderFindOneCallCount = 0;
+
+  await withPatchedProperty(
+    CheckoutSession,
+    "findOne",
+    (async (filter: Record<string, unknown>) => {
+      checkoutFindOneCallCount += 1;
+
+      if (checkoutFindOneCallCount === 1) {
+        assert.equal(filter.guestId, "guest-replaced");
+        return null;
+      }
+
+      assert.equal(filter.token, "payment-recovery-token");
+      assert.equal("guestId" in filter, false);
+
+      return {
+        _id: new Types.ObjectId(),
+        token: "payment-recovery-token",
+        status: "payment_pending",
+        expiresAt: new Date(Date.now() + 60_000),
+      };
+    }) as unknown as typeof CheckoutSession.findOne,
+    async () => {
+      await withPatchedProperty(
+        Order,
+        "findOne",
+        (async (filter: Record<string, unknown>) => {
+          orderFindOneCallCount += 1;
+
+          if (orderFindOneCallCount === 1) {
+            assert.equal(filter.guestId, "guest-replaced");
+            return null;
+          }
+
+          assert.equal(filter._id, "64f000000000000000000032");
+          assert.equal(filter.checkoutToken, "payment-recovery-token");
+
+          return {
+            _id: new Types.ObjectId("64f000000000000000000032"),
+            checkoutToken: "payment-recovery-token",
+            paymentStatus: "paid",
+          };
+        }) as unknown as typeof Order.findOne,
+        async () => {
+          assert.deepEqual(
+            await getCheckoutPaymentStatus(
+              "payment-recovery-token",
+              "64f000000000000000000032",
+              { guestId: "guest-replaced" },
+            ),
+            {
+              status: "paid",
+              orderId: "64f000000000000000000032",
+              token: "payment-recovery-token",
+              redirectTo: "/order/success/payment-recovery-token",
             },
           );
         },

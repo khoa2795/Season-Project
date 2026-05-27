@@ -16,8 +16,9 @@ const GUEST_COOKIE_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
 export const guestSessionCookieOptions: CookieOptions = {
   httpOnly: true,
   secure: IS_PRODUCTION,
-  sameSite: "strict",
+  sameSite: "lax",
   maxAge: GUEST_COOKIE_MAX_AGE_MS,
+  path: "/",
 };
 
 export function clearGuestSessionCookie(res: Response): void {
@@ -25,6 +26,7 @@ export function clearGuestSessionCookie(res: Response): void {
     httpOnly: guestSessionCookieOptions.httpOnly,
     secure: guestSessionCookieOptions.secure,
     sameSite: guestSessionCookieOptions.sameSite,
+    path: guestSessionCookieOptions.path,
   });
 }
 
