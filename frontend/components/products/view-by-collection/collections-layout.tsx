@@ -15,11 +15,10 @@ export function CollectionsLayout({ children }: { children: ReactNode }) {
     Array<{ label: string; slug: string; href: string }>
   >([]);
   const [isLoadingCollectionFilters, setIsLoadingCollectionFilters] =
-    useState(false);
+    useState(true);
 
   useEffect(() => {
     let isCancelled = false;
-    setIsLoadingCollectionFilters(true);
 
     const loadCollectionFilters = async () => {
       try {

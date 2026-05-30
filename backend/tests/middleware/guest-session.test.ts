@@ -104,6 +104,7 @@ test("clearGuestSessionCookie clears the guest cookie with the expected options"
         httpOnly: guestSessionCookieOptions.httpOnly,
         secure: guestSessionCookieOptions.secure,
         sameSite: guestSessionCookieOptions.sameSite,
+        path: guestSessionCookieOptions.path,
       },
     },
   ]);
