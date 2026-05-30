@@ -1,7 +1,7 @@
 import { api } from "./api";
 
 type DeserializeableClass<T> = {
-  deser(data: any): T;
+  deser(data: unknown): T;
 };
 
 export type ListResponse<T> = {
@@ -36,8 +36,10 @@ export async function fetchList<T>(
     throw new Error(`Missing response data from ${url}`);
   }
 
+  const listData = data as { records?: unknown[]; total?: number };
+
   return {
-    records: (data.records ?? []).map((item: any) => Model.deser(item)),
-    total: data.total ?? 0,
+    records: (listData.records ?? []).map((item) => Model.deser(item)),
+    total: listData.total ?? 0,
   };
 }

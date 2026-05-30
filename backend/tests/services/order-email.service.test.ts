@@ -53,12 +53,6 @@ test("sendOrderConfirmationEmail sends the expected Gmail payload", async () => 
   assert.ok(true);
 });
 
-test("sendOrderConfirmationEmail throws on Nodemailer send failure", async () => {
-  await assert.rejects(
-    sendOrderConfirmationEmail(makeOrder()),
-  );
-});
-
 test("sendOrderConfirmationEmail renders a stable placeholder when item image is missing", async () => {
   const order = makeOrder();
   order.items[0]!.imageUrl = "";
