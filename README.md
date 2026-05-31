@@ -1,4 +1,4 @@
-# Season
+# Test demo
 
 Season is a full-stack eyewear project with:
 
